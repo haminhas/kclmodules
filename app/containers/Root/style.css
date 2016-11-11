@@ -1,0 +1,26 @@
+@value battleshipGrey, violetBlue from '../../styles/variables.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+html {
+  color: #333;
+}
+
+.mainContainer {
+  display: block;
+  margin: 0 auto;
+  max-width: 620px;
+  padding: 14px;
+}
+
+a:link, a:visited {
+  color: battleshipGrey;
+}
+
+a:hover, a:active {
+  color: violetBlue;
+}
