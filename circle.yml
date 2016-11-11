@@ -15,5 +15,3 @@ deployment:
     branch: master
     heroku:
       appname: kclmodules
-    commands:
-      - npm run deploy
