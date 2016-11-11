@@ -18,6 +18,6 @@ const middleware = isDev ? [logger] : [];
 // );
 
 ReactDOM.render(
-    (<h1>Hello World</h1>),
+    (<h1>Hello World, First Heroku Test </h1>),
   document.getElementById('app')
 );
