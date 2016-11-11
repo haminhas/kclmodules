@@ -6,10 +6,6 @@ dependencies:
   override:
     - npm install
 
-test:
-  pre:
-    - npm run relint
-
 deployment:
   staging:
     branch: master
