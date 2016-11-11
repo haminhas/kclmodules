@@ -5,17 +5,15 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
+  devtool: 'eval-source-map',
   entry: [
-    'whatwg-fetch',
-    'babel-polyfill',
-    'webpack-dev-server/client',
-    'webpack/hot/only-dev-server',
-    './app/index',
+    'webpack-hot-middleware/client',
+    path.join(__dirname, './app/index')
   ],
-  output: { // Compile into js/build.js
-    path: path.resolve(__dirname, 'public'),
-    publicPath: '/',
-    filename: 'index.js',
+  output: {
+    path: path.join(__dirname, '/dist/'),
+    filename: '[name].js',
+    publicPath: '/'
   },
   module: {
     loaders: [{
@@ -63,7 +61,7 @@ module.exports = {
   devtool: 'eval', // debugging - can be source-map etc
   target: 'web', // Make web variables accessible to webpack, e.g. window
   devServer: {
-    contentBase: './public',
+    contentBase: './dist',
     hot: true,
     noInfo: true,
     historyApiFallback: {
