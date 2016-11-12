@@ -10,7 +10,7 @@ import reducer from 'app/containers/Root/reducer';
 
 const logger = createLogger();
 
-const isDev = Boolean(process.env.NODE_ENV !== 'prod');
+const isDev = Boolean(process.env.NODE_ENV !== 'production');
 const middleware = isDev ? [logger] : [];
 
 const store = createStore(
