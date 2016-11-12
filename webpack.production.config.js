@@ -7,14 +7,12 @@ const StatsPlugin = require('stats-webpack-plugin');
 
 module.exports = {
   entry: [
-    'whatwg-fetch',
-    'babel-polyfill',
-    './app/index',
+    path.join(__dirname, './app/index')
   ],
-  output: { // Compile into js/build.js
-    path: path.resolve(__dirname, 'public'),
-    publicPath: '/',
-    filename: 'index.js',
+  output: {
+    path: path.join(__dirname, '/dist/'),
+    filename: '[name]-[hash].min.js',
+    publicPath: '/'
   },
   module: {
     loaders: [{
@@ -36,6 +34,18 @@ module.exports = {
     }]
   },
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new ExtractTextPlugin('[name]-[hash].min.css'),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false,
+        screw_ie8: true
+      }
+    }),
+    new StatsPlugin('webpack.stats.json', {
+      source: false,
+      modules: false
+    }),
     new HtmlWebpackPlugin({
       template: './app/index.html',
     }),
