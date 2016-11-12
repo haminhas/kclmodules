@@ -3,7 +3,6 @@ const express = require('express');
 const webpack = require('webpack');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('./webpack.config.js');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
@@ -11,6 +10,7 @@ const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
 
 if (isDeveloping) {
+  const config = require('./webpack.config.js');
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,
@@ -38,7 +38,7 @@ if (isDeveloping) {
   });
 }
 
-app.listen(port, function onStart(err) {
+app.listen(process.env.PORT || 3000, function onStart(err) {
   if (err) {
     console.log(err);
   }
