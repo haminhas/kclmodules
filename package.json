@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "webpack --config ./webpack-production.config.js --progress --colors",
     "test:watch": "npm t -- --watch",
     "test": "find . -path ./node_modules -prune -o -name '*.test.js' ! -path '*/node_modules/*' | xargs mocha --compilers js:babel-register --require test.setup",
     "build": "webpack -p --config ./webpack.production.config.js",
