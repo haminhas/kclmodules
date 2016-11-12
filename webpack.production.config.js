@@ -53,7 +53,7 @@ module.exports = {
     new dotenvPlugin({
       sample: './.env.example',
       path: './.env'
-    })
+    }).config({silent: true})
   ],
   resolve: {
     modules: [
