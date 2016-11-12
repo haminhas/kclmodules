@@ -9,5 +9,9 @@ dependencies:
 deployment:
   staging:
     branch: master
-    heroku:
-      appname: kclmodules
+    commands:
+      - npm run build
+      - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
+      - git push git@heroku.com:foo-bar-123.git $CIRCLE_SHA1:refs/heads/master
+      - heroku run rake db:migrate --app kclmodules:
+          timeout: 400
