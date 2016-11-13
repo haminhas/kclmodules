@@ -40,9 +40,10 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('[name].css'),
-    new dotenvPlugin({
-      sample: './.env.example',
-      path: './.env'
+    new webpack.DefinePlugin({
+      'process.env':{
+        'NODE_ENV': JSON.stringify('development'),
+      }
     })
   ],
   resolve: {

@@ -48,6 +48,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './app/index.html',
     }),
+    new webpack.DefinePlugin({
+      'process.env':{
+        'NODE_ENV': JSON.stringify('production'),
+      }
+    }),
     new ExtractTextPlugin('[name].css')
   ],
   resolve: {
