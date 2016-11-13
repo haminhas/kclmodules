@@ -16,6 +16,7 @@
   "dependencies": {
     "babel": "^6.5.2",
     "classnames": "^2.2.5",
+    "express": "^4.14.0",
     "js-sha256": "^0.3.0",
     "react": "^15.2.0",
     "react-dom": "^15.2.0",
