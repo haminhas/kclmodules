@@ -1,7 +1,7 @@
 {
   "name": "kclmodules",
   "version": "1.0.0",
-  "description": "",
+  "description": "Module ammendment application for Kings",
   "main": "index.js",
   "scripts": {
     "test:watch": "npm t -- --watch",
