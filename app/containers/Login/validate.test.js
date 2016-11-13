@@ -12,11 +12,11 @@ describe('Login Form Validation', () => {
   describe('Email validation', () => {
     it('rejects non red-badger emails', () => {
       const input = {
-        email: 'adamsNewMixtape@worldstar.gov',
+        email: 'email@gov.ac.uk',
         password: 'pass',
       };
       const expectedErrors = {
-        email: 'Not an @red-badger.com email',
+        email: 'Not an @kcl.ac.uk email',
       };
       expect(validate(input)).to.deep.equal(expectedErrors);
     });
@@ -35,7 +35,7 @@ describe('Login Form Validation', () => {
   describe('Password field validation', () => {
     it('rejects blank password field', () => {
       const input = {
-        email: 'jack.galvin@red-badger.com',
+        email: 'email@kcl.ac.uk',
         password: '',
       };
       const expectedErrors = {
