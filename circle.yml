@@ -5,9 +5,3 @@ machine:
 dependencies:
   override:
     - npm install
-
-deployment:
-  production:
-    branch: master
-    heroku:
-      appname: kclmodules
