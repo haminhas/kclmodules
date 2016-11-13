@@ -41,9 +41,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('[name].css'),
     new webpack.DefinePlugin({
-      'process.env':{
-        'NODE_ENV': JSON.stringify('development'),
-      }
+      'process.env.NODE_ENV': JSON.stringify('development')
     })
   ],
   resolve: {
