@@ -3,7 +3,7 @@ import validate from './validate';
 describe('Login Form Validation', () => {
   it('accepts valid input', () => {
     const input = {
-      email: 'jack.galvin@red-badger.com',
+      email: 'email@kcl.ac.uk',
       password: 'pass',
     };
     const expectedErrors = {};
