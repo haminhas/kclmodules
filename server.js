@@ -3,7 +3,6 @@ const express = require('express');
 const webpack = require('webpack');
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
-console.log(process.env.NODE_ENV);
 const app = express();
 
 if (isDeveloping) {
