@@ -35,7 +35,7 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new ExtractTextPlugin('[name]-[hash].min.css'),
+    new ExtractTextPlugin('style.css'),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false,
@@ -64,6 +64,7 @@ module.exports = {
   },
   postcss: function () {
     return [
+      require('postcss-smart-import'),
       require('autoprefixer'),
       require('precss'),
     ];

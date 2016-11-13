@@ -20,7 +20,7 @@ const Login = props => (
         <Field
           name="email"
           title="Email"
-          placeholder="e.g. email@red-badger.com"
+          placeholder="e.g. email@kcl.ac.uk"
           component={InputField}
           type="email"
         />
