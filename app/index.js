@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import createLogger from 'redux-logger';
-import Login from 'app/containers/Login';
+// import Login from 'app/containers/Login';
 
 import reducer from 'app/containers/Root/reducer';
-//import Router from 'app/containers/Router';
+import Router from 'app/containers/Router';
 
 const logger = createLogger();
 
@@ -20,7 +20,7 @@ const store = createStore(
 
 ReactDOM.render(
   (<Provider store={store}>
-    <Login />
+    <Router />
   </Provider>),
   document.getElementById('app')
 );
