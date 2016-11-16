@@ -13,7 +13,7 @@ export default () => {
       <Route path="/" component={Root}>
       <IndexRoute component={Login} />
       <Route path="/dashboard" component={DashBoard} />
-      <Route path="*" component={FourOFour} />
+      <Route path="/auth/Login" component={FourOFour} />
       </Route>
     </Router>
   );

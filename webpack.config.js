@@ -7,7 +7,10 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'eval-source-map',
   entry: [
+    'whatwg-fetch',
+    'babel-polyfill',
     'webpack-hot-middleware/client',
+    'webpack/hot/only-dev-server',
     path.join(__dirname, './app/index')
   ],
   output: {
@@ -18,7 +21,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/, // Transform all .js files required somewhere with Babel
-      loaders: ['react-hot-loader/webpack', 'babel'],
+      loaders: ['babel'],
       exclude: /node_modules/,
     }, {
       test: /\.css$/,
@@ -40,8 +43,9 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('[name].css'),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+    new dotenvPlugin({
+      sample: './.env.example',
+      path: './.env'
     })
   ],
   resolve: {

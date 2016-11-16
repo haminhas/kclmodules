@@ -5,14 +5,14 @@ import style from './style.css';
 
 const Root = props => (
   <div className={style.root}>
-    <Navbar path={""} />
+    <Navbar path={''} />
     <div className={style.mainContainer}>
       {props.children}
     </div>
   </div>
 );
 
-const { node, array } = PropTypes;
+const { node } = PropTypes;
 
 Root.propTypes = {
   children: node.isRequired,
