@@ -1,21 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import Router from 'app/containers/Router';
-import configureStore from './store/configureStore';
-import sagas from 'app/containers/Root/saga';
+import configureStore from './store';
+import saga from 'app/containers/Root/saga';
+import { Router, browserHistory } from 'react-router';
+import createRoutes from './Router';
 
-const store = configureStore();
+const initialState = window.__INITIAL_STATE__;
+
+const store = configureStore(initialState);
+const routes = createRoutes(store);
 
 if (module.hot) {
   module.hot.accept();
 }
-
-store.runSaga(sagas);
+store.runSaga(saga);
 
 ReactDOM.render(
   (<Provider store={store}>
-    <Router />
+    <Router history={browserHistory}>
+       {routes}
+     </Router>
   </Provider>),
   document.getElementById('app')
 );

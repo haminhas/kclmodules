@@ -1,4 +1,4 @@
-const { API_GATEWAY_URL } = process.env;
+// const { API_GATEWAY_URL } = process.env;
 
 export async function callAPI(
   method,
@@ -7,7 +7,7 @@ export async function callAPI(
   fetch = global.fetch
 ) {
   const response = await fetch(
-    `${API_GATEWAY_URL}${route}`, {
+    `http://localhost:3000${route}`, {
       method,
       headers: {
         'Content-Type': 'application/json',

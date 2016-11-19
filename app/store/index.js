@@ -1,10 +1,9 @@
 import { createStore, applyMiddleware } from 'redux';
 import reducer from 'app/containers/Root/reducer';
 import createLogger from 'redux-logger';
-import createSagaMiddleware from 'redux-saga';
+import createSagaMiddleware, { END } from 'redux-saga';
 
 const isDev = Boolean(process.env.NODE_ENV !== 'production');
-
 
 export default function configureStore(initialState) {
   const sagaMiddleware = createSagaMiddleware();
@@ -18,17 +17,17 @@ export default function configureStore(initialState) {
       ...middleware,
     ),
   );
-  // When using WebPack, module.hot.accept should be used. In LiveReactload,
-  // same result can be achieved by using "module.onReload" hook.
-  if (module.onReload) {
-    module.onReload(() => {
-      store.replaceReducer(reducer.default || reducer);
 
-      // return true to indicate that this module is accepted and
-      // there is no need to reload its parent modules
-      return true;
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept(require('app/containers/Root/reducer'), () => {
+      const nextRootReducer = require('app/containers/Root/reducer');
+
+      store.replaceReducer(nextRootReducer);
     });
   }
   store.runSaga = sagaMiddleware.run;
+  store.close = () => store.dispatch(END);
+
   return store;
 }

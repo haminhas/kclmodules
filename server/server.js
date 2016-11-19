@@ -1,22 +1,29 @@
-const path = require('path');
-const express = require('express');
-const webpack = require('webpack');
+import register from 'ignore-styles';
+register(['.sass', '.scss']);
+
+import express from 'express';
+import webpack from 'webpack';
+import expressConfig from './config/express';
+import routesConfig from './config/routes';
+import config from '../webpack.config.js';
+import webpackMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import passportConfig from './config/passport';
+
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
 
+passportConfig();
+const compiler = webpack(config);
+
 if (isDeveloping) {
-  const webpackMiddleware = require('webpack-dev-middleware');
-  const webpackHotMiddleware = require('webpack-hot-middleware');
-  const config = require('./webpack.config.js');
-  const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,
     contentBase: 'src',
     stats: {
       colors: true, hash: false, timings: true, chunks: false, chunkModules: false, modules: false,
     },
-    serverSideRender: true,
   });
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
@@ -24,9 +31,9 @@ if (isDeveloping) {
   app.use(express.static(__dirname + '/dist'));
 }
 
-app.get('/about', function(req, res){
-  res.send('about us');
-});
+expressConfig(app);
+routesConfig(app);
+
 
 app.listen(process.env.PORT || 3000, function onStart(err) {
   if (err) {

@@ -3,7 +3,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
-
 module.exports = {
   devtool: 'eval-source-map',
   entry: [
@@ -38,6 +37,7 @@ module.exports = {
     }]
   },
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
       template: './app/index.html',
     }),

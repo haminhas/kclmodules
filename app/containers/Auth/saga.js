@@ -1,5 +1,5 @@
-import { call, put } from 'redux-saga/effects';
-import fetch from 'app/fetch';
+import { put } from 'redux-saga/effects';
+// import fetch from 'app/fetch';
 import { takeLatest } from 'redux-saga';
 import {
   LOGIN_REQUEST,
@@ -9,7 +9,9 @@ import {
 
 export function* loginWorker() {
   try {
-    yield call(fetch, 'POST', '/auth', {});
+    // Router.get().transitionTo('/auth');
+    // yield apply(browserHistory, browserHistory.push, ['/auth']);
+    // yield call(fetch, 'GET', '/auth', {});
     yield put(loginSucceed());
   } catch (error) {
     yield put(loginFail(error));

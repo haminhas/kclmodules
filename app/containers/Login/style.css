@@ -1,36 +1,18 @@
 @value desktop from '../../styles/variables.css';
-
-.forgottenPassword {
-  padding-top: 19px;
-  padding-bottom: 22px;
-  color:#4500c0;
+.button {
+  border: 5px solid #8356d5;
+  background-color: #8356d5;
+  text-align: center;
+  margin-top: 8px;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 5px;
+  height: 44px;
+  width: 100%;
 }
 
-.forgottenPasswordLink:hover, .forgottenPasswordLink:active {
-  color:#747677;
+.button:hover:not(.invalid) {
+  background-color: #b298e1;
+  border: 5px solid #b298e1;
   cursor: pointer;
-}
-
-.createAccountText {
-  padding-top: 51px;
-  color:#747677;
-}
-
-.createAccountLink {
-  color: #4500c0;
-}
-
-.createAccountLink:hover, .createAccountLink:active {
-  color:#747677;
-  cursor: pointer;
-}
-
-@media desktop {
-  .forgottenPassword {
-    float: right;
-  }
-  
-  .inputFields {
-    max-width: 435px;
-  }
 }
