@@ -9,9 +9,6 @@ import {
 
 export function* loginWorker() {
   try {
-    // Router.get().transitionTo('/auth');
-    // yield apply(browserHistory, browserHistory.push, ['/auth']);
-    // yield call(fetch, 'GET', '/auth', {});
     yield put(loginSucceed());
   } catch (error) {
     yield put(loginFail(error));

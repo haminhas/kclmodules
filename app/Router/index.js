@@ -1,6 +1,6 @@
 import React from 'react';
 import { IndexRoute, Route } from 'react-router';
-
+import { Router, browserHistory } from 'react-router';
 import Login from 'app/containers/Login';
 import Root from 'app/containers/Root/component';
 import FourOFour from 'app/components/FourOFour';
@@ -29,12 +29,14 @@ export default (store) => {
   // };
 
   return (
-    <Route path="/" component={Root}>
-    <IndexRoute component={Login}  />
-    <Route onEnter={requireAuth}>
-      <Route path="/dashboard" component={DashBoard} />
-    </Route>
-    <Route path="*" component={FourOFour} />
-    </Route>
+    <Router history={browserHistory}>
+      <Route path="/" component={Root}>
+      <IndexRoute component={Login}  />
+      <Route onEnter={requireAuth}>
+        <Route path="/dashboard" component={DashBoard} />
+      </Route>
+      <Route path="*" component={FourOFour} />
+      </Route>
+    </Router>
   );
 };

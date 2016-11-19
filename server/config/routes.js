@@ -1,7 +1,6 @@
-import { createMemoryHistory, match } from 'react-router';
+import { createMemoryHistory, match, browserHistory } from 'react-router';
 import passport from 'passport';
 import configureStore from '../../app/store';
-import { syncHistoryWithStore } from 'react-router-redux';
 import routes from '../../app/Router';
 import pageRenderer from './pageRenderer';
 export default (app) => {
@@ -49,7 +48,7 @@ export default (app) => {
   app.use((req, res) => {
     const memoryHistory = createMemoryHistory(req.url);
     const store = configureStore(memoryHistory);
-    const history = syncHistoryWithStore(memoryHistory, store);
+    const history = browserHistory;
 
     match({ history, routes, location: req.url }, (error, redirectLocation, renderProps) => {
       if (error) {
