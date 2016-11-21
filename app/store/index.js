@@ -5,14 +5,13 @@ import createSagaMiddleware, { END } from 'redux-saga';
 
 const isDev = Boolean(process.env.NODE_ENV !== 'production');
 
-export default function configureStore(initialState) {
+export default function configureStore() {
   const sagaMiddleware = createSagaMiddleware();
   const logger = createLogger();
   const middleware = isDev ? [logger, sagaMiddleware] : [sagaMiddleware];
 
   const store = createStore(
     reducer,
-    initialState,
     applyMiddleware(
       ...middleware,
     ),

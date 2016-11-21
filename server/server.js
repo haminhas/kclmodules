@@ -15,9 +15,9 @@ const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
 
 passportConfig();
-const compiler = webpack(config);
 
 if (isDeveloping) {
+  const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,
     contentBase: 'src',
@@ -33,7 +33,6 @@ if (isDeveloping) {
 
 expressConfig(app);
 routesConfig(app);
-
 
 app.listen(process.env.PORT || 3000, function onStart(err) {
   if (err) {
