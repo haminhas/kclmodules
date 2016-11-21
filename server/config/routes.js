@@ -1,8 +1,8 @@
-import { RouterContext, match } from 'react-router';
+import { createMemoryHistory, match } from 'react-router';
 import passport from 'passport';
 import routes from '../../app/Router';
-import { renderToString } from 'react-dom/server';
-import React from 'react';
+import pageRenderer from './pageRenderer';
+import configureStore from '../../app/store';
 
 export default (app) => {
   // const ensureAuthenticated = (req, res, next) => {
@@ -49,37 +49,22 @@ export default (app) => {
 
   // send all requests to index.html so browserHistory works
   app.get('*', (req, res) => {
+    const memoryHistory = createMemoryHistory(req.url);
+    const store = configureStore(memoryHistory);
+
     match({ routes, location: req.url }, (err, redirect, props) => {
       if (err) {
         res.status(500).send(err.message);
       } else if (redirect) {
         res.redirect(redirect.pathname + redirect.search);
       } else if (props) {
-        const appHtml = renderToString(<RouterContext {...props}/>);
-        res.send(renderPage(appHtml));
+        const html = pageRenderer(store, props);
+        res.send(html);
       } else {
         res.status(404).send('Not Found');
       }
     });
   });
-
-  function renderPage(appHtml) {
-    return `
-    <html lang="en">
-      <head>
-        <meta charset="utf-8">
-        <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,400italic,500italic,700,700italic' rel='stylesheet' type='text/css'>
-        <!-- Make the page mobile compatible -->
-        <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,user-scalable=no">
-        <title>Module Amendments</title>
-      </head>
-      <body>
-        <!-- The app hooks into this div -->
-        <div id=app>${appHtml}</div>
-      </body>
-    </html>
-   `;
-  }
 
   // app.use((req, res) => {
   //   const memoryHistory = createMemoryHistory(req.url);
