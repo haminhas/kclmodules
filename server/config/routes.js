@@ -3,9 +3,9 @@ import passport from 'passport';
 import routes from '../../app/Router';
 import pageRenderer from './pageRenderer';
 import configureStore from '../../app/store';
-
+import path from 'path';
 export default (app) => {
-  // const ensureAuthenticated = (req, res, next) => {
+    // const ensureAuthenticated = (req, res, next) => {
   //   if (req.isAuthenticated()) { return next(); }
   //   return res.redirect('/login');
   // };
@@ -61,11 +61,10 @@ export default (app) => {
         const html = pageRenderer(store, props);
         res.send(html);
       } else {
-        res.status(404).send('Not Found');
+        res.sendFile(path.join(__dirname, '../../dist/index.html'));
       }
     });
   });
-
   // app.use((req, res) => {
   //   const memoryHistory = createMemoryHistory(req.url);
   //   const store = configureStore(memoryHistory);

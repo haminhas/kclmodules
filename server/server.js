@@ -6,7 +6,7 @@ import webpack from 'webpack';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
 import config from '../webpack.config.js';
-import webpackMiddleware from 'webpack-dev-middleware';
+import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import passportConfig from './config/passport';
 
@@ -18,9 +18,9 @@ passportConfig();
 
 if (isDeveloping) {
   const compiler = webpack(config);
-  const middleware = webpackMiddleware(compiler, {
+  console.log(config.output.publicPath);
+  const middleware = webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
-    contentBase: 'src',
     stats: {
       colors: true, hash: false, timings: true, chunks: false, chunkModules: false, modules: false,
     },

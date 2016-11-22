@@ -3,18 +3,17 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
+
 module.exports = {
   devtool: 'eval-source-map',
   entry: [
-    'whatwg-fetch',
     'babel-polyfill',
-    'webpack-hot-middleware/client',
-    'webpack/hot/only-dev-server',
-    path.join(__dirname, './app/index')
+    'webpack-hot-middleware/client?reload=true',
+    path.join(__dirname, 'app/index.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
-    filename: '[name].js',
+    filename: 'bundle.js',
     publicPath: '/'
   },
   module: {
@@ -61,15 +60,5 @@ module.exports = {
       require('precss'),
     ];
   },
-  devtool: 'eval', // debugging - can be source-map etc
   target: 'web', // Make web variables accessible to webpack, e.g. window
-  devServer: {
-    contentBase: './dist',
-    hot: true,
-    noInfo: true,
-    historyApiFallback: {
-      index: 'index.html'
-    }
-  },
-
 };

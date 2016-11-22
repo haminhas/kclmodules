@@ -7,7 +7,7 @@
   "scripts": {
     "test:watch": "npm t -- --watch",
     "test": "find . -path ./node_modules -prune -o -name '*.test.js' ! -path '*/node_modules/*' | xargs mocha --compilers js:babel-register --require test.setup",
-    "postinstall": "echo $NODE_ENV && [ $NODE_ENV = 'production' ] && webpack --config ./webpack.production.config.js --progress --colors || echo Not production",
+    "postinstall": "echo $NODE_ENV && [ $NODE_ENV = 'production' ] && webpack --config ./webpack.production.config.js --progress --colors || webpack",
     "start": "npm run postinstall && nodemon server/server --exec babel-node --ignore app/",
     "build": "babel server -d dist",
     "build:prod": "webpack --config ./webpack.production.config.js --progress --colors",
@@ -33,10 +33,10 @@
     "compress": "^0.99.0",
     "cookie-session": "^2.0.0-alpha.2",
     "css-loader": "^0.25.0",
-    "ejs": "^2.5.2",
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.24.1",
+    "ignore-styles": "^5.0.1",
     "js-sha256": "^0.3.2",
     "passport-windowslive": "^1.0.2",
     "postcss-loader": "^1.1.1",
@@ -55,7 +55,6 @@
     "stats-webpack-plugin": "^0.4.2",
     "style-loader": "^0.13.1",
     "svg-inline-react": "^1.0.2",
-    "types": "^0.1.1",
     "webpack": "^1.13.3",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-dotenv-plugin": "^1.4.0",
@@ -90,7 +89,7 @@
     "svg-inline-loader": "^0.7.1",
     "ts-loader": "^1.2.1",
     "typescript": "^2.0.9",
-    "webpack-dev-server": "^1.16.2",
+    "webpack-dev-server": "^1.12.1",
     "webpack-hot-middleware": "^2.13.2"
   }
 }

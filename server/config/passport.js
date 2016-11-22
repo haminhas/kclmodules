@@ -34,7 +34,6 @@ export default () => {
         // to represent the logged-in user.  In a typical application, you would
         // want to associate the Outlook account with a user record in your
         // database, and return that user instead.
-        console.log(accessToken);
         return done(null, profile);
       });
     }
