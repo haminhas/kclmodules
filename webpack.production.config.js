@@ -55,7 +55,8 @@ module.exports = {
      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
      'process.env.SESSION_SECRET': JSON.stringify(process.env.SESSION_SECRET),
      'process.env.OUTLOOK_CLIENT_ID': JSON.stringify(process.env.OUTLOOK_CLIENT_ID),
-     'process.env.OUTLOOK_CLIENT_SECRET': JSON.stringify(process.env.OUTLOOK_CLIENT_SECRET)
+     'process.env.OUTLOOK_CLIENT_SECRET': JSON.stringify(process.env.OUTLOOK_CLIENT_SECRET),
+     'process.env.API_GATEWAY_URL': JSON.stringify(process.env.API_GATEWAY_URL)
     }),
     new ExtractTextPlugin('[name].css')
   ],
