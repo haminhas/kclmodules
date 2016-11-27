@@ -7,18 +7,19 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'eval-source-map',
   entry: [
-    'webpack-hot-middleware/client',
-    path.join(__dirname, './app/index')
+    'babel-polyfill',
+    'webpack-hot-middleware/client?reload=true',
+    path.join(__dirname, 'app/index.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
-    filename: '[name].js',
+    filename: 'bundle.js',
     publicPath: '/'
   },
   module: {
     loaders: [{
       test: /\.js$/, // Transform all .js files required somewhere with Babel
-      loaders: ['react-hot-loader/webpack', 'babel'],
+      loaders: ['babel'],
       exclude: /node_modules/,
     }, {
       test: /\.css$/,
@@ -35,13 +36,15 @@ module.exports = {
     }]
   },
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
       template: './app/index.html',
     }),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('[name].css'),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+    new dotenvPlugin({
+      sample: './.env.example',
+      path: './.env'
     })
   ],
   resolve: {
@@ -57,15 +60,5 @@ module.exports = {
       require('precss'),
     ];
   },
-  devtool: 'eval', // debugging - can be source-map etc
   target: 'web', // Make web variables accessible to webpack, e.g. window
-  devServer: {
-    contentBase: './dist',
-    hot: true,
-    noInfo: true,
-    historyApiFallback: {
-      index: 'index.html'
-    }
-  },
-
 };

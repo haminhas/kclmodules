@@ -1,26 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import createLogger from 'redux-logger';
-import Login from 'app/containers/Login';
+import configureStore from './store';
+import saga from 'app/containers/Root/saga';
+import Router from './router';
 
-import reducer from 'app/containers/Root/reducer';
-//import Router from 'app/containers/Router';
+const store = configureStore();
 
-const logger = createLogger();
+if (module.hot) {
+  module.hot.accept();
+}
 
-const isDev = Boolean(process.env.NODE_ENV !== 'production');
-const middleware = isDev ? [logger] : [];
-
-const store = createStore(
-  reducer,
-  applyMiddleware(...middleware),
-);
+store.runSaga(saga);
 
 ReactDOM.render(
   (<Provider store={store}>
-    <Login />
+    <Router />
   </Provider>),
   document.getElementById('app')
 );

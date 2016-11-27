@@ -1,23 +1,17 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { reduxForm } from 'redux-form';
 
-// import { login } from 'app/containers/Auth/actions';
+import { login } from 'app/containers/Auth/actions';
+// import validate from './validate';
+import LoginComponent from './component';
 
-import LoginForm from './component';
-import validate from './validate';
+const mapStateToProps = state => ({
+  applicationError: state.applicationError,
+});
 
-const LoginFormContainer = reduxForm({
-  form: 'loginForm',
-  validate,
-})(LoginForm);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  login,
+}, dispatch);
 
-// const mapStateToProps = state => ({
-//   applicationError: state.applicationError,
-// });
-
-// const mapDispatchToProps = dispatch => bindActionCreators({
-//   onSubmit: login,
-// }, dispatch);
-
-export default connect()(LoginFormContainer);
+export default connect(mapStateToProps,
+mapDispatchToProps)(LoginComponent);

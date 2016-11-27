@@ -5,7 +5,8 @@
       "module-alias",
       [
         { "src": "./app", "expose": "app" }
-      ]
+      ],
+      "transform-runtime",
     ]
   ]
 }
