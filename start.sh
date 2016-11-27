@@ -5,6 +5,7 @@ if [ $NODE_ENV = 'production' ]; then
   babel server -d dist
   nodemon dist/server.js
 else
+  npm i
   webpack
   nodemon server/server --exec babel-node --ignore app/
 fi
