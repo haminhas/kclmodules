@@ -6,8 +6,6 @@ import webpack from 'webpack';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
 import config from '../webpack.config.js';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
 import passportConfig from './config/passport';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
@@ -17,8 +15,9 @@ const app = express();
 passportConfig();
 
 if (isDeveloping) {
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
   const compiler = webpack(config);
-  console.log(config.output.publicPath);
   const middleware = webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
     stats: {
