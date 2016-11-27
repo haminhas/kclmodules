@@ -28,8 +28,6 @@ if (isDeveloping) {
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
 } else {
-  console.log('production Build ');
-  console.log(__dirname);
   app.use(express.static(__dirname + '/'));
 }
 
