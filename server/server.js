@@ -5,7 +5,6 @@ import express from 'express';
 import webpack from 'webpack';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
-import config from '../webpack.config.js';
 import passportConfig from './config/passport';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
@@ -15,6 +14,7 @@ const app = express();
 passportConfig();
 
 if (isDeveloping) {
+  const config = require('../webpack.config.js');
   const webpackDevMiddleware = require('webpack-dev-middleware');
   const webpackHotMiddleware = require('webpack-hot-middleware');
   const compiler = webpack(config);

@@ -7,7 +7,6 @@ import cookieParser from 'cookie-parser';
 import compress from 'compression';
 import cookieSession from 'cookie-session';
 
-export const sessionSecret = process.env.SESSION_SECRET;
 export default (app) => {
   app.use(compress());
   app.use(bodyParser());
@@ -49,7 +48,6 @@ export default (app) => {
     sess.cookie.secure = true; // Serve secure cookies
   }
   console.log('--------------------------');
-
 
   app.use(session(sess));
 
