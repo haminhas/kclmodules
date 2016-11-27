@@ -7,5 +7,5 @@ if [ $NODE_ENV = 'production' ]; then
 else
   npm i
   webpack
-  nodemon server/server --exec babel-node --ignore app/
+  node server/server --ignore app/
 fi
