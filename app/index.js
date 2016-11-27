@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store';
 import saga from 'app/containers/Root/saga';
-import router from './router';
+import Router from './router';
 
 const store = configureStore();
 
@@ -15,7 +15,7 @@ store.runSaga(saga);
 
 ReactDOM.render(
   (<Provider store={store}>
-    <router />
+    <Router />
   </Provider>),
   document.getElementById('app')
 );
