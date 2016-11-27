@@ -28,7 +28,9 @@ if (isDeveloping) {
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
 } else {
-  app.use(express.static(__dirname + '/dist'));
+  console.log('production Build ');
+  console.log(__dirname);
+  app.use(express.static(__dirname + '/'));
 }
 
 expressConfig(app);

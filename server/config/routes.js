@@ -1,9 +1,6 @@
-import { createMemoryHistory, match } from 'react-router';
 import passport from 'passport';
-import routes from '../../app/Router';
-import pageRenderer from './pageRenderer';
-import configureStore from '../../app/store';
 import path from 'path';
+
 export default (app) => {
     // const ensureAuthenticated = (req, res, next) => {
   //   if (req.isAuthenticated()) { return next(); }
@@ -49,36 +46,6 @@ export default (app) => {
 
   // send all requests to index.html so browserHistory works
   app.get('*', (req, res) => {
-    const memoryHistory = createMemoryHistory(req.url);
-    const store = configureStore(memoryHistory);
-
-    match({ routes, location: req.url }, (err, redirect, props) => {
-      if (err) {
-        res.status(500).send(err.message);
-      } else if (redirect) {
-        res.redirect(redirect.pathname + redirect.search);
-      } else if (props) {
-        const html = pageRenderer(store, props);
-        res.send(html);
-      } else {
-        res.sendFile(path.join(__dirname, '../../dist/index.html'));
-      }
-    });
+    res.sendFile(path.join(__dirname, '../../dist/index.html'));
   });
-  // app.use((req, res) => {
-  //   const memoryHistory = createMemoryHistory(req.url);
-  //   const store = configureStore(memoryHistory);
-  //   const history = browserHistory;
-  //
-  //   match({ history, routes, location: req.url }, (error, redirectLocation, renderProps) => {
-  //     if (error) {
-  //       res.status(500).send(error.message);
-  //     } else if (redirectLocation) {
-  //       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-  //     } else if (renderProps) {
-  //       const html = pageRenderer(store, renderProps);
-  //       res.send(html);
-  //     }
-  //   });
-  // });
 };
