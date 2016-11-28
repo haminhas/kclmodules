@@ -17,7 +17,6 @@ export default () => {
     done(null, obj);
   });
 
-
   // Use the OutlookStrategy within Passport.
   //   Strategies in Passport require a `verify` function, which accept
   //   credentials (in this case, an accessToken, refreshToken, and Outlook

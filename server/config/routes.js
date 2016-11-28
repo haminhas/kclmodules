@@ -2,15 +2,19 @@ import passport from 'passport';
 import path from 'path';
 
 export default (app) => {
-    // const ensureAuthenticated = (req, res, next) => {
-  //   if (req.isAuthenticated()) { return next(); }
-  //   return res.redirect('/login');
-  // };
+  const ensureAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated()) { return next(); }
+    return res.redirect('/');
+  };
 
-  // app.get('/dashboard', ensureAuthenticated, (req, res) => {
-  //   // res.status(200).json({ user: req.user });
-  //   res.render('dashboard', { user: req.user });
-  // });
+  app.get('/dashboard', ensureAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, '../../dist/index.html'));
+  });
+
+  app.get('/logout', ensureAuthenticated, (req, res) => {
+    req.logout();
+    res.redirect('/');
+  });
 
   // GET /auth/outlook
   //   Use passport.authenticate() as route middleware to authenticate the
@@ -37,12 +41,10 @@ export default (app) => {
   //   request.  If authentication fails, the user will be redirected back to the
   //   login page.  Otherwise, the primary route function function will be called,
   //   which, in this example, will redirect the user to the home page.
-  app.get('/auth/callback',
-    passport.authenticate('windowslive', {
-      successRedirect: '/dashboard',
-      failureRedirect: '/login'
-    }),
-  );
+  app.get('/auth/callback', passport.authenticate('windowslive', { failureRedirect: '/login' }),
+  (req, res) => {
+    res.redirect('/dashboard');
+  });
 
   // send all requests to index.html so browserHistory works
   app.get('*', (req, res) => {

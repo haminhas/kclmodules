@@ -41,11 +41,11 @@ module.exports = {
       template: './app/index.html',
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('[name].css'),
     new dotenvPlugin({
       sample: './.env.example',
       path: './.env'
-    })
+    }),
+    new ExtractTextPlugin('[name].css'),
   ],
   resolve: {
     modules: [
