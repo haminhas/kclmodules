@@ -1,11 +1,13 @@
 import passport from 'passport';
 import path from 'path';
+import {decideSwap} from './moduleAuthoriser';
 
 export default (app) => {
   const ensureAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) { return next(); }
     return res.redirect('/');
   };
+
 
   app.get('/dashboard', ensureAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, '../../dist/index.html'));
@@ -14,6 +16,11 @@ export default (app) => {
   app.get('/logout', ensureAuthenticated, (req, res) => {
     req.logout();
     res.redirect('/');
+  });
+
+  app.post('/swap', (req, res) => {
+    const response = JSON.stringify(decideSwap('k1461907', 'module1'));
+    res.send(response);
   });
 
   // GET /auth/outlook

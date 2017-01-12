@@ -2,7 +2,6 @@ import React from 'react';
 import style from './style.css';
 const { API_GATEWAY_URL } = process.env;
 const url = `${API_GATEWAY_URL}/logout`;
-console.log(url);
 const DashBoard = () => (
   <div className={style.mainContainer}>
     <div>
