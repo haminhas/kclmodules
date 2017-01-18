@@ -5,8 +5,9 @@ import express from 'express';
 import webpack from 'webpack';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
-require('./config/passport');
+import pool from './config/db';
 
+require('./config/passport');
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
@@ -29,7 +30,7 @@ if (isDeveloping) {
 }
 
 expressConfig(app);
-routesConfig(app);
+routesConfig(app, pool);
 
 app.listen(process.env.PORT || 3000, (err) => {
   if (err) {
