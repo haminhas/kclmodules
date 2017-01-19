@@ -64,6 +64,24 @@ export async function getModuleTimetable(moduleCode) {
   }
 }
 
+export async function getModuleCount(moduleCode) {
+  try {
+    const sql = `SELECT modules.code, COUNT(*), modules.capacity FROM studentTimetable INNER JOIN modules ON moduleCode = code WHERE moduleCode = '${moduleCode}' GROUP BY modules.code;`;
+    return await query(sql);
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+export async function getProgrammeModules(studentid) {
+  try {
+    const sql = `SELECT students.id,programmeModules.moduleCode FROM programmeModules INNER JOIN students ON programmeModules.programmeid = students.programmeid WHERE students.id = '${studentid}';`;
+    return await query(sql);
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
 async function query(sql) {
   try {
     const {rows} =  await pool.query(sql);

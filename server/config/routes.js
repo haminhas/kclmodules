@@ -1,7 +1,7 @@
 import passport from 'passport';
 import path from 'path';
 import {decideSwap} from './moduleAuthoriser';
-import { getAllModules, getStudentTimetable, getStudent } from './db';
+// import { getAllModules, getStudentTimetable, getStudent } from './db';
 
 export default (app) => {
   const ensureAuthenticated = (req, res, next) => {
@@ -10,11 +10,11 @@ export default (app) => {
   };
 
 
-  app.post('/dbtest', async (req, res) => {
-    const result = await getAllModules('s1');
-    console.log('first ' + result);
-    res.send(result);
-  });
+  // app.post('/dbtest', async (req, res) => {
+  //   const result = await getAllModules('s1');
+  //   console.log('first ' + result);
+  //   res.send(result);
+  // });
 
   app.get('/dashboard', ensureAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, '../../dist/index.html'));
@@ -26,7 +26,8 @@ export default (app) => {
   });
 
   app.post('/swap', (req, res) => {
-    const response = JSON.stringify(decideSwap('s1', 'm1', 'm3'));
+    const response = JSON.stringify(decideSwap('s1', 'm1', 'm2'));
+    // console.log(response);
     res.send(response);
   });
 
