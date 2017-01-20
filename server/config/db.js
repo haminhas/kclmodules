@@ -48,7 +48,21 @@ export async function getStudent(studentid) {
 
 export async function getStudentTimetable(studentid) {
   try {
-    const sql = `SELECT students.id,studentTimetable.moduleCode,studentTimetable.class,timetable.roomid,timetable.startTime,timetable.endTime,timetable.day FROM students INNER JOIN studentTimetable ON students.id = studentTimetable.studentid INNER JOIN timetable ON studentTimetable.moduleCode=timetable.moduleid WHERE studentTimetable.class = timetable.class AND students.id = '${studentid}';`;
+    const sql = `SELECT modules.code,
+                        m.capacity,
+                        m.startTime,
+                        m.endtime,
+                        m.groupNumber,
+                        m.day,
+                        t.name
+                 FROM   moduleTimetable AS m
+                 INNER JOIN moduleTypes AS t
+                 ON     m.moduletype = t.id
+                 INNER JOIN studentTimetable AS s
+                 ON     s.moduleType = m.id
+                 INNER JOIN modules
+                 ON     t.moduleCode = modules.code
+                 WHERE  s.studentid = '${studentid}';`;
     return await query(sql);
   } catch (err) {
     throw new Error(err);
@@ -57,7 +71,18 @@ export async function getStudentTimetable(studentid) {
 
 export async function getModuleTimetable(moduleCode) {
   try {
-    const sql = `SELECT moduleid,roomid,startTime,endTime,class,day FROM timetable WHERE moduleid = '${moduleCode}';`;
+    const sql = `SELECT modules.code,
+                        m.startTime,
+                        m.endtime,
+                        m.groupNumber,
+                        m.day,
+                        t.name
+                FROM    moduleTimetable AS m
+                INNER JOIN moduleTypes AS t
+                ON      m.moduleType = t.id
+                INNER JOIN modules
+                ON      t.moduleCode = modules.code
+                WHERE   modules.code = '${moduleCode}';`;
     return await query(sql);
   } catch (err) {
     throw new Error(err);
@@ -66,7 +91,19 @@ export async function getModuleTimetable(moduleCode) {
 
 export async function getModuleCount(moduleCode) {
   try {
-    const sql = `SELECT modules.code, COUNT(*), modules.capacity FROM studentTimetable INNER JOIN modules ON moduleCode = code WHERE moduleCode = '${moduleCode}' GROUP BY modules.code;`;
+    const sql = `SELECT modules.code,
+                        m.groupNumber,
+                        COUNT(*),
+                        m.capacity
+                 FROM   studentTimetable AS s
+                 INNER JOIN moduleTimetable AS m
+                 ON     s.moduleType = m.id
+                 INNER JOIN moduleTypes AS t
+                 ON     m.moduleType = t.id
+                 INNER JOIN modules
+                 ON     t.moduleCode = modules.code
+                 WHERE  modules.code = '${moduleCode}'
+                 GROUP BY m.groupNumber, modules.code, m.capacity;`;
     return await query(sql);
   } catch (err) {
     throw new Error(err);
@@ -75,7 +112,12 @@ export async function getModuleCount(moduleCode) {
 
 export async function getProgrammeModules(studentid) {
   try {
-    const sql = `SELECT students.id,programmeModules.moduleCode FROM programmeModules INNER JOIN students ON programmeModules.programmeid = students.programmeid WHERE students.id = '${studentid}';`;
+    const sql = `SELECT m.programmeid,
+                        m.code
+                 FROM   modules AS m
+                 INNER JOIN students AS s
+                 ON     m.programmeid = s.programmeid
+                 WHERE  s.id = '${studentid}';`;
     return await query(sql);
   } catch (err) {
     throw new Error(err);

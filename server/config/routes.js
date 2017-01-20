@@ -26,7 +26,7 @@ export default (app) => {
   });
 
   app.post('/swap', (req, res) => {
-    const response = JSON.stringify(decideSwap('s1', 'm1', 'm2'));
+    const response = JSON.stringify(decideSwap('s1', 'm3', 'm2'));
     // console.log(response);
     res.send(response);
   });
