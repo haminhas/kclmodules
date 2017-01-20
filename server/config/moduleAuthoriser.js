@@ -1,4 +1,9 @@
-import { getStudentTimetable, getModuleTimetable, getModuleCount, getProgrammeModules } from './db';
+import { getStudentTimetable,
+         getModuleTimetable,
+         getModuleCount,
+         getProgrammeModules,
+         getModuleTypeTimetable
+} from './db';
 
 const checkClash = (currentTimetable, moduleTimetable) => {
   for (const moduleobj of currentTimetable) {
@@ -21,6 +26,13 @@ async function checkModuleSpace(moduleCode) {
   return true;
 }
 
+async function checkGroupSpace(moduleCode, groupnumber) {
+  const data = await getModuleCount(moduleCode);
+  const result = data.filter(( obj ) => (obj.groupnumber === groupnumber));
+  if ((result[0].capacity - result[0].count) < 1) return false;
+  return true;
+}
+
 async function checkModuleInProgramme(studentid, newModule) {
   const data = await getProgrammeModules(studentid);
   const result = data.find(x => x.code === newModule);
@@ -28,15 +40,27 @@ async function checkModuleInProgramme(studentid, newModule) {
   return true;
 }
 
-// async function reassign(studentid, currentTimetable) {
-//   // console.log(currentTimetable);
-//   // for (const mod of currentTimetable) {
-//   //   const otherGroups = await getModuleTimetable(mod.modulecode);
-//   //   if (otherGroups.length > 0) {
-//   //     console.log(otherGroups);
-//   //   }
-//   // }
-// }
+const changeGroup = (currentTimetable, newGroups, moduleTimetable) => {
+  for (const group of newGroups) {
+    let timetable = currentTimetable.filter((x) => (x.code === group.code));
+    timetable = timetable.filter((x) => (x.name !== group.name));
+    timetable.push(group);
+    return checkClash(timetable, moduleTimetable);
+  }
+  return null;
+};
+
+async function reassign(studentid, currentTimetable, moduleTimetable) {
+  for (const mod of currentTimetable) {
+    const otherGroups = await getModuleTypeTimetable(mod.code, mod.groupnumber, mod.name);
+    if (otherGroups.length > 0 && await checkGroupSpace(otherGroups[0].code, otherGroups[0].groupnumber)) {
+      // means we have found another group to assign studnet
+      // check if new group has space
+      return changeGroup(currentTimetable, otherGroups, moduleTimetable);
+    }
+  }
+  throw new Error('No reassignment possible');
+}
 
 
 export async function decideSwap(studentid, oldModule, newModule) {
@@ -48,8 +72,9 @@ export async function decideSwap(studentid, oldModule, newModule) {
     const moduleTimetable = await getModuleTimetable(newModule);
 
     if (!checkClash(currentTimetable, moduleTimetable)) {
-      // const arr = await reassign(studentid, currentTimetable);
-      // return arr;
+      const arr = await reassign(studentid, currentTimetable, moduleTimetable);
+      console.log(arr);
+      return arr;
     }
     return false;
   } catch (err) {

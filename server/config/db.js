@@ -62,7 +62,7 @@ export async function getStudentTimetable(studentid) {
                  ON     s.moduleType = m.id
                  INNER JOIN modules
                  ON     t.moduleCode = modules.code
-                 WHERE  s.studentid = '${studentid}';`;
+                 WHERE  m.groupNumber = s.groupNumber AND s.studentid = '${studentid}';`;
     return await query(sql);
   } catch (err) {
     throw new Error(err);
@@ -89,21 +89,41 @@ export async function getModuleTimetable(moduleCode) {
   }
 }
 
-export async function getModuleCount(moduleCode) {
+export async function getModuleTypeTimetable(moduleCode, groupNumber, name) {
   try {
     const sql = `SELECT modules.code,
+           m.startTime,
+           m.endtime,
+           m.groupNumber,
+           m.day,
+           t.name
+    FROM    moduleTimetable AS m
+    INNER JOIN moduleTypes AS t
+    ON      m.moduleType = t.id
+    INNER JOIN modules
+    ON      t.moduleCode = modules.code
+    WHERE   modules.code = '${moduleCode}' AND m.groupNumber != ${groupNumber} AND t.name = '${name}'`;
+    return await query(sql);
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+export async function getModuleCount(moduleCode) {
+  try {
+    const sql = `SELECT t.moduleCode,
+                        m.moduleType,
                         m.groupNumber,
-                        COUNT(*),
-                        m.capacity
-                 FROM   studentTimetable AS s
-                 INNER JOIN moduleTimetable AS m
-                 ON     s.moduleType = m.id
+                        m.capacity,
+                        count(*)
+                 FROM   moduleTimetable AS m
                  INNER JOIN moduleTypes AS t
                  ON     m.moduleType = t.id
-                 INNER JOIN modules
-                 ON     t.moduleCode = modules.code
-                 WHERE  modules.code = '${moduleCode}'
-                 GROUP BY m.groupNumber, modules.code, m.capacity;`;
+                 FULL OUTER JOIN studentTimetable AS s
+                 ON     s.moduleType = m.id
+                 WHERE  t.moduleCode = '${moduleCode}'
+                 GROUP BY m.moduleType, m.groupNumber, t.moduleCode, m.capacity
+                 HAVING count(*) > 0;`;
     return await query(sql);
   } catch (err) {
     throw new Error(err);
