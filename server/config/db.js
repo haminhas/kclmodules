@@ -71,18 +71,19 @@ export async function getStudentTimetable(studentid) {
 
 export async function getModuleTimetable(moduleCode) {
   try {
-    const sql = `SELECT modules.code,
+    const sql = `SELECT DISTINCT ON(modules.code,t.name)
+                        modules.code,
                         m.startTime,
                         m.endtime,
                         m.groupNumber,
                         m.day,
                         t.name
-                FROM    moduleTimetable AS m
-                INNER JOIN moduleTypes AS t
-                ON      m.moduleType = t.id
-                INNER JOIN modules
-                ON      t.moduleCode = modules.code
-                WHERE   modules.code = '${moduleCode}';`;
+                 FROM   moduleTimetable AS m
+                 INNER JOIN moduleTypes AS t
+                 ON     m.moduleType = t.id
+                 INNER JOIN modules
+                 ON     t.moduleCode = modules.code
+                 WHERE  modules.code = '${moduleCode}';`;
     return await query(sql);
   } catch (err) {
     throw new Error(err);

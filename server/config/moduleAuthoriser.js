@@ -15,6 +15,8 @@ const checkClash = (currentTimetable, moduleTimetable) => {
     }
   }
   console.log('NO CLASH');
+  console.log(currentTimetable);
+  console.log(moduleTimetable);
   return true;
 };
 
@@ -45,7 +47,7 @@ const changeGroup = (currentTimetable, newGroups, moduleTimetable) => {
     let timetable = currentTimetable.filter((x) => (x.code === group.code));
     timetable = timetable.filter((x) => (x.name !== group.name));
     timetable.push(group);
-    return checkClash(timetable, moduleTimetable);
+    if (checkClash(timetable, moduleTimetable)) return true;
   }
   return null;
 };
@@ -62,7 +64,6 @@ async function reassign(studentid, currentTimetable, moduleTimetable) {
   throw new Error('No reassignment possible');
 }
 
-
 export async function decideSwap(studentid, oldModule, newModule) {
   try {
     // check if new module is in programme
@@ -72,11 +73,9 @@ export async function decideSwap(studentid, oldModule, newModule) {
     const moduleTimetable = await getModuleTimetable(newModule);
 
     if (!checkClash(currentTimetable, moduleTimetable)) {
-      const arr = await reassign(studentid, currentTimetable, moduleTimetable);
-      console.log(arr);
-      return arr;
+      return await reassign(studentid, currentTimetable, moduleTimetable);
     }
-    return false;
+    return true;
   } catch (err) {
     throw new Error(err);
   }

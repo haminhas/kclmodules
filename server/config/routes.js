@@ -9,13 +9,6 @@ export default (app) => {
     return res.redirect('/');
   };
 
-
-  // app.post('/dbtest', async (req, res) => {
-  //   const result = await getAllModules('s1');
-  //   console.log('first ' + result);
-  //   res.send(result);
-  // });
-
   app.get('/dashboard', ensureAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, '../../dist/index.html'));
   });
@@ -25,9 +18,12 @@ export default (app) => {
     res.redirect('/');
   });
 
-  app.post('/swap', (req, res) => {
-    const response = JSON.stringify(decideSwap('s1', 'm3', 'm2'));
-    // console.log(response);
+  app.post('/swap', async (req, res) => {
+    const response = await decideSwap(
+      req.body.studentid,
+      req.body.oldModule,
+      req.body.newModule
+    );
     res.send(response);
   });
 

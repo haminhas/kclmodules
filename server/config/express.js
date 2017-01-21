@@ -9,7 +9,6 @@ import cookieSession from 'cookie-session';
 
 export default (app) => {
   app.use(compress());
-  app.use(bodyParser());
   app.use(cookieParser());
   app.use(cookieSession({
     key: 'kclmodules.com',
@@ -41,10 +40,7 @@ export default (app) => {
   console.log('===> 😊  Starting Server . . .');
   console.log(`===>  Environment: ${process.env.NODE_ENV}`);
   console.log(`===>  Listening on port: ${app.get(process.env.PORT)}`);
-    // console.log(`===>  Using DB TYPE: ${DB_TYPE}`);
   if (process.env.NODE_ENV  === 'production') {
-    console.log('===> 🚦  Note: In order for authentication to work in production');
-    console.log('===>           you will need a secure HTTPS connection');
     sess.cookie.secure = true; // Serve secure cookies
   }
   console.log('--------------------------');
