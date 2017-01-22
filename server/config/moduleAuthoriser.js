@@ -8,7 +8,9 @@ import { getStudentTimetable,
 const checkClash = (currentTimetable, moduleTimetable) => {
   for (const moduleobj of currentTimetable) {
     for (const reqobj of moduleTimetable) {
-      if ((reqobj.day === moduleobj.day) && (moduleobj.starttime <= reqobj.starttime && moduleobj.endtime >= reqobj.endtime)) {
+      if ((reqobj.day === moduleobj.day) &&
+      (moduleobj.starttime <= reqobj.starttime &&
+        moduleobj.endtime >= reqobj.endtime)) {
         console.log('CLASH');
         return false;
       }
@@ -55,7 +57,8 @@ const changeGroup = (currentTimetable, newGroups, moduleTimetable) => {
 async function reassign(studentid, currentTimetable, moduleTimetable) {
   for (const mod of currentTimetable) {
     const otherGroups = await getModuleTypeTimetable(mod.code, mod.groupnumber, mod.name);
-    if (otherGroups.length > 0 && await checkGroupSpace(otherGroups[0].code, otherGroups[0].groupnumber)) {
+    if (otherGroups.length > 0 &&
+      await checkGroupSpace(otherGroups[0].code, otherGroups[0].groupnumber)) {
       // means we have found another group to assign studnet
       // check if new group has space
       return changeGroup(currentTimetable, otherGroups, moduleTimetable);
@@ -67,7 +70,8 @@ async function reassign(studentid, currentTimetable, moduleTimetable) {
 export async function decideSwap(studentid, oldModule, newModule) {
   try {
     // check if new module is in programme
-    if (await !checkModuleSpace(newModule) || await !checkModuleInProgramme(studentid, newModule)) return false;
+    if (await !checkModuleSpace(newModule) ||
+        await !checkModuleInProgramme(studentid, newModule)) return false;
     let currentTimetable = await getStudentTimetable(studentid);
     currentTimetable = currentTimetable.filter((x) => (x.code !== oldModule));
     const moduleTimetable = await getModuleTimetable(newModule);
