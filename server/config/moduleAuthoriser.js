@@ -5,12 +5,15 @@ import { getStudentTimetable,
          getModuleTypeTimetable
 } from './db';
 
-const checkClash = (currentTimetable, moduleTimetable) => {
+export const checkClash = (currentTimetable, moduleTimetable) => {
   for (const moduleobj of currentTimetable) {
     for (const reqobj of moduleTimetable) {
       if ((reqobj.day === moduleobj.day) &&
-      (moduleobj.starttime <= reqobj.starttime &&
-        moduleobj.endtime >= reqobj.endtime)) {
+      ((moduleobj.starttime <= reqobj.starttime &&
+        moduleobj.endtime >= reqobj.endtime) ||
+      (moduleobj.starttime >= reqobj.starttime &&
+        moduleobj.endtime <= reqobj.endtime)
+      )) {
         console.log('CLASH');
         return false;
       }
@@ -84,3 +87,5 @@ export async function decideSwap(studentid, oldModule, newModule) {
     throw new Error(err);
   }
 }
+
+export default decideSwap;
