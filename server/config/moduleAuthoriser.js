@@ -42,38 +42,34 @@ export async function checkModuleInProgramme(
 ) {
   const data = await getProgrammeModulesFn(studentid);
   const result = data.find(x => x.code === newModule);
-  if (result === undefined) return false;
-  return true;
+  if (result === undefined) return true;
+  return false;
 }
 
-export const changeGroup = (currentTimetable, newGroups, moduleTimetable ) => {
-  for (const group of newGroups) {
-    // console.log(currentTimetable);
-    // console.log(newGroups);
-    // console.log(moduleTimetable);
-    let timetable = currentTimetable.filter((x) => (x.code === group.code));
-    timetable = timetable.filter((x) => (x.name !== group.name));
-    timetable.push(group);
-    if (checkClash(timetable, moduleTimetable)) return true;
-    return false;
-  }
-  throw new Error('Error at changeGroup');
+export const changeGroup = (currentTimetable, newGroup, moduleTimetable) => {
+  let timetable = currentTimetable.filter((x) => (x.code === newGroup.code));
+  timetable = timetable.filter((x) => (x.name !== newGroup.name));
+  timetable.push(newGroup);
+  if (checkClash(timetable, moduleTimetable)) return true;
+  return false;
 };
 
+// method for looping over groups in currentTimetable
 async function reassign(currentTimetable, moduleTimetable) {
   for (const mod of currentTimetable) {
     const otherGroups = await getModuleTypeTimetable(mod.code, mod.groupnumber, mod.name);
-    if (otherGroups.length > 0 &&
-      await checkGroupSpace(otherGroups[0].code, otherGroups[0].groupnumber)) {
-      // means we have found another group to assign studnet
-      // check if new group has space
-      return changeGroup(currentTimetable, otherGroups, moduleTimetable);
+    for (const group of otherGroups) {
+      if (await checkGroupSpace(group.code, group.groupnumber)) {
+        // means we have found another group to assign studnet
+        // check if new group has space
+        return changeGroup(currentTimetable, group, moduleTimetable);
+      }
     }
   }
   throw new Error('No reassignment possible');
 }
 
-async function checkModuleGroups(currentTimetable, moduleTimetable) {
+export const groupArrays = (moduleTimetable) => {
   const newMod = [];
   const names = [];
   for (let i = 0; i < moduleTimetable.length; i++) {
@@ -82,9 +78,15 @@ async function checkModuleGroups(currentTimetable, moduleTimetable) {
     newMod.push(timetable);
     names.push(timetable[0].name);
   }
+  return newMod;
+};
 
+// method for looping over all groups in newModule
+async function checkModuleGroups(currentTimetable, moduleTimetable) {
+  const newMod = groupArrays(moduleTimetable);
   const option = [];
 
+// initliase the array with the first group for each type
   for (let i = 0; i < newMod.length; i++) {
     option.push(newMod[i][0]);
   }
@@ -94,19 +96,21 @@ async function checkModuleGroups(currentTimetable, moduleTimetable) {
       if (await checkGroupSpace(newMod[i][j].code, newMod[i][j].groupnumber)) {
         option[i] = newMod[i][j];
         if (!checkClash(currentTimetable, option)) {
-          return await reassign(currentTimetable, moduleTimetable);
+          const res = await reassign(currentTimetable, option);
+          if (res) return true;
+        } else {
+          return true;
         }
-        return true;
       }
     }
   }
-  throw new Error('Error has occured');
+  return false;
 }
 
 export async function decideSwap(studentid, oldModule, newModule) {
   try {
     // check if new module is in programme
-    if (await !checkModuleInProgramme(studentid, newModule)) return false;
+    if (await checkModuleInProgramme(studentid, newModule)) return false;
     let currentTimetable = await getStudentTimetable(studentid);
     currentTimetable = currentTimetable.filter((x) => (x.code !== oldModule));
     const moduleTimetable = await getModuleTimetable(newModule);
