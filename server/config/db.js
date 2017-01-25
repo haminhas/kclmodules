@@ -46,8 +46,7 @@ export async function getStudentTimetable(studentid, pool = pools) {
 
 export async function getModuleTimetable(moduleCode, pool = pools) {
   try {
-    const sql = `SELECT DISTINCT ON(modules.code,t.name)
-                        modules.code,
+    const sql = `SELECT modules.code,
                         m.startTime,
                         m.endtime,
                         m.groupNumber,
