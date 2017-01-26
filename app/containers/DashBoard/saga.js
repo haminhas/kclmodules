@@ -10,7 +10,7 @@ import {
 
 export function* getUserIDWorker() {
   try {
-    const userID = yield call(fetch, 'POST', '/user');
+    const userID = yield call(fetch, 'GET', '/user');
     yield put(getUserIDSuccess(userID));
   } catch (error) {
     yield put(getUserIDFail(error));

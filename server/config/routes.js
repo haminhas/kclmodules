@@ -26,7 +26,7 @@ export default (app) => {
     res.send(response);
   });
 
-  app.post('/user', ensureAuthenticated, (req, res) => {
+  app.get('/user', ensureAuthenticated, (req, res) => {
     return res.json(req.user.alias);
   });
 

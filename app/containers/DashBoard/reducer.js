@@ -9,8 +9,7 @@ const getInitialState = () => ({
   loading: false,
 });
 
-const userReducer = (state = getInitialState(), action) => {
-  let userID;
+const dashBoardReducer = (state = getInitialState(), action) => {
   switch (action && action.type) {
   case GET_USERID_REQUEST:
     return {
@@ -33,4 +32,4 @@ const userReducer = (state = getInitialState(), action) => {
   }
 };
 
-export default userReducer;
+export default dashBoardReducer;
