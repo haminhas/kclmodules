@@ -1,10 +1,10 @@
+import fetch from 'node-fetch';
 const { API_GATEWAY_URL } = process.env;
 
 export async function callAPI(
   method,
   route = '',
   body,
-  fetch = global.fetch
 ) {
   const response = await fetch(
     `${API_GATEWAY_URL}${route}`, {
@@ -25,6 +25,7 @@ export default function* fetchWrapper(...args) {
     const response = yield callAPI(...args);
     return response;
   } catch (err) {
+    console.log(err);
     throw new Error(err);
   }
 }

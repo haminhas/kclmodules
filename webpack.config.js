@@ -41,9 +41,10 @@ module.exports = {
       template: './app/index.html',
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new dotenvPlugin({
-      sample: './.env.example',
-      path: './.env'
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('dev'),
+      'process.env.PORT': JSON.stringify('3000'),
+      'process.env.API_GATEWAY_URL': JSON.stringify('http://localhost:3000')
     }),
     new ExtractTextPlugin('[name].css'),
   ],

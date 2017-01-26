@@ -1,6 +1,7 @@
 import { fork } from 'redux-saga/effects';
-import { loginWatcher } from 'app/containers/Auth/saga';
+import { getUserIDWatcher } from 'app/containers/DashBoard/saga';
+
 
 export default function* () {
-  yield fork(loginWatcher);
+  yield fork(getUserIDWatcher);
 }
