@@ -6,7 +6,9 @@ import { getUserID } from './actions';
 import { login } from 'app/containers/AccountWidget/actions';
 
 const mapStateToProps = state => ({
-  userID: state.userID,
+  userID: state.dashBoard.userID,
+  modules: state.dashBoard.modules,
+  loading: state.dashBoard.loading,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

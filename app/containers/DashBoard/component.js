@@ -1,27 +1,31 @@
 import React, { PropTypes, Component } from 'react';
 import style from './style.css';
-
-const { func } = PropTypes;
-const url = `${process.env.API_GATEWAY_URL}/logout`;
+import ModuleList from 'app/components/ModuleList';
+const { func, string, array, bool } = PropTypes;
 
 export default class DashBoardComponent extends Component {
   static propTypes = {
     getUserID: func.isRequired,
     login: func.isRequired,
+    userID: string.isRequired,
+    modules: array.isRequired,
+    loading: bool.isRequired,
   };
 
   componentWillMount() {
-    this.props.getUserID();
+    if (!this.props.getUserID.length) this.props.getUserID();
     this.props.login();
   }
 
   render() {
-    return (
+    const { userID, modules, loading } = this.props;
+    console.log(loading);
+    return !loading && (
       <div className={style.mainContainer}>
         <div>
-          <span className={style.four}>Working</span>
-          <a className={style.button} href={url}>Log Out</a>
+          <span className={style.four}>Welcome {userID}</span>
         </div>
+        <ModuleList modules={modules}/>
       </div>
     );
   }

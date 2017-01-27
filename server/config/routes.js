@@ -1,6 +1,7 @@
 import passport from 'passport';
 import path from 'path';
-import {decideSwap} from './moduleAuthoriser';
+import { decideSwap } from './moduleAuthoriser';
+import { getStudentModules } from './db';
 
 export default (app) => {
   const ensureAuthenticated = (req, res, next) => {
@@ -28,6 +29,11 @@ export default (app) => {
 
   app.get('/user', ensureAuthenticated, (req, res) => {
     return res.json(req.user.alias);
+  });
+
+  app.post('/userModules', ensureAuthenticated, async (req, res) => {
+    const response = await getStudentModules(req.body.userID);
+    return res.json(response);
   });
 
   app.get('/auth/callback',

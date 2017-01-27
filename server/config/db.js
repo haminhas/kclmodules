@@ -20,6 +20,25 @@ const config = {
 
 const pools = new Pool(config);
 
+export async function getStudentModules(studentid, pool = pools) {
+  try {
+    const sql = `SELECT DISTINCT ON (m.code)
+                        m.code
+                 FROM   modules AS m
+                 INNER JOIN moduleTypes AS t
+                 ON     t.moduleCode = m.code
+                 INNER JOIN moduleTimetable AS mt
+                 ON     t.id = mt.moduleType
+                 INNER JOIN studentTimetable AS s
+                 ON     mt.id = s.moduleType
+                 WHERE  s.studentid = '${studentid}';`;
+    const {rows} =  await pool.query(sql);
+    return rows;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}
+
 export async function getStudentTimetable(studentid, pool = pools) {
   try {
     const sql = `SELECT modules.code,

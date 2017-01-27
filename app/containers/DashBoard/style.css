@@ -1,9 +1,9 @@
 .four {
-  font-size: 144px;
+  font-size: 32px;
   color: #4500c0;
 }
 
 .mainContainer {
-  margin-top: 68px;
-  text-align: center;
+  margin-top: 10px;
+  text-align: left;
 }
