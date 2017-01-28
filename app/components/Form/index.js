@@ -5,16 +5,23 @@ import style from './style.css';
 const Form = props => {
   const {
     buttonText,
+    otherButtonText,
     children,
     handleSubmit,
     pristine,
     submitting,
     reset,
     invalid,
+    otherSubmit
   } = props;
 
   const onSubmit = (...args) => {
     handleSubmit(...args);
+    reset();
+  };
+
+  const otherOnSubmit = (...args) => {
+    otherSubmit(...args);
     reset();
   };
 
@@ -29,6 +36,12 @@ const Form = props => {
         type="submit"
         disabled={pristine || submitting || invalid}
         className={buttonStyle}
+        onClick={() => otherOnSubmit()}
+      >{otherButtonText}</button>
+      <button
+        type="submit"
+        disabled={pristine || submitting || invalid}
+        className={buttonStyle}
       >{buttonText}</button>
     </form>
   );
@@ -38,12 +51,14 @@ const { func, bool, node, string } = PropTypes;
 
 Form.propTypes = {
   buttonText: string.isRequired,
+  otherButtonText: string.isRequired,
   children: node.isRequired,
   handleSubmit: func.isRequired,
-  pristine: bool.isRequired,
-  submitting: bool.isRequired,
-  reset: func.isRequired,
-  invalid: bool.isRequired,
+  pristine: bool,
+  submitting: bool,
+  reset: func,
+  invalid: bool,
+  otherSubmit: func.isRequired,
 };
 
 export default Form;

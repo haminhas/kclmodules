@@ -1,8 +1,15 @@
 import React, { PropTypes, Component } from 'react';
 import style from './style.css';
 import ModuleList from 'app/components/ModuleList';
-import Title from 'app/components/Title';
+import ModuleListForm from 'app/components/ModuleListForm';
+import { reduxForm } from 'redux-form';
+
 const { func, string, array, bool } = PropTypes;
+
+const ModuleListFormContainer = reduxForm({
+  form: 'ModuleListForm',
+})(ModuleListForm);
+
 
 export default class DashBoardComponent extends Component {
   static propTypes = {
@@ -20,17 +27,19 @@ export default class DashBoardComponent extends Component {
   }
 
   render() {
-    const { userID, modules, loading, newModules } = this.props;
+    const { userID, modules, loading, newModules, getUserID } = this.props;
     console.log(loading);
     return !loading && (
       <div className={style.mainContainer}>
         <div>
           <span className={style.four}>Welcome {userID}</span>
         </div>
-        <Title type="large">Current Modules</Title>
-        <ModuleList modules={modules}/>
-        <Title type="large">New Modules</Title>
-        <ModuleList modules={newModules}/>
+        <ModuleListFormContainer
+          modules={modules}
+          newModules={newModules}
+          onSubmit={getUserID}
+          otherSubmit={getUserID}
+        />
       </div>
     );
   }

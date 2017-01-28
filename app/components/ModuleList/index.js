@@ -1,18 +1,21 @@
 import React from 'react';
 import ModuleCard from 'app/components/ModuleCard';
+import Title from 'app/components/Title';
+
 const ModuleListComponent = props => {
   const { modules } = props;
   return (
-    <ul>
-      { modules.map((item, index) => (
-        <div key={index}>
-          <ModuleCard
-            key={index}
-            moduleCode={item.code}
-          />
-        </div>
-      ))}
-    </ul>
+    <div>
+    <Title type="large">{props.title}</Title>
+    { modules.map((item, index) => (
+      <div key={index}>
+        <ModuleCard
+          key={index}
+          moduleCode={item.code}
+        />
+      </div>
+    ))}
+  </div>
   );
 };
 
@@ -22,6 +25,7 @@ ModuleListComponent.propTypes = {
   modules: arrayOf(shape({
     code: string.isRequired,
   })).isRequired,
+  title: string.isRequired,
 };
 
 export default ModuleListComponent;
