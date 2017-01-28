@@ -1,7 +1,7 @@
 import passport from 'passport';
 import path from 'path';
 import { decideSwap } from './moduleAuthoriser';
-import { getStudentModules } from './db';
+import { getStudentModules, getProgrammeModules } from './db';
 
 export default (app) => {
   const ensureAuthenticated = (req, res, next) => {
@@ -31,9 +31,10 @@ export default (app) => {
     return res.json(req.user.alias);
   });
 
-  app.post('/userModules', ensureAuthenticated, async (req, res) => {
-    const response = await getStudentModules(req.body.userID);
-    return res.json(response);
+  app.post('/modules', ensureAuthenticated, async (req, res) => {
+    const response1 = await getStudentModules(req.body.userID);
+    const response2 = await getProgrammeModules(req.body.userID);
+    return res.json([response1, response2]);
   });
 
   app.get('/auth/callback',

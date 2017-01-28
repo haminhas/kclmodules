@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
   userID: state.dashBoard.userID,
   modules: state.dashBoard.modules,
   loading: state.dashBoard.loading,
+  newModules: state.dashBoard.newModules,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

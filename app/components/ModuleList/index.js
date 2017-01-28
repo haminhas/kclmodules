@@ -1,19 +1,15 @@
 import React from 'react';
-import Checkbox from 'rc-checkbox';
-
+import ModuleCard from 'app/components/ModuleCard';
 const ModuleListComponent = props => {
   const { modules } = props;
   return (
     <ul>
       { modules.map((item, index) => (
         <div key={index}>
-          <label>
-            <Checkbox
-              key={index}
-              name={item.code}
-            />
-          { item.code }
-          </label>
+          <ModuleCard
+            key={index}
+            moduleCode={item.code}
+          />
         </div>
       ))}
     </ul>

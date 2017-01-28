@@ -6,23 +6,23 @@ import {
   getUserIDFail,
   getUserIDSuccess,
   GET_USERID_REQUEST,
-  getUserModulesSuccess,
-  getUserModulesFail,
+  getModulesSuccess,
+  getModulesFail,
 } from './actions';
 
-export function* getUserModulesWorker(userID) {
+export function* getModulesWorker(userID) {
   try {
-    const userModules = yield call(fetch, 'POST', '/userModules', { userID });
-    yield put(getUserModulesSuccess(userModules));
+    const modules = yield call(fetch, 'POST', '/modules', { userID });
+    yield put(getModulesSuccess(modules));
   } catch (error) {
-    yield put(getUserModulesFail(error));
+    yield put(getModulesFail(error));
   }
 }
 
 export function* getUserIDWorker() {
   try {
     const userID = yield call(fetch, 'GET', '/user');
-    yield call(getUserModulesWorker, userID);
+    yield call(getModulesWorker, userID);
     yield put(getUserIDSuccess(userID));
   } catch (error) {
     yield put(getUserIDFail(error));

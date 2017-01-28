@@ -1,0 +1,50 @@
+@value desktop, violetBlue, adamsSenseOfHumourGrey from '../../styles/variables.css';
+
+.item {
+  background-color: adamsSenseOfHumourGrey;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
+  list-style-type: none;
+  margin-bottom: 40px;
+}
+
+.cardContent {
+  position: relative;
+  padding: 26px 12px;
+}
+
+.projectName {
+  font-size: 14px;
+  font-weight: normal;
+  margin-right: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.link:link, .link:visited {
+  text-decoration: none;
+  color: violetBlue;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: #747677;
+}
+
+.linkChevron {
+  width: 15px;
+  height: 10px;
+  padding-left: 5px;
+}
+
+@media desktop {
+  .projectName {
+    font-size: 18px;
+  }
+
+  .cardContent {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}

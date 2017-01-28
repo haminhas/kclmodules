@@ -2,8 +2,8 @@ import {
   GET_USERID_REQUEST,
   GET_USERID_SUCCESS,
   GET_USERID_FAIL,
-  GET_USER_MODULES_SUCCESS,
-  GET_USER_MODULES_FAIL,
+  GET_MODULES_SUCCESS,
+  GET_MODULES_FAIL,
 } from './actions';
 
 const getInitialState = () => ({
@@ -18,13 +18,19 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       ...state,
       loading: true,
     };
-  case GET_USER_MODULES_SUCCESS:
+  case GET_MODULES_SUCCESS:
+    for (let i = 0; i < action.modules[0].length; i++) {
+      action.modules[1] = action.modules[1].filter((x) =>
+        x.code !== action.modules[0][i].code
+      );
+    }
     return {
       ...state,
-      modules: action.modules,
+      modules: action.modules[0],
+      newModules: action.modules[1],
       loading: true,
     };
-  case GET_USER_MODULES_FAIL:
+  case GET_MODULES_FAIL:
   case GET_USERID_FAIL:
     return {
       ...state,
