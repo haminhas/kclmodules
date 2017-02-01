@@ -1,5 +1,7 @@
 import passport from 'passport';
 import path from 'path';
+import { decideSwap } from './moduleAuthoriser';
+import { getStudentModules, getProgrammeModules } from './db';
 
 export default (app) => {
   const ensureAuthenticated = (req, res, next) => {
@@ -16,12 +18,31 @@ export default (app) => {
     res.redirect('/');
   });
 
-  // GET /auth/outlook
-  //   Use passport.authenticate() as route middleware to authenticate the
-  //   request.  The first step in Outlook authentication will involve
-  //   redirecting the user to outlook.com.  After authorization, Outlook
-  //   will redirect the user back to this application at
-  //   /auth/outlook/callback
+  app.post('/checkClash', async (req, res) => {
+    const response = await decideSwap(
+      req.body.studentid,
+      req.body.oldModules,
+      req.body.newModules
+    );
+    res.send(response);
+  });
+
+  app.get('/user', ensureAuthenticated, (req, res) => {
+    return res.json(req.user.alias);
+  });
+
+  app.post('/modules', ensureAuthenticated, async (req, res) => {
+    const response1 = await getStudentModules(req.body.userID);
+    const response2 = await getProgrammeModules(req.body.userID);
+    return res.json([response1, response2]);
+  });
+
+  app.get('/auth/callback',
+    passport.authenticate('windowslive', { failureRedirect: '/login' }),
+    (req, res) => {
+      res.redirect('/dashboard');
+    });
+
   app.get('/auth',
     passport.authenticate('windowslive', { scope: [
       'openid',
@@ -30,21 +51,8 @@ export default (app) => {
       'https://outlook.office.com/Mail.Read'
     ]}),
     (req, res) => {
-      res.send('hello');
-      // The request will be redirected to Outlook for authentication, so
-      // this function will not be called.
     }
   );
-
-  // GET /auth/outlook/callback
-  //   Use passport.authenticate() as route middleware to authenticate the
-  //   request.  If authentication fails, the user will be redirected back to the
-  //   login page.  Otherwise, the primary route function function will be called,
-  //   which, in this example, will redirect the user to the home page.
-  app.get('/auth/callback', passport.authenticate('windowslive', { failureRedirect: '/login' }),
-  (req, res) => {
-    res.redirect('/dashboard');
-  });
 
   // send all requests to index.html so browserHistory works
   app.get('*', (req, res) => {

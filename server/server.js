@@ -5,13 +5,11 @@ import express from 'express';
 import webpack from 'webpack';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
-import passportConfig from './config/passport';
 
+require('./config/passport');
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
-
-passportConfig();
 
 if (isDeveloping) {
   const config = require('../webpack.config.js');
@@ -33,7 +31,7 @@ if (isDeveloping) {
 expressConfig(app);
 routesConfig(app);
 
-app.listen(process.env.PORT || 3000, function onStart(err) {
+app.listen(process.env.PORT || 3000, (err) => {
   if (err) {
     console.log(err);
   }

@@ -1,13 +1,13 @@
-// const { API_GATEWAY_URL } = process.env;
+import fetch from 'node-fetch';
+const { API_GATEWAY_URL } = process.env;
 
 export async function callAPI(
   method,
   route = '',
   body,
-  fetch = global.fetch
 ) {
   const response = await fetch(
-    `http://localhost:3000${route}`, {
+    `${API_GATEWAY_URL}${route}`, {
       method,
       headers: {
         'Content-Type': 'application/json',

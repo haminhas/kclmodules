@@ -1,0 +1,16 @@
+.accountWidget {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.profileIcon {
+  margin-right: 10px;
+}
+
+.text {
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+}
