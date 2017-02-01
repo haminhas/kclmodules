@@ -9,6 +9,8 @@ import {
 const initialState = {
   loading: false,
   userID: '',
+  checkClash: false,
+  checkClashLoading: true,
 };
 
 const userData = {
@@ -17,10 +19,12 @@ const userData = {
 };
 
 describe('dashBoard reducer', () => {
-  it('has initial state of an empty string of userID and loading false', () => {
+  it('has correct initialState', () => {
     const expectedState = {
-      loading: false,
+      loading: true,
       userID: '',
+      checkClash: false,
+      checkClashLoading: true,
     };
     const actualState = dashBoardReducer(undefined, {});
     expect(actualState).to.deep.equal(expectedState);
@@ -30,6 +34,8 @@ describe('dashBoard reducer', () => {
     const expectedState = {
       loading: true,
       userID: '',
+      checkClash: false,
+      checkClashLoading: true,
     };
     const action = {
       type: GET_USERID_REQUEST,
@@ -42,6 +48,8 @@ describe('dashBoard reducer', () => {
     const expectedState = {
       loading: false,
       userID: '',
+      checkClash: false,
+      checkClashLoading: true,
     };
     const action = {
       type: GET_USERID_FAIL,

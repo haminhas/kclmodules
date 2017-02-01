@@ -25,7 +25,6 @@ export default function* fetchWrapper(...args) {
     const response = yield callAPI(...args);
     return response;
   } catch (err) {
-    console.log(err);
     throw new Error(err);
   }
 }

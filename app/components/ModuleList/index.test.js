@@ -2,18 +2,20 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import ModuleList from './index';
-import Checkbox from 'rc-checkbox';
+import ModuleCard from 'app/components/ModuleCard';
 
-describe.only('app/components/ModuleList', () => {
+describe('app/components/ModuleList', () => {
   let component;
 
   beforeEach(() => {
     const modules = [
       {
         code: 'm1',
+        name: 'test',
       },
       {
         code: 'm2',
+        name: 'test',
       },
     ];
 
@@ -30,15 +32,15 @@ describe.only('app/components/ModuleList', () => {
 
   describe('Project elements', () => {
     it('displays an element for each module', () => {
-      expect(component.find(Checkbox)).to.have.length(2);
+      expect(component.find(ModuleCard)).to.have.length(2);
     });
 
     it('passes through the code', () => {
-      expect(component.find(Checkbox).first().prop('name')).to.equal('m1');
+      expect(component.find(ModuleCard).first().prop('moduleCode')).to.equal('m1');
     });
 
     it('sets a key to identify this unique element', () => {
-      expect(component.find(Checkbox).first().key()).to.equal('0');
+      expect(component.find(ModuleCard).first().key()).to.equal('0');
     });
   });
 });

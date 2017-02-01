@@ -18,11 +18,11 @@ export default (app) => {
     res.redirect('/');
   });
 
-  app.post('/swap', async (req, res) => {
+  app.post('/checkClash', async (req, res) => {
     const response = await decideSwap(
       req.body.studentid,
-      req.body.oldModule,
-      req.body.newModule
+      req.body.oldModules,
+      req.body.newModules
     );
     res.send(response);
   });

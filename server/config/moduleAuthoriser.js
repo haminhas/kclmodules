@@ -5,6 +5,8 @@ import { getStudentTimetable,
          getModuleTypeTimetable
 } from './db';
 
+let finalTimetable = '';
+
 export const checkClash = (currentTimetable, moduleTimetable) => {
   for (const moduleobj of currentTimetable) {
     for (const reqobj of moduleTimetable) {
@@ -20,7 +22,8 @@ export const checkClash = (currentTimetable, moduleTimetable) => {
     }
   }
   console.log('NO CLASH');
-  console.log(currentTimetable.concat(moduleTimetable));
+  // console.log(currentTimetable.concat(moduleTimetable));
+  finalTimetable = currentTimetable.concat(moduleTimetable);
   return true;
 };
 
@@ -66,7 +69,7 @@ async function reassign(currentTimetable, moduleTimetable) {
       }
     }
   }
-  throw new Error('No reassignment possible');
+  return false;
 }
 
 export const groupArrays = (moduleTimetable) => {
@@ -107,14 +110,28 @@ async function checkModuleGroups(currentTimetable, moduleTimetable) {
   return false;
 }
 
-export async function decideSwap(studentid, oldModule, newModule) {
+export async function decideSwap(studentid, oldModules, newModules) {
   try {
     // check if new module is in programme
-    if (await checkModuleInProgramme(studentid, newModule)) return false;
+    for (const mod of newModules) {
+      if (await checkModuleInProgramme(studentid, mod)) return false;
+    }
     let currentTimetable = await getStudentTimetable(studentid);
-    currentTimetable = currentTimetable.filter((x) => (x.code !== oldModule));
-    const moduleTimetable = await getModuleTimetable(newModule);
-    return await checkModuleGroups(currentTimetable, moduleTimetable);
+    for (const mod of oldModules) {
+      currentTimetable = currentTimetable.filter((x) => (x.code !== mod));
+    }
+    const moduleTimetables = [];
+    for (const mod of newModules) {
+      const response = await getModuleTimetable(mod);
+      if (response.length > 0) moduleTimetables.push(response);
+    }
+
+    for (const mod of moduleTimetables) {
+      const response = await checkModuleGroups(currentTimetable, mod);
+      if (!response) return false;
+      currentTimetable = finalTimetable;
+    }
+    return [true, finalTimetable];
   } catch (err) {
     throw new Error(err);
   }
