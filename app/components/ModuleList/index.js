@@ -13,6 +13,7 @@ const ModuleListComponent = props => {
             key={index}
             moduleCode={item.code}
             name={props.name}
+            fieldDisabled={item.compulsory}
           />
         </div>
     ))}

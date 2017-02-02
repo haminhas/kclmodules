@@ -24,7 +24,8 @@ const pools = new Pool(config);
 export async function getStudentModules(studentid, pool = pools) {
   try {
     const sql = `SELECT DISTINCT ON (m.code)
-                        m.code
+                        m.code,
+                        m.compulsory
                  FROM   modules AS m
                  INNER JOIN moduleTypes AS t
                  ON     t.moduleCode = m.code
@@ -67,6 +68,7 @@ export async function getStudentTimetable(studentid, pool = pools) {
 export async function getModuleTimetable(moduleCode, pool = pools) {
   try {
     const sql = `SELECT modules.code,
+                        modules.isCompulsory
                         m.startTime,
                         m.endtime,
                         m.groupNumber,
