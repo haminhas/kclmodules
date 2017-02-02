@@ -16,6 +16,7 @@ const config = {
   port: process.env.DB_PORT, // env var: PGPORT
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+  ssl: true,
 };
 
 const pools = new Pool(config);
