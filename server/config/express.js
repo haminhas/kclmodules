@@ -3,7 +3,7 @@ import passport from 'passport';
 import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
-import compress from 'compression';
+// import compress from 'compression';
 import { Strategy } from 'passport-outlook';
 export default (app) => {
   passport.use(new Strategy({
@@ -25,7 +25,6 @@ export default (app) => {
     cb(null, obj);
   });
 
-  app.use(compress());
   app.use(cookieParser());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded

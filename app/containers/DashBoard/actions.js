@@ -7,6 +7,24 @@ export const GET_MODULES_REQUEST = 'GET_MODULES_REQUEST';
 export const CHECK_CLASH_REQUEST = 'CHECK_CLASH_REQUEST';
 export const CHECK_CLASH_SUCCESS = 'CHECK_CLASH_SUCCESS';
 export const CHECK_CLASH_FAIL = 'CHECK_CLASH_FAIL';
+export const GET_MODULE_TIMETABLE_REQUEST = 'GET_MODULE_TIMETABLE_REQUEST';
+export const GET_MODULE_TIMETABLE_SUCCESS = 'GET_MODULE_TIMETABLE_SUCCESS';
+export const GET_MODULE_TIMETABLE_FAIL = 'GET_MODULE_TIMETABLE_FAIL';
+
+export const getModuleTimetable = (moduleCodes) => ({
+  type: GET_MODULE_TIMETABLE_REQUEST,
+  moduleCodes,
+});
+
+export const getModuleTimetableSuccess = timetables => ({
+  type: GET_MODULE_TIMETABLE_SUCCESS,
+  timetables,
+});
+
+export const getModuleTimetableFail = error => ({
+  type: GET_MODULE_TIMETABLE_FAIL,
+  error,
+});
 
 export const getUserID = () => ({
   type: GET_USERID_REQUEST,

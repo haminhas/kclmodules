@@ -4,8 +4,8 @@ import { Field } from 'redux-form';
 import classnames from 'classnames';
 
 const ModuleCard = props => (
-  <li className={style.item}>
-    <div className={style.cardContent}>
+  <li>
+    <div >
       <label>
         <Field
           name={`${props.name}.${props.moduleCode}`}
@@ -17,9 +17,7 @@ const ModuleCard = props => (
         />
       {props.moduleCode}
     </label>
-    {props.fieldDisabled &&
-      <div className={classnames(style.button, style.remove)}>Compulsory Module</div>
-    }
+
     </div>
   </li>
 );
@@ -33,3 +31,6 @@ ModuleCard.propTypes = {
 };
 
 export default ModuleCard;
+// {props.fieldDisabled &&
+//   <div className={classnames(style.button, style.remove)}>Compulsory Module</div>
+// }

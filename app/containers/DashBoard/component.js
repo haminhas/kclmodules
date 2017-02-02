@@ -21,7 +21,7 @@ export default class DashBoardComponent extends Component {
     checkClash: func.isRequired,
     clash: bool.isRequired,
     checkClashLoading: bool.isRequired,
-    newTimetable: array.isRequired,
+    moduleTimetables: array.isRequired,
   };
 
   componentWillMount() {
@@ -37,7 +37,8 @@ export default class DashBoardComponent extends Component {
       newModules,
       checkClash,
       checkClashLoading,
-      clash
+      clash,
+      moduleTimetables
     } = this.props;
     return !loading && (
       <div className={style.mainContainer}>
@@ -48,6 +49,7 @@ export default class DashBoardComponent extends Component {
           modules={modules}
           newModules={newModules}
           onSubmit={checkClash}
+          moduleTimetables={moduleTimetables}
         />
         {!checkClashLoading && !clash &&
           <span>Invalid Selection, Please try again </span>

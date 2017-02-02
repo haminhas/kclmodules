@@ -1,27 +1,30 @@
 import React from 'react';
-import ModuleCard from 'app/components/ModuleCard';
 import Title from 'app/components/Title';
+import ExpandablePanel from 'app/components/ExpandablePanel';
+import TimetableList from 'app/components/TimetableList';
 
 const ModuleListComponent = props => {
-  const { modules } = props;
+  const { modules, title, moduleTimetables } = props;
   return (
     <ul>
-    <Title type="large">{props.title}</Title>
+    <Title type="large">{title}</Title>
     { modules.map((item, index) => (
         <div key={index}>
-          <ModuleCard
+          <ExpandablePanel
             key={index}
             moduleCode={item.code}
-            name={props.name}
+            name={name}
             fieldDisabled={item.compulsory}
-          />
+          >
+          <TimetableList name={item.code} modules={moduleTimetables}/>
+          </ExpandablePanel>
         </div>
     ))}
   </ul>
   );
 };
 
-const { arrayOf, shape, string } = React.PropTypes;
+const { arrayOf, shape, string, array } = React.PropTypes;
 
 ModuleListComponent.propTypes = {
   modules: arrayOf(shape({
@@ -29,6 +32,7 @@ ModuleListComponent.propTypes = {
   })).isRequired,
   title: string.isRequired,
   name: string.isRequired,
+  moduleTimetables: array.isRequired,
 };
 
 export default ModuleListComponent;

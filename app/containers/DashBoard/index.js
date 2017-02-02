@@ -12,13 +12,13 @@ const mapStateToProps = state => ({
   newModules: state.dashBoard.newModules,
   clash: state.dashBoard.checkClash,
   checkClashLoading: state.dashBoard.checkClashLoading,
-  newTimetable: state.dashBoard.newTimetable,
+  moduleTimetables: state.dashBoard.moduleTimetables,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getUserID,
   login,
-  checkClash
+  checkClash,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoardComponent);
