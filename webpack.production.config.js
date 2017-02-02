@@ -7,7 +7,7 @@ const StatsPlugin = require('stats-webpack-plugin');
 module.exports = {
   entry: [
     'babel-polyfill',
-    path.join(__dirname, './app/index.js')
+    path.join(__dirname, 'app/index.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -58,7 +58,7 @@ module.exports = {
      'process.env.OUTLOOK_CLIENT_SECRET': JSON.stringify(process.env.OUTLOOK_CLIENT_SECRET),
      'process.env.API_GATEWAY_URL': JSON.stringify(process.env.API_GATEWAY_URL)
     }),
-    new ExtractTextPlugin('[name].css')
+    new ExtractTextPlugin('[name].css'),
   ],
   resolve: {
     modules: [

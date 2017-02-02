@@ -6,7 +6,12 @@
       [
         { "src": "./app", "expose": "app" }
       ],
-      "transform-runtime",
-    ]
+    ],
+    ["transform-runtime", {
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true,
+      "moduleName": "babel-runtime"
+    }],
   ]
 }
