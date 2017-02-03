@@ -31,48 +31,4 @@ describe('Form component', () => {
     );
     expect(wrapper.find('input')).to.have.length(1);
   });
-
-  describe('submit button', () => {
-    it('is disabled when form is pristine', () => {
-      const handleSubmit = () => {};
-      const wrapper = shallow(
-        <Form
-          buttonText="submit"
-          children={<input />}
-          handleSubmit={handleSubmit}
-          pristine
-          submitting={false}
-        />
-      );
-      expect(wrapper.find('button').prop('disabled')).to.equal(true);
-    });
-
-    it('is disabled when form is being submitted', () => {
-      const handleSubmit = () => {};
-      const wrapper = shallow(
-        <Form
-          buttonText="submit"
-          children={<input />}
-          handleSubmit={handleSubmit}
-          pristine={false}
-          submitting
-        />
-      );
-      expect(wrapper.find('button').prop('disabled')).to.equal(true);
-    });
-
-    it('displays text from prop', () => {
-      const handleSubmit = () => {};
-      const wrapper = shallow(
-        <Form
-          buttonText="submit"
-          children={<input />}
-          handleSubmit={handleSubmit}
-          pristine={false}
-          submitting
-        />
-      );
-      expect(wrapper.find('button').text()).to.equal('submit');
-    });
-  });
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import ModuleList from './index';
-import ModuleCard from 'app/components/ModuleCard';
+import ExpandablePanel from 'app/components/ExpandablePanel';
 
 describe('app/components/ModuleList', () => {
   let component;
@@ -32,15 +32,15 @@ describe('app/components/ModuleList', () => {
 
   describe('Project elements', () => {
     it('displays an element for each module', () => {
-      expect(component.find(ModuleCard)).to.have.length(2);
+      expect(component.find(ExpandablePanel)).to.have.length(2);
     });
 
     it('passes through the code', () => {
-      expect(component.find(ModuleCard).first().prop('moduleCode')).to.equal('m1');
+      expect(component.find(ExpandablePanel).first().prop('moduleCode')).to.equal('m1');
     });
 
     it('sets a key to identify this unique element', () => {
-      expect(component.find(ModuleCard).first().key()).to.equal('0');
+      expect(component.find(ExpandablePanel).first().key()).to.equal('0');
     });
   });
 });
