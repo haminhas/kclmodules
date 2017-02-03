@@ -11,6 +11,9 @@ const Form = props => {
     submitting,
     reset,
     invalid,
+    newTimetable,
+    otherText,
+    amendment,
   } = props;
 
   const onSubmit = (...args) => {
@@ -18,8 +21,10 @@ const Form = props => {
     reset();
   };
 
+  const disabled = newTimetable && !newTimetable.length;
+
   const buttonStyle = classnames(style.button, {
-    [style.invalid]: props.invalid,
+    [style.invalid]: props.invalid || disabled,
   });
 
   return (
@@ -30,11 +35,16 @@ const Form = props => {
         disabled={pristine || submitting || invalid}
         className={buttonStyle}
       >{buttonText}</button>
+      <button
+        disabled={disabled}
+        className={buttonStyle}
+        onClick={() => amendment(newTimetable)}
+      >{otherText}</button>
     </form>
   );
 };
 
-const { func, bool, node, string } = PropTypes;
+const { func, bool, node, string, array} = PropTypes;
 
 Form.propTypes = {
   buttonText: string.isRequired,
@@ -44,6 +54,9 @@ Form.propTypes = {
   submitting: bool.isRequired,
   reset: func.isRequired,
   invalid: bool.isRequired,
+  otherText: string.isRequired,
+  newTimetable: array.isRequired,
+  amendment: func.isRequired,
 };
 
 export default Form;

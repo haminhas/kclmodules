@@ -66,6 +66,7 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       ...state,
       loading: false,
       checkClashLoading: false,
+      newTimetable: [],
     };
   case GET_MODULE_TIMETABLE_FAIL:
   case GET_MODULES_FAIL:

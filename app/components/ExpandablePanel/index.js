@@ -4,8 +4,6 @@ import ModuleCard from 'app/components/ModuleCard';
 
 import style from './style.css';
 
-import plusIcon from 'app/assets/ic-plus.svg';
-import minusIcon from 'app/assets/ic-minus.svg';
 const { bool, string, node } = PropTypes;
 
 export default class ExpandablePanel extends Component {
@@ -53,13 +51,13 @@ export default class ExpandablePanel extends Component {
     });
     return (
       <div className={className}>
-        <div onClick={() => this.toggleView()} className={style.button}>
+        <div className={style.button}>
           <ModuleCard
             moduleCode={moduleCode}
             name={name}
             fieldDisabled={fieldDisabled}
           />
-        <div className={style.buttonIcon}>View Timetable</div>
+        <div className={style.buttonIcon} onClick={() => this.toggleView()}>View Timetable</div>
         </div>
         {expanded ? <div className={style.container}>{children}</div> : null}
       </div>

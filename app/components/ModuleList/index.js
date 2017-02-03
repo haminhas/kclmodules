@@ -4,7 +4,7 @@ import ExpandablePanel from 'app/components/ExpandablePanel';
 import TimetableList from 'app/components/TimetableList';
 
 const ModuleListComponent = props => {
-  const { modules, title, moduleTimetables } = props;
+  const { modules, title, moduleTimetables, name } = props;
   return (
     <ul>
     <Title type="large">{title}</Title>

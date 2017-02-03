@@ -18,7 +18,7 @@
 }
 
 .container {
-  padding: 0px 30px 25px 30px;
+  padding: 0px 35px 25px 35px;
 }
 
 .buttonIcon {
@@ -29,4 +29,10 @@
   position: absolute;
   right: 24px;
   top: 28px;
+}
+
+@media desktop {
+  .container {
+    padding: 0px 70px 25px 70px;
+  }
 }

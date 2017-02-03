@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
   clash: state.dashBoard.checkClash,
   checkClashLoading: state.dashBoard.checkClashLoading,
   moduleTimetables: state.dashBoard.moduleTimetables,
+  newTimetable: state.dashBoard.newTimetable,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
