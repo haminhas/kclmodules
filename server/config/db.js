@@ -68,7 +68,7 @@ export async function getStudentTimetable(studentid, pool = pools) {
 export async function getModuleTimetable(moduleCode, pool = pools) {
   try {
     const sql = `SELECT modules.code,
-                        modules.isCompulsory
+                        modules.compulsory,
                         m.startTime,
                         m.endtime,
                         m.groupNumber,

@@ -1,65 +1,29 @@
-@value desktop, violetBlue, adamsSenseOfHumourGrey, battleshipGrey from '../../styles/variables.css';
+@value desktop, bermudaGreen from '../../styles/variables.css';
 
-.item {
-  background-color: adamsSenseOfHumourGrey;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
-  list-style-type: none;
-  margin-bottom: 40px;
-}
-
-.cardContent {
-  position: relative;
-  padding: 26px 12px;
-}
-
-.projectName {
+.compulsory{
   font-size: 14px;
-  font-weight: normal;
-  margin-right: 140px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.link:link, .link:visited {
-  text-decoration: none;
-  color: violetBlue;
-  cursor: pointer;
-}
-
-.link:hover {
-  color: #747677;
-}
-
-.linkChevron {
-  width: 15px;
-  height: 10px;
-  padding-left: 5px;
-}
-
-.button {
-  font-size: 12px;
-  height: 16px;
-  color: violetBlue;
-  max-width: 140px;
+  height: 18px;
+  color: bermudaGreen;
+  width: 87%;
   position: absolute;
-  right: 24px;
+  top: 28px;
+  text-align: center;
+}
+
+.field{
+  height: 18px;
   top: 28px;
 }
 
+.code{
+  margin-top: -23px;
+  margin-left: 20px;
+  position: absolute;
+  height: 18px;
+}
 
 @media desktop {
-  .button {
-    font-size: 14px;
-  }
-
-  .projectName {
-    font-size: 18px;
-  }
-
-  .cardContent {
-    padding-left: 24px;
-    padding-right: 24px;
+  .compulsory {
+    width: 87%;
   }
 }

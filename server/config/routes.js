@@ -1,7 +1,7 @@
 import passport from 'passport';
 import path from 'path';
 import { decideSwap } from './moduleAuthoriser';
-import { getStudentModules, getProgrammeModules } from './db';
+import { getStudentModules, getProgrammeModules, getModuleTimetable } from './db';
 
 export default (app) => {
   const ensureAuthenticated = (req, res, next) => {
@@ -29,6 +29,28 @@ export default (app) => {
 
   app.get('/user', ensureAuthenticated, (req, res) => {
     return res.json(req.user.alias);
+  });
+
+  app.post('/moduleTimetables', ensureAuthenticated, async (req, res) => {
+    try {
+      const modules = req.body.moduleCodes;
+      for (let i = 0; i < modules[0].length; i++) {
+        modules[1] = modules[1].filter((x) =>
+        x.code !== modules[0][i].code
+      );
+      }
+      const timetable = [];
+      for (let i = 0; i < modules.length; i++) {
+        for (let j = 0; j < modules[i].length; j++) {
+          const response = await getModuleTimetable(modules[i][j].code);
+          timetable.push(response);
+        }
+      }
+      return res.json(timetable);
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
   });
 
   app.post('/modules', ensureAuthenticated, async (req, res) => {

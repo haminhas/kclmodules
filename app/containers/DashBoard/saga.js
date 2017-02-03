@@ -11,11 +11,14 @@ import {
   CHECK_CLASH_REQUEST,
   checkClashSuccess,
   checkClashFail,
+  getModuleTimetableSuccess,
+  getModuleTimetableFail,
 } from './actions';
 
 export function* getModulesWorker(userID) {
   try {
     const modules = yield call(fetch, 'POST', '/modules', { userID });
+    yield call(getModuleTimetableWorker, modules);
     yield put(getModulesSuccess(modules));
   } catch (error) {
     yield put(getModulesFail(error));
@@ -50,6 +53,15 @@ export function* getUserIDWorker() {
     yield put(getUserIDSuccess(userID));
   } catch (error) {
     yield put(getUserIDFail(error));
+  }
+}
+
+export function* getModuleTimetableWorker(moduleCodes) {
+  try {
+    const modules = yield call(fetch, 'POST', '/moduleTimetables', { moduleCodes });
+    yield put(getModuleTimetableSuccess(modules));
+  } catch (error) {
+    yield put(getModuleTimetableFail(error));
   }
 }
 

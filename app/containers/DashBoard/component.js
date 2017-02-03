@@ -1,9 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import style from './style.css';
-import ModuleListForm from 'app/components/ModuleListForm';
+import ModuleListForm from 'app/containers/ModuleListForm';
 import { reduxForm } from 'redux-form';
 
-const { func, string, array, bool } = PropTypes;
+const { func, string, bool, array } = PropTypes;
 
 const ModuleListFormContainer = reduxForm({
   form: 'ModuleListForm',
@@ -15,8 +15,6 @@ export default class DashBoardComponent extends Component {
     getUserID: func.isRequired,
     login: func.isRequired,
     userID: string.isRequired,
-    modules: array.isRequired,
-    newModules: array.isRequired,
     loading: bool.isRequired,
     checkClash: func.isRequired,
     clash: bool.isRequired,
@@ -32,12 +30,11 @@ export default class DashBoardComponent extends Component {
   render() {
     const {
       userID,
-      modules,
       loading,
-      newModules,
       checkClash,
       checkClashLoading,
-      clash
+      clash,
+      newTimetable,
     } = this.props;
     return !loading && (
       <div className={style.mainContainer}>
@@ -45,9 +42,8 @@ export default class DashBoardComponent extends Component {
           <span className={style.four}>Welcome {userID}</span>
         </div>
         <ModuleListFormContainer
-          modules={modules}
-          newModules={newModules}
           onSubmit={checkClash}
+          newTimetable={newTimetable}
         />
         {!checkClashLoading && !clash &&
           <span>Invalid Selection, Please try again </span>

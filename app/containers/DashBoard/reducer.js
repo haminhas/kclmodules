@@ -7,6 +7,8 @@ import {
   CHECK_CLASH_SUCCESS,
   CHECK_CLASH_FAIL,
   CHECK_CLASH_REQUEST,
+  GET_MODULE_TIMETABLE_SUCCESS,
+  GET_MODULE_TIMETABLE_FAIL,
 } from './actions';
 
 const getInitialState = () => ({
@@ -31,6 +33,11 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       ...state,
       checkClash: false,
       checkClashLoading: false,
+    };
+  case GET_MODULE_TIMETABLE_SUCCESS:
+    return {
+      ...state,
+      moduleTimetables: action.timetables,
     };
   case GET_USERID_REQUEST:
     return {
@@ -59,7 +66,9 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       ...state,
       loading: false,
       checkClashLoading: false,
+      newTimetable: [],
     };
+  case GET_MODULE_TIMETABLE_FAIL:
   case GET_MODULES_FAIL:
   case GET_USERID_FAIL:
     return {

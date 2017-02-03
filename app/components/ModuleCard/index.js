@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
-import style from './style.css';
 import { Field } from 'redux-form';
-import classnames from 'classnames';
+import style from './style.css';
 
 const ModuleCard = props => (
-  <li className={style.item}>
-    <div className={style.cardContent}>
+  <li>
+    <div >
       <label>
         <Field
+          className={style.field}
           name={`${props.name}.${props.moduleCode}`}
           id={props.moduleCode}
           title="Code"
@@ -15,10 +15,11 @@ const ModuleCard = props => (
           type="checkbox"
           disabled={props.fieldDisabled}
         />
-      {props.moduleCode}
+      <div className={style.code}>{props.moduleCode}</div>
     </label>
+
     {props.fieldDisabled &&
-      <div className={classnames(style.button, style.remove)}>Compulsory Module</div>
+      <div className={style.compulsory}>Compulsory Module</div>
     }
     </div>
   </li>

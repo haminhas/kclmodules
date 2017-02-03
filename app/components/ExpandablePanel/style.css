@@ -1,0 +1,38 @@
+@value desktop, violetBlue from '../../styles/variables.css';
+
+.expandablePanel {
+  border: 1px solid #8356d5;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
+  margin: 27px 0 50px;
+}
+
+.expanded {
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.15), 0 6px 17px 0 rgba(0, 0, 0, 0.21);
+}
+
+.button {
+  cursor: pointer;
+  position: relative;
+  padding: 30px 25px;
+}
+
+.container {
+  padding: 0px 35px 25px 35px;
+}
+
+.buttonIcon {
+  font-size: 14px;
+  height: 18px;
+  color: violetBlue;
+  max-width: 140px;
+  position: absolute;
+  right: 24px;
+  top: 28px;
+}
+
+@media desktop {
+  .container {
+    padding: 0px 70px 25px 70px;
+  }
+}
