@@ -1,9 +1,33 @@
 import passport from 'passport';
 import path from 'path';
 import { decideSwap } from './moduleAuthoriser';
-import { getStudentModules, getProgrammeModules, getModuleTimetable } from './db';
+import {
+  getStudentModules,
+  getProgrammeModules,
+  getModuleTimetable,
+  removeOldModules,
+  insertStudentTimetable,
+ } from './db';
+
 
 export default (app) => {
+  async function amend(req) {
+    try {
+      const newTimetable = req.body.timetable;
+      const newTimetableID = newTimetable.map((x) => x.id);
+      const oldIsRemoved = await removeOldModules(req.user.alias, newTimetableID);
+      if (oldIsRemoved > 0) {
+        for (const obj of newTimetable) {
+          const response = await insertStudentTimetable(req.user.alias, obj.id, obj.groupnumber);
+          if (response <= 0) throw new Error('Failed inserting new Module');
+        }
+      }
+      return true;
+    } catch (err) {
+      return err;
+    }
+  }
+
   const ensureAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) { return next(); }
     return res.redirect('/');
@@ -18,14 +42,25 @@ export default (app) => {
     res.redirect('/');
   });
 
-  app.post('/checkClash', async (req, res) => {
+  app.post('/checkClash', ensureAuthenticated, async (req, res) => {
     const response = await decideSwap(
-      req.body.studentid,
+      req.user.alias,
       req.body.oldModules,
       req.body.newModules
     );
     res.send(response);
   });
+
+  app.post('/amend', ensureAuthenticated, async (req, res) => {
+    const response = await amend(req);
+    if (response) {
+      const response1 = await getStudentModules(req.user.alias);
+      const response2 = await getProgrammeModules(req.user.alias);
+      return res.json([response1, response2]);
+    }
+    return res.json(response);
+  });
+
 
   app.get('/user', ensureAuthenticated, (req, res) => {
     return res.json(req.user.alias);

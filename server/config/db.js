@@ -21,6 +21,29 @@ const config = {
 
 const pools = new Pool(config);
 
+export async function removeOldModules(studentid, oldModules, pool = pools) {
+  try {
+    const sql = `DELETE
+                 FROM   studentTimetable
+                 WHERE  studentid = '${studentid}' AND moduleType != ALL(ARRAY[${oldModules}]);`;
+    const { rowCount } =  await pool.query(sql);
+    return rowCount;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}
+
+export async function insertStudentTimetable(studentid, id, groupNumber, pool = pools) {
+  try {
+    const sql = `INSERT INTO studentTimetable (studentid,moduleType,groupNumber)
+                 VALUES ('${studentid}', ${id}, ${groupNumber});`;
+    const { rowCount } =  await pool.query(sql);
+    return rowCount;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}
+
 export async function getStudentModules(studentid, pool = pools) {
   try {
     const sql = `SELECT DISTINCT ON (m.code)
@@ -49,7 +72,8 @@ export async function getStudentTimetable(studentid, pool = pools) {
                         m.endtime,
                         m.groupNumber,
                         m.day,
-                        t.name
+                        t.name,
+                        m.id
                  FROM   moduleTimetable AS m
                  INNER JOIN moduleTypes AS t
                  ON     m.moduletype = t.id
@@ -73,7 +97,8 @@ export async function getModuleTimetable(moduleCode, pool = pools) {
                         m.endtime,
                         m.groupNumber,
                         m.day,
-                        t.name
+                        t.name,
+                        m.id
                  FROM   moduleTimetable AS m
                  INNER JOIN moduleTypes AS t
                  ON     m.moduleType = t.id
@@ -95,6 +120,7 @@ export async function getModuleTypeTimetable(moduleCode, groupNumber, name, pool
                         m.endtime,
                         m.groupNumber,
                         m.day,
+                        m.id,
                         t.name
                  FROM   moduleTimetable AS m
                  INNER JOIN moduleTypes AS t

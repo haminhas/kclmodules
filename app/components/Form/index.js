@@ -21,6 +21,11 @@ const Form = props => {
     reset();
   };
 
+  const onClickSubmit = () => {
+    amendment(newTimetable);
+    reset();
+  };
+
   const disabled = newTimetable && !newTimetable.length;
 
   const buttonStyle = classnames(style.button, {
@@ -36,9 +41,10 @@ const Form = props => {
         className={buttonStyle}
       >{buttonText}</button>
       <button
+        type="submit"
         disabled={disabled}
         className={buttonStyle}
-        onClick={() => amendment(newTimetable)}
+        onClick={onClickSubmit}
       >{otherText}</button>
     </form>
   );
