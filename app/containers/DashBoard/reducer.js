@@ -11,6 +11,11 @@ import {
   GET_MODULE_TIMETABLE_FAIL,
 } from './actions';
 
+import {
+  AMEDNMENT_SUCCESS,
+  AMEDNMENT_FAIL
+} from 'app/containers/ModuleListForm/actions';
+
 const getInitialState = () => ({
   userID: '',
   loading: true,
@@ -49,6 +54,7 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       ...state,
       checkClashLoading: true,
     };
+  case AMEDNMENT_SUCCESS:
   case GET_MODULES_SUCCESS:
     for (let i = 0; i < action.modules[0].length; i++) {
       action.modules[1] = action.modules[1].filter((x) =>
@@ -68,6 +74,7 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       checkClashLoading: false,
       newTimetable: [],
     };
+  case AMEDNMENT_FAIL:
   case GET_MODULE_TIMETABLE_FAIL:
   case GET_MODULES_FAIL:
   case GET_USERID_FAIL:

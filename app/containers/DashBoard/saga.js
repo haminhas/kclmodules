@@ -24,22 +24,12 @@ export function* getModulesWorker(userID) {
     yield put(getModulesFail(error));
   }
 }
-
-const getKey = (arr) => {
-  const newArr = [];
-  for (const key in arr) {
-    newArr.push(key);
-  }
-  return newArr;
-};
-
 export function* checkClashWorker({ data }) {
   try {
-    let { oldModules, newModules } = data;
-    oldModules = getKey(oldModules);
-    newModules = getKey(newModules);
-    const studentid = yield call(fetch, 'GET', '/user');
-    const response = yield call(fetch, 'POST', '/checkClash', {studentid, oldModules, newModules});
+    const {newFormModule, oldFormModule} = data;
+    const oldModules = oldFormModule.map((x) => x.moduleCode);
+    const newModules = newFormModule.map((x) => x.moduleCode);
+    const response = yield call(fetch, 'POST', '/checkClash', {oldModules, newModules});
     yield put(checkClashSuccess(response));
   } catch (error) {
     yield put(checkClashFail(error));

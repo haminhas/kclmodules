@@ -1,36 +1,55 @@
-import React, { PropTypes } from 'react';
-import { Field } from 'redux-form';
-import style from './style.css';
+import React, { PropTypes, Component } from 'react';
+import style from './style';
 
-const ModuleCard = props => (
-  <li>
-    <div >
-      <label>
-        <Field
-          className={style.field}
-          name={`${props.name}.${props.moduleCode}`}
-          id={props.moduleCode}
-          title="Code"
-          component="input"
-          type="checkbox"
-          disabled={props.fieldDisabled}
-        />
-      <div className={style.code}>{props.moduleCode}</div>
-    </label>
+const { func, string, bool} = PropTypes;
 
-    {props.fieldDisabled &&
-      <div className={style.compulsory}>Compulsory Module</div>
-    }
-    </div>
-  </li>
-);
+export default class ModuleListCardComponent extends Component {
+  static propTypes = {
+    moduleCode: string.isRequired,
+    name: string.isRequired,
+    fieldDisabled: bool,
+    checked: bool,
+    moduleOnChange: func.isRequired,
+  };
 
-const { string, bool } = PropTypes;
+  state = {
+    checked: false,
+  };
 
-ModuleCard.propTypes = {
-  moduleCode: string.isRequired,
-  name: string.isRequired,
-  fieldDisabled: bool.isRequired,
-};
+  toggleChecked = () => {
+    this.setState(({ checked }) => ({
+      checked: !checked,
+    }));
+    this.props.moduleOnChange(
+      this.props.name,
+      this.props.moduleCode,
+      !this.state.checked
+    );
+  };
 
-export default ModuleCard;
+  render() {
+    const { checked } = this.state;
+    const { moduleCode, fieldDisabled } = this.props;
+
+    return (
+      <li>
+        <div >
+          <label>
+            <input
+              className={style.field}
+              type="checkbox"
+              checked={checked}
+              onChange={this.toggleChecked}
+              disabled={fieldDisabled}
+            />
+          <div className={style.code}>{moduleCode}</div>
+        </label>
+
+        {fieldDisabled &&
+          <div className={style.compulsory}>Compulsory Module</div>
+        }
+        </div>
+      </li>
+    );
+  }
+}

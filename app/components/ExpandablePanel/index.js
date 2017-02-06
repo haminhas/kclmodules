@@ -4,7 +4,7 @@ import ModuleCard from 'app/components/ModuleCard';
 
 import style from './style.css';
 
-const { bool, string, node } = PropTypes;
+const { bool, string, node, func } = PropTypes;
 
 export default class ExpandablePanel extends Component {
   static propTypes = {
@@ -13,6 +13,7 @@ export default class ExpandablePanel extends Component {
     moduleCode: string.isRequired,
     name: string.isRequired,
     fieldDisabled: bool.isRequired,
+    moduleOnChange: func.isRequired,
   };
 
   constructor(props) {
@@ -44,7 +45,7 @@ export default class ExpandablePanel extends Component {
   };
 
   render() {
-    const { children, moduleCode, name, fieldDisabled } = this.props;
+    const { children, moduleCode, name, fieldDisabled, moduleOnChange } = this.props;
     const { expanded } = this.state;
     const className = classnames(style.expandablePanel, {
       [style.expanded]: expanded,
@@ -56,6 +57,7 @@ export default class ExpandablePanel extends Component {
             moduleCode={moduleCode}
             name={name}
             fieldDisabled={fieldDisabled}
+            moduleOnChange={moduleOnChange}
           />
         <div className={style.buttonIcon} onClick={() => this.toggleView()}>View Timetable</div>
         </div>

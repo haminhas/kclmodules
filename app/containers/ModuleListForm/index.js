@@ -1,18 +1,25 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import ModuleListFormComponent from './component';
-import { amendment } from './actions';
+import {
+  moduleOnChange,
+  loadOldModules,
+  loadNewModules,
+} from './actions';
+import { checkClash } from 'app/containers/DashBoard/actions';
+
 
 const mapStateToProps = state => ({
-  modules: state.dashBoard.modules,
-  newModules: state.dashBoard.newModules,
-  checkClashLoading: state.dashBoard.checkClashLoading,
-  moduleTimetables: state.dashBoard.moduleTimetables,
+  newTimetable: state.dashBoard.newTimetable,
+  newFormModules: state.form.newModules,
+  oldFormModules: state.form.oldModules,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  amendment,
+  moduleOnChange,
+  loadOldModules,
+  loadNewModules,
+  checkClash,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModuleListFormComponent);

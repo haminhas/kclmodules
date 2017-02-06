@@ -4,7 +4,7 @@ import ExpandablePanel from 'app/components/ExpandablePanel';
 import TimetableList from 'app/components/TimetableList';
 
 const ModuleListComponent = props => {
-  const { modules, title, moduleTimetables, name } = props;
+  const { modules, title, moduleTimetables, name, moduleOnChange } = props;
   return (
     <ul>
     <Title type="large">{title}</Title>
@@ -15,6 +15,7 @@ const ModuleListComponent = props => {
             moduleCode={item.code}
             name={name}
             fieldDisabled={item.compulsory}
+            moduleOnChange={moduleOnChange}
           >
           <TimetableList name={item.code} modules={moduleTimetables}/>
           </ExpandablePanel>
@@ -24,7 +25,7 @@ const ModuleListComponent = props => {
   );
 };
 
-const { arrayOf, shape, string, array } = React.PropTypes;
+const { arrayOf, shape, string, array, func } = React.PropTypes;
 
 ModuleListComponent.propTypes = {
   modules: arrayOf(shape({
@@ -33,6 +34,7 @@ ModuleListComponent.propTypes = {
   title: string.isRequired,
   name: string.isRequired,
   moduleTimetables: array.isRequired,
+  moduleOnChange: func.isRequired,
 };
 
 export default ModuleListComponent;

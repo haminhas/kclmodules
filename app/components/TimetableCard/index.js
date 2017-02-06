@@ -7,6 +7,8 @@ const TimetableCardComponent = props => {
   return (
     <li>
     <table>
+    <tbody>
+
     <tr>
       <td className={style.day}>{day}</td>
     </tr>
@@ -25,6 +27,7 @@ const TimetableCardComponent = props => {
         {sessions.length > index + 1 && <hr/>}
       </div>
     ))}
+    </tbody>
     </table>
   </li>
   );
