@@ -19,8 +19,9 @@ import {
 const getInitialState = () => ({
   userID: '',
   loading: true,
+  firstClash: false,
   checkClash: false,
-  checkClashLoading: true,
+  checkClashLoading: false,
 });
 
 const dashBoardReducer = (state = getInitialState(), action) => {
@@ -29,6 +30,7 @@ const dashBoardReducer = (state = getInitialState(), action) => {
     if (action.result[0]) {
       return {
         ...state,
+        firstClash: true,
         checkClash: true,
         checkClashLoading: false,
         newTimetable: action.result[1],

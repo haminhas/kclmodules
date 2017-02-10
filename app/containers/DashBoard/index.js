@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
   loading: state.dashBoard.loading,
   newModules: state.dashBoard.newModules,
   clash: state.dashBoard.checkClash,
+  firstClash: state.dashBoard.firstClash,
   checkClashLoading: state.dashBoard.checkClashLoading,
   moduleTimetables: state.dashBoard.moduleTimetables,
   newTimetable: state.dashBoard.newTimetable,

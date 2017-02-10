@@ -12,7 +12,7 @@ export default class ExpandablePanel extends Component {
     expanded: bool,
     moduleCode: string.isRequired,
     name: string.isRequired,
-    fieldDisabled: bool.isRequired,
+    fieldDisabled: bool,
     moduleOnChange: func.isRequired,
   };
 

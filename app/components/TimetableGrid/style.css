@@ -1,0 +1,13 @@
+.headers{
+  text-align: left;
+  width: 5%
+}
+
+.hide {
+  font-size: 0;
+  width: 5%
+}
+
+table, th, td {
+    border: 1px solid black;
+}

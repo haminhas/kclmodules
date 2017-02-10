@@ -1,6 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import style from './style.css';
 import ModuleListForm from 'app/containers/ModuleListForm';
+import Loading from 'react-loading';
+import classnames from 'classnames';
+import TimetableGrid from 'app/components/TimetableGrid';
+
 
 const { func, string, bool, array } = PropTypes;
 
@@ -13,6 +17,7 @@ export default class DashBoardComponent extends Component {
     checkClash: func.isRequired,
     clash: bool.isRequired,
     checkClashLoading: bool.isRequired,
+    firstClash: bool.isRequired,
     newTimetable: array,
     newModules: array,
     modules: array,
@@ -34,10 +39,19 @@ export default class DashBoardComponent extends Component {
       newModules,
       newTimetable,
       moduleTimetables,
+      firstClash,
     } = this.props;
+
+    const mainStyle = classnames(
+      {
+        [style.dashBoardContainer]: !checkClashLoading,
+      }, {
+        [style.mainLoading]: checkClashLoading,
+      });
+
     return !loading && (
-      <div className={style.mainContainer}>
-        <div>
+      <div className={mainStyle}>
+        <div className={style.name}>
           <span className={style.four}>Welcome {userID}</span>
         </div>
         <ModuleListForm
@@ -46,12 +60,26 @@ export default class DashBoardComponent extends Component {
           newTimetable={newTimetable}
           moduleTimetables={moduleTimetables}
         />
-        {!checkClashLoading && !clash &&
+        {firstClash && !checkClashLoading && !clash &&
           <span>Invalid Selection, Please try again </span>
         }
-        {!checkClashLoading && clash &&
+        {firstClash && !checkClashLoading && clash &&
           <span>Valid Selection</span>
         }
+        { checkClashLoading &&
+          <div className={style.loading}>
+            <Loading type="spinningBubbles" color="#4500c0" />
+          </div>
+        }
+        {newTimetable &&
+          <div>
+            <TimetableGrid timetable={newTimetable}/>
+          </div>
+        }
+      </div>
+    ) || (
+      <div className={style.loading}>
+        <Loading type="spinningBubbles" color="#4500c0" />
       </div>
     );
   }

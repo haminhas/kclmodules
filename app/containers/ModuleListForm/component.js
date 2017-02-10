@@ -61,20 +61,26 @@ export default class ModuleListFormComponent extends Component {
 
     return (
       <div>
-        <ModuleList
-          title="Current Modules"
-          modules={modules}
-          name="oldModules"
-          moduleTimetables={moduleTimetables}
-          moduleOnChange={moduleOnChange}
-        />
-        <ModuleList
-          title="New Modules"
-          modules={newModules}
-          name="newModules"
-          moduleTimetables={moduleTimetables}
-          moduleOnChange={moduleOnChange}
-        />
+        <div className={style.modulesContainer}>
+          <div className={style.left}>
+            <ModuleList
+              title="Current Modules"
+              modules={modules}
+              name="oldModules"
+              moduleTimetables={moduleTimetables}
+              moduleOnChange={moduleOnChange}
+            />
+          </div>
+          <div className={style.right}>
+            <ModuleList
+              title="New Modules"
+              modules={newModules}
+              name="newModules"
+              moduleTimetables={moduleTimetables}
+              moduleOnChange={moduleOnChange}
+            />
+          </div>
+        </div>
         <button
           type="submit"
           disabled={pristine || submitting || invalid}

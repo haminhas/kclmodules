@@ -13,8 +13,9 @@ html {
 .mainContainer {
   display: block;
   margin: 0 auto;
-  max-width: 620px;
+  max-width: 920px;
   padding: 14px;
+  text-align: center;
 }
 
 a:link, a:visited {
