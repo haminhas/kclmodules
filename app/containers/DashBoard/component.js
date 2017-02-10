@@ -72,7 +72,7 @@ export default class DashBoardComponent extends Component {
           </div>
         }
         {newTimetable &&
-          <div>
+          <div className={style.timeGrid}>
             <TimetableGrid timetable={newTimetable}/>
           </div>
         }

@@ -1,7 +1,7 @@
-@value desktop, violetBlue from '../../styles/variables.css';
+@value desktop, aoi from '../../styles/variables.css';
 
 .expandablePanel {
-  border: 1px solid #8356d5;
+  border: 1px solid aoi;
   border-radius: 5px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
   margin: 25px 0 0px;

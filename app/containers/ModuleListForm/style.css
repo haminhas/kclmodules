@@ -1,8 +1,8 @@
-@value desktop from '../../styles/variables.css';
+@value desktop, aoi from '../../styles/variables.css';
 
 .button {
-  border: 5px solid #8356d5;
-  background-color: #8356d5;
+  border: 5px solid aoi;
+  background-color: aoi;
   text-align: center;
   margin-top: 20px;
   color: #fff;
@@ -14,8 +14,8 @@
 }
 
 .button:hover:not(.invalid) {
-  background-color: #b298e1;
-  border: 5px solid #b298e1;
+  background-color: #90caf9;
+  border: 5px solid #90caf9;
   cursor: pointer;
 }
 

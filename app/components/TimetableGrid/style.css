@@ -1,6 +1,6 @@
 .headers{
   text-align: left;
-  width: 5%
+  width: 5%;
 }
 
 .hide {
@@ -8,6 +8,28 @@
   width: 5%
 }
 
-table, th, td {
-    border: 1px solid black;
+.timetable {
+  width: 80%;
+  margin: auto;
+  display: table-row;
+}
+
+.cardContianer{
+  display: table-cell;
+  border: 1px solid #e0e0e0;
+  min-width: 150px;
+}
+
+table {
+  border: none;
+  border-collapse:collapse;
+}
+
+th {
+   border:none;
+}
+
+.timetableGridContainer{
+  display: table;
+  margin: 0 auto;
 }

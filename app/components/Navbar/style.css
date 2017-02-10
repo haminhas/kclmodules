@@ -1,7 +1,7 @@
-@value desktop, violetBlue from '../../styles/variables.css';
+@value desktop, aoi from '../../styles/variables.css';
 
 .navbar {
-  background-color: violetBlue;
+  background-color: aoi;
 }
 
 .container {
@@ -10,8 +10,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  line-height: 100px;
-  min-height: 100px;
+  line-height: 70px;
+  min-height: 70px;
   padding: 0 15px;
 }
 

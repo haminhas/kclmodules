@@ -3,7 +3,7 @@
 .error {
   background-color: haloOrange;
   position: absolute;
-  top: 100px;
+  top: 80px;
   display: flex;
   justify-content: center;
   margin: 0 auto;
@@ -15,7 +15,7 @@
 .notification {
   background-color: bermudaGreen;
   position: absolute;
-  top: 100px;
+  top: 80px;
   display: flex;
   justify-content: center;
   margin: 0 auto;

@@ -1,6 +1,8 @@
+@value desktop, orange from '../../styles/variables.css';
+
 .four {
   font-size: 32px;
-  color: #4500c0;
+  color: orange;
 }
 
 .name {
@@ -14,6 +16,11 @@
   width: 100%;
   margin-left:'auto';
   margin-right:'auto';
+}
+
+.timeGrid {
+  margin-top: 65px;
+  text-align: center;
 }
 
 .loading {

@@ -1,8 +1,8 @@
-@value desktop from '../../styles/variables.css';
+@value desktop, aoi from '../../styles/variables.css';
 
 .button {
-  border: 5px solid #8356d5;
-  background-color: #8356d5;
+  border: 5px solid aoi;
+  background-color: aoi;
   text-align: center;
   margin-top: 8px;
   color: #fff;

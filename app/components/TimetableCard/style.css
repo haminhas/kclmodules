@@ -1,10 +1,13 @@
-@value desktop, Grey from '../../styles/variables.css';
+@value desktop, lightBlue from '../../styles/variables.css';
 
 .day {
-  background-color: Grey;
+  background-color: lightBlue;
   width: 10%;
   padding-left: 5px;
   font-size: 18px;
+  min-width: 120px;
+  height: 25px;
+  border-bottom: 5px;
 }
 
 ul {
