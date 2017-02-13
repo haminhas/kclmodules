@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import DashBoardComponent from './component';
-import { getUserID, checkClash } from './actions';
+import { getUserID, checkClash, amendment } from './actions';
 import { login } from 'app/containers/AccountWidget/actions';
 
 const mapStateToProps = state => ({
@@ -21,6 +21,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getUserID,
   login,
   checkClash,
+  amendment,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoardComponent);

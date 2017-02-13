@@ -1,12 +1,17 @@
 import React, { PropTypes, Component } from 'react';
 import TimetableGridCard from 'app/components/TimetableGridCard';
+import classnames from 'classnames';
 
 import style from './style.css';
-const { array } = PropTypes;
+const { array, func, bool } = PropTypes;
 
 export default class TimetableGrid extends Component {
   static propTypes = {
     timetable: array,
+    amend: func.isRequired,
+    clash: bool.isRequired,
+    submitting: bool.isRequired,
+    pristine: bool.isRequired,
   };
 
   constructor() {
@@ -14,11 +19,16 @@ export default class TimetableGrid extends Component {
   }
 
   render() {
-    const { timetable } = this.props;
+    const { timetable, amend, clash, submitting, pristine } = this.props;
     const colors = ['#f44336', '#2196f3', '#4caf50', '#ff9800', '#6d4c41', '#9c27b0'];
     [...new Set(timetable.map((item) => item.code))].map((item, index) => {
       timetable.filter((x) => x.code === item).map((y) => y.color = colors[index]);
     });
+
+    const buttonStyle = classnames(style.button, {
+      [style.invalid]: clash,
+    });
+
     return (
       <div className={style.timetableGridContainer}>
         <div className={style.timetable}>
@@ -40,6 +50,12 @@ export default class TimetableGrid extends Component {
             </div>
           </ul>
         </div>
+        <button
+          type="submit"
+          disabled={pristine || submitting || clash}
+          className={buttonStyle}
+          onClick={amend}
+        >Amend</button>
       </div>
     );
   }

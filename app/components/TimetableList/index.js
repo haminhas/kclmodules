@@ -18,12 +18,10 @@ const TimetableListComponent = props => {
   );
 };
 
-const { arrayOf, shape, string } = React.PropTypes;
+const { array, string } = React.PropTypes;
 
 TimetableListComponent.propTypes = {
-  modules: arrayOf(shape({
-    code: string.isRequired,
-  })).isRequired,
+  modules: array.isRequired,
   name: string.isRequired,
 };
 

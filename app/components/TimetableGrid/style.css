@@ -33,3 +33,27 @@ th {
   display: table;
   margin: 0 auto;
 }
+
+.button {
+  border: 5px solid aoi;
+  background-color: aoi;
+  text-align: center;
+  margin-top: 20px;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 5px;
+  height: 44px;
+  width: 100%;
+  float: right;
+}
+
+.button:hover:not(.invalid) {
+  background-color: #90caf9;
+  border: 5px solid #90caf9;
+  cursor: pointer;
+}
+
+.invalid {
+  border-color: #eee;
+  background-color: #eee;
+}

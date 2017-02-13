@@ -22,6 +22,7 @@ export default class DashBoardComponent extends Component {
     newModules: array,
     modules: array,
     moduleTimetables: array,
+    amendment: func.isRequired,
   };
 
   componentWillMount() {
@@ -40,6 +41,7 @@ export default class DashBoardComponent extends Component {
       newTimetable,
       moduleTimetables,
       firstClash,
+      amendment,
     } = this.props;
 
     const mainStyle = classnames(
@@ -73,7 +75,7 @@ export default class DashBoardComponent extends Component {
         }
         {newTimetable &&
           <div className={style.timeGrid}>
-            <TimetableGrid timetable={newTimetable}/>
+            <TimetableGrid timetable={newTimetable} amend={amendment} clash={clash}/>
           </div>
         }
       </div>

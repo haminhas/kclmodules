@@ -19,9 +19,7 @@ export default class ModuleListFormComponent extends Component {
     moduleOnChange: func.isRequired,
     loadOldModules: func.isRequired,
     loadNewModules: func.isRequired,
-    pristine: bool.isRequired,
-    submitting: bool.isRequired,
-    invalid: bool.isRequired,
+    modulesInvalid: bool.isRequired,
     newFormModules: array,
     oldFormModules: array,
   };
@@ -41,16 +39,14 @@ export default class ModuleListFormComponent extends Component {
       newModules,
       moduleTimetables,
       moduleOnChange,
-      pristine,
-      submitting,
-      invalid,
       newFormModules,
       oldFormModules,
       checkClash,
+      modulesInvalid,
     } = this.props;
 
     const buttonStyle = classnames(style.button, {
-      [style.invalid]: invalid,
+      [style.invalid]: modulesInvalid,
     });
 
     const handleClash = () => {
@@ -83,7 +79,7 @@ export default class ModuleListFormComponent extends Component {
         </div>
         <button
           type="submit"
-          disabled={pristine || submitting || invalid}
+          disabled={modulesInvalid}
           className={buttonStyle}
           onClick={handleClash}
         >Check Validity</button>
