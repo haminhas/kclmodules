@@ -14,13 +14,14 @@ export default (app) => {
   async function amend(req) {
     try {
       const newTimetable = req.body.timetable;
-      const newTimetableID = newTimetable.map((x) => x.id);
-      const oldIsRemoved = await removeOldModules(req.user.alias, newTimetableID);
+      const oldIsRemoved = await removeOldModules(req.user.alias);
       if (oldIsRemoved > 0) {
         for (const obj of newTimetable) {
           const response = await insertStudentTimetable(req.user.alias, obj.id, obj.groupnumber);
           if (response <= 0) throw new Error('Failed inserting new Module');
         }
+      } else {
+        throw new Error('Failed deleting old modules');
       }
       return true;
     } catch (err) {

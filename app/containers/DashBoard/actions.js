@@ -13,6 +13,14 @@ export const GET_MODULE_TIMETABLE_FAIL = 'GET_MODULE_TIMETABLE_FAIL';
 export const AMEDNMENT_REQUEST = 'AMEDNMENT_REQUEST';
 export const AMEDNMENT_SUCCESS = 'AMEDNMENT_SUCCESS';
 export const AMEDNMENT_FAIL = 'AMEDNMENT_FAIL';
+export const MODULE_ON_CHANGE = 'MODULE_ON_CHANGE';
+
+export const moduleOnChange = (name, code, checked) => ({
+  type: MODULE_ON_CHANGE,
+  name,
+  code,
+  checked
+});
 
 export const getModuleTimetable = (moduleCodes) => ({
   type: GET_MODULE_TIMETABLE_REQUEST,

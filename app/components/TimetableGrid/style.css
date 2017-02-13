@@ -1,3 +1,5 @@
+@value desktop, aoi from '../../styles/variables.css';
+
 .headers{
   text-align: left;
   width: 5%;
@@ -38,7 +40,7 @@ th {
   border: 5px solid aoi;
   background-color: aoi;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 15px;
   color: #fff;
   font-size: 16px;
   border-radius: 5px;
@@ -56,4 +58,9 @@ th {
 .invalid {
   border-color: #eee;
   background-color: #eee;
+}
+
+.buttonDiv{
+  width: 190px;
+  float: right;
 }

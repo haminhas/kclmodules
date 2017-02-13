@@ -11,7 +11,6 @@ const { func, string, bool, array } = PropTypes;
 export default class DashBoardComponent extends Component {
   static propTypes = {
     getUserID: func.isRequired,
-    login: func.isRequired,
     userID: string.isRequired,
     loading: bool.isRequired,
     checkClash: func.isRequired,
@@ -20,19 +19,18 @@ export default class DashBoardComponent extends Component {
     firstClash: bool.isRequired,
     newTimetable: array,
     newModules: array,
-    modules: array,
+    oldModules: array,
     moduleTimetables: array,
     amendment: func.isRequired,
   };
 
   componentWillMount() {
-    if (!this.props.getUserID.length) this.props.getUserID();
-    this.props.login();
+    this.props.getUserID();
   }
 
   render() {
     const {
-      modules,
+      oldModules,
       userID,
       loading,
       checkClashLoading,
@@ -57,7 +55,7 @@ export default class DashBoardComponent extends Component {
           <span className={style.four}>Welcome {userID}</span>
         </div>
         <ModuleListForm
-          modules={modules}
+          modules={oldModules}
           newModules={newModules}
           newTimetable={newTimetable}
           moduleTimetables={moduleTimetables}

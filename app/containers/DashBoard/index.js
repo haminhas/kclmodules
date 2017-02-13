@@ -3,11 +3,10 @@ import { bindActionCreators } from 'redux';
 
 import DashBoardComponent from './component';
 import { getUserID, checkClash, amendment } from './actions';
-import { login } from 'app/containers/AccountWidget/actions';
 
 const mapStateToProps = state => ({
   userID: state.dashBoard.userID,
-  modules: state.dashBoard.modules,
+  oldModules: state.dashBoard.oldModules,
   loading: state.dashBoard.loading,
   newModules: state.dashBoard.newModules,
   clash: state.dashBoard.checkClash,
@@ -19,7 +18,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getUserID,
-  login,
   checkClash,
   amendment,
 }, dispatch);

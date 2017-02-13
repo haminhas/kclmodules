@@ -21,11 +21,11 @@ const config = {
 
 const pools = new Pool(config);
 
-export async function removeOldModules(studentid, oldModules, pool = pools) {
+export async function removeOldModules(studentid, pool = pools) {
   try {
     const sql = `DELETE
                  FROM   studentTimetable
-                 WHERE  studentid = '${studentid}' AND moduleType != ALL(ARRAY[${oldModules}]);`;
+                 WHERE  studentid = '${studentid}';`;
     const { rowCount } =  await pool.query(sql);
     return rowCount;
   } catch (err) {

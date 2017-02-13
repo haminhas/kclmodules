@@ -7,7 +7,7 @@ const { string, array, arrayOf, shape, func, bool } = PropTypes;
 
 export default class ModuleListFormComponent extends Component {
   static propTypes = {
-    modules: arrayOf(shape({
+    oldModules: arrayOf(shape({
       code: string.isRequired,
     })).isRequired,
     newModules: arrayOf(shape({
@@ -17,30 +17,19 @@ export default class ModuleListFormComponent extends Component {
     newTimetable: array,
     checkClash: func.isRequired,
     moduleOnChange: func.isRequired,
-    loadOldModules: func.isRequired,
-    loadNewModules: func.isRequired,
     modulesInvalid: bool.isRequired,
-    newFormModules: array,
-    oldFormModules: array,
   };
 
   static contextTypes = {
     redux: React.PropTypes.object
   }
 
-  componentWillMount() {
-    this.props.loadOldModules(this.props.modules);
-    this.props.loadNewModules(this.props.newModules);
-  }
-
   render() {
     const {
-      modules,
       newModules,
       moduleTimetables,
       moduleOnChange,
-      newFormModules,
-      oldFormModules,
+      oldModules,
       checkClash,
       modulesInvalid,
     } = this.props;
@@ -50,9 +39,9 @@ export default class ModuleListFormComponent extends Component {
     });
 
     const handleClash = () => {
-      const newFormModule = newFormModules.filter((x) => x.checked === true);
-      const oldFormModule = oldFormModules.filter((x) => x.checked === true);
-      checkClash({newFormModule, oldFormModule});
+      const newModule = newModules.filter((x) => x.checked === true);
+      const oldModule = oldModules.filter((x) => x.checked === true);
+      checkClash({newModule, oldModule});
     };
 
     return (
@@ -61,7 +50,7 @@ export default class ModuleListFormComponent extends Component {
           <div className={style.left}>
             <ModuleList
               title="Current Modules"
-              modules={modules}
+              modules={oldModules}
               name="oldModules"
               moduleTimetables={moduleTimetables}
               moduleOnChange={moduleOnChange}

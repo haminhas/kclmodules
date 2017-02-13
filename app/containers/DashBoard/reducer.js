@@ -9,12 +9,10 @@ import {
   CHECK_CLASH_REQUEST,
   GET_MODULE_TIMETABLE_SUCCESS,
   GET_MODULE_TIMETABLE_FAIL,
-} from './actions';
-
-import {
   AMEDNMENT_SUCCESS,
-  AMEDNMENT_FAIL
-} from 'app/containers/ModuleListForm/actions';
+  AMEDNMENT_FAIL,
+  MODULE_ON_CHANGE,
+} from './actions';
 
 const getInitialState = () => ({
   userID: '',
@@ -22,10 +20,57 @@ const getInitialState = () => ({
   firstClash: false,
   checkClash: false,
   checkClashLoading: false,
+  modulesInvalid: true,
 });
+
+const invalid = (modules, state) => {
+  const newM = state.newModules.filter((x) => x.checked);
+  const old = state.oldModules.filter((x) => x.checked);
+  if (newM.length === old.length) {
+    return false;
+  }
+  return true;
+};
+
+const mod = (action) => {
+  for (let i = 0; i < action.modules[0].length; i++) {
+    action.modules[1] = action.modules[1].filter((x) =>
+      x.code !== action.modules[0][i].code
+    );
+  }
+
+  for (const obj of action.modules[0]) {
+    obj.checked = false;
+  }
+
+  for (const obj of action.modules[1]) {
+    obj.checked = false;
+  }
+};
 
 const dashBoardReducer = (state = getInitialState(), action) => {
   switch (action && action.type) {
+  case MODULE_ON_CHANGE:
+    let modules = '';
+    if (action.name === 'newModules') {
+      modules = state.newModules;
+    } else {
+      modules = state.oldModules;
+    }
+    modules.forEach((item, i) => { if (item.code === action.code) modules[i].checked = action.checked; });
+
+    if (action.name === 'newModules') {
+      return {
+        ...state,
+        newModules: modules,
+        modulesInvalid: invalid(modules, state),
+      };
+    }
+    return {
+      ...state,
+      oldModules: modules,
+      modulesInvalid: invalid(modules, state),
+    };
   case CHECK_CLASH_SUCCESS:
     if (action.result[0]) {
       return {
@@ -58,16 +103,15 @@ const dashBoardReducer = (state = getInitialState(), action) => {
     };
   case AMEDNMENT_SUCCESS:
   case GET_MODULES_SUCCESS:
-    for (let i = 0; i < action.modules[0].length; i++) {
-      action.modules[1] = action.modules[1].filter((x) =>
-        x.code !== action.modules[0][i].code
-      );
-    }
+    mod(action);
     return {
       ...state,
-      modules: action.modules[0],
+      firstClash: false,
+      checkClash: false,
+      checkClashLoading: false,
+      oldModules: action.modules[0],
       newModules: action.modules[1],
-      loading: true,
+      loading: false,
     };
   case CHECK_CLASH_FAIL:
     return {

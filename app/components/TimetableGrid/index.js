@@ -10,24 +10,27 @@ export default class TimetableGrid extends Component {
     timetable: array,
     amend: func.isRequired,
     clash: bool.isRequired,
-    submitting: bool.isRequired,
-    pristine: bool.isRequired,
   };
 
   constructor() {
     super();
   }
 
+
   render() {
-    const { timetable, amend, clash, submitting, pristine } = this.props;
+    const { timetable, clash, amend } = this.props;
     const colors = ['#f44336', '#2196f3', '#4caf50', '#ff9800', '#6d4c41', '#9c27b0'];
     [...new Set(timetable.map((item) => item.code))].map((item, index) => {
       timetable.filter((x) => x.code === item).map((y) => y.color = colors[index]);
     });
 
     const buttonStyle = classnames(style.button, {
-      [style.invalid]: clash,
+      [style.invalid]: !clash,
     });
+
+    const handleSubmit = () => {
+      amend(timetable);
+    };
 
     return (
       <div className={style.timetableGridContainer}>
@@ -50,12 +53,14 @@ export default class TimetableGrid extends Component {
             </div>
           </ul>
         </div>
+        <div className={style.buttonDiv}>
         <button
           type="submit"
-          disabled={pristine || submitting || clash}
+          disabled={!clash}
           className={buttonStyle}
-          onClick={amend}
+          onClick={handleSubmit}
         >Amend</button>
+        </div>
       </div>
     );
   }
