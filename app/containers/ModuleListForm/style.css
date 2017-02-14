@@ -24,6 +24,9 @@
   background-color: #eee;
 }
 
+.modulesContainer {
+  overflow:auto;
+}
 
 .right {
   width: 49%;

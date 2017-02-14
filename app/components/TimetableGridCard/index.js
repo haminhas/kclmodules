@@ -17,7 +17,7 @@ const TimetableGridCardComponent = props => {
       <div key={index} className={style.gridCardContainer}>
         <table className={style.gridCard}>
           <tr>
-            <td rowSpan="3" style={{'background-color': item.color}} className={style.leftColor}/>
+            <td rowSpan="3" style={{'backgroundColor': item.color}} className={style.leftColor}/>
             <td className={style.times} >{item.starttime.slice(0, -3)} - {item.endtime.slice(0, -3)}</td>
           </tr>
           <tr>

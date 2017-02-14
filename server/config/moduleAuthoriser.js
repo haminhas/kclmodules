@@ -14,7 +14,7 @@ let finalTimetable = '';
 export const checkClash = (currentTimetable, moduleTimetable) => {
   for (const moduleobj of currentTimetable) {
     for (const reqobj of moduleTimetable) {
-      if ((reqobj.day === moduleobj.day) &&
+      if ((reqobj.day.toLowerCase() === moduleobj.day.toLowerCase()) &&
       ((moduleobj.starttime <= reqobj.starttime &&
         moduleobj.endtime >= reqobj.endtime) ||
       (moduleobj.starttime >= reqobj.starttime &&
@@ -129,7 +129,6 @@ export async function decideSwap(studentid, oldModules, newModules) {
       const response = await getModuleTimetable(mod);
       if (response.length > 0) moduleTimetables.push(response);
     }
-
     for (const mod of moduleTimetables) {
       const response = await checkModuleGroups(currentTimetable, mod);
       if (!response) return false;

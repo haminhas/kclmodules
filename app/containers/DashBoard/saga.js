@@ -18,7 +18,7 @@ import {
   amendmentFail,
 } from './actions';
 
-import { login } from 'app/containers/AccountWidget/actions';
+import { loginWorker } from 'app/containers/AccountWidget/saga';
 
 export function* amendmentWorker({ timetable }) {
   try {
@@ -55,7 +55,7 @@ export function* checkClashWorker({ data }) {
 export function* getUserIDWorker() {
   try {
     const userID = yield call(fetch, 'GET', '/user');
-    yield call(login);
+    yield call(loginWorker);
     yield call(getModulesWorker, userID);
     yield put(getUserIDSuccess(userID));
   } catch (error) {

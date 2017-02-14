@@ -38,7 +38,6 @@ export default class DashBoardComponent extends Component {
       newModules,
       newTimetable,
       moduleTimetables,
-      firstClash,
       amendment,
     } = this.props;
 
@@ -60,18 +59,12 @@ export default class DashBoardComponent extends Component {
           newTimetable={newTimetable}
           moduleTimetables={moduleTimetables}
         />
-        {firstClash && !checkClashLoading && !clash &&
-          <span>Invalid Selection, Please try again </span>
-        }
-        {firstClash && !checkClashLoading && clash &&
-          <span>Valid Selection</span>
-        }
         { checkClashLoading &&
           <div className={style.loading}>
             <Loading type="spinningBubbles" color="#4500c0" />
           </div>
         }
-        {newTimetable &&
+        { newTimetable && clash &&
           <div className={style.timeGrid}>
             <TimetableGrid timetable={newTimetable} amend={amendment} clash={clash}/>
           </div>

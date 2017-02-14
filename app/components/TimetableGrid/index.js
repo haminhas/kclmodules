@@ -37,19 +37,19 @@ export default class TimetableGrid extends Component {
         <div className={style.timetable}>
           <ul>
             <div className={style.cardContianer}>
-              <TimetableGridCard day="Monday" sessions={timetable.filter((x) => x.day === 'Mon')}/>
+              <TimetableGridCard day="Monday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'mon')}/>
             </div>
             <div className={style.cardContianer}>
-              <TimetableGridCard day="Tuesday" sessions={timetable.filter((x) => x.day === 'Tue')}/>
+              <TimetableGridCard day="Tuesday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'tue')}/>
             </div>
             <div className={style.cardContianer}>
-              <TimetableGridCard day="Wednesday" sessions={timetable.filter((x) => x.day === 'Wed')}/>
+              <TimetableGridCard day="Wednesday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'wed')}/>
             </div>
             <div className={style.cardContianer}>
-              <TimetableGridCard day="Thursday" sessions={timetable.filter((x) => x.day === 'Thu')}/>
+              <TimetableGridCard day="Thursday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'thu')}/>
             </div>
             <div className={style.cardContianer}>
-              <TimetableGridCard day="Friday" sessions={timetable.filter((x) => x.day === 'Fri')}/>
+              <TimetableGridCard day="Friday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'fri')}/>
             </div>
           </ul>
         </div>
