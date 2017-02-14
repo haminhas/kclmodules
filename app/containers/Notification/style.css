@@ -1,0 +1,54 @@
+@value desktop, azul, bermudaGreen, haloOrange from '../../styles/variables.css';
+
+.error {
+  background-color: haloOrange;
+  position: absolute;
+  top: 70px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  color: white;
+  width: 100%;
+  z-index: 10;
+  height: 35px;
+}
+
+.notification {
+  background-color: bermudaGreen;
+  position: absolute;
+  top: 70px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  color: white;
+  width: 100%;
+  z-index: 10;
+  height: 35px;
+}
+
+.contents {
+  display: flex;
+  align-items: center;
+  max-width: 620px;
+  width: 100%;
+  padding: 7px;
+  min-height: 25px;
+}
+
+.moodIcon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  margin-right: 10px;
+  float: left;
+}
+
+.dismiss {
+  float: right;
+  margin-right: 10px;
+  color: #fff;
+}
+
+.error {
+  color: #fff;
+}

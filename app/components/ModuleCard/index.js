@@ -32,24 +32,22 @@ export default class ModuleListCardComponent extends Component {
     const { moduleCode, fieldDisabled } = this.props;
 
     return (
-      <li>
-        <div >
-          <label>
-            <input
-              className={style.field}
-              type="checkbox"
-              checked={checked}
-              onChange={this.toggleChecked}
-              disabled={fieldDisabled}
-            />
-          <div className={style.code}>{moduleCode}</div>
-        </label>
+      <div >
+        <label>
+          <input
+            className={style.field}
+            type="checkbox"
+            checked={checked}
+            onChange={this.toggleChecked}
+            disabled={fieldDisabled}
+          />
+        <div className={style.code}>{moduleCode}</div>
+      </label>
 
-        {fieldDisabled &&
-          <div className={style.compulsory}>Compulsory Module</div>
-        }
-        </div>
-      </li>
+      {fieldDisabled &&
+        <div className={style.compulsory}>Compulsory Module</div>
+      }
+      </div>
     );
   }
 }

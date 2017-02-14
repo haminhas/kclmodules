@@ -1,32 +1,36 @@
 import React, { PropTypes, Component } from 'react';
 import style from './style.css';
 import ModuleListForm from 'app/containers/ModuleListForm';
+import Loading from 'react-loading';
+import classnames from 'classnames';
+import TimetableGrid from 'app/components/TimetableGrid';
+
 
 const { func, string, bool, array } = PropTypes;
 
 export default class DashBoardComponent extends Component {
   static propTypes = {
     getUserID: func.isRequired,
-    login: func.isRequired,
     userID: string.isRequired,
     loading: bool.isRequired,
     checkClash: func.isRequired,
     clash: bool.isRequired,
     checkClashLoading: bool.isRequired,
+    firstClash: bool.isRequired,
     newTimetable: array,
     newModules: array,
-    modules: array,
+    oldModules: array,
     moduleTimetables: array,
+    amendment: func.isRequired,
   };
 
   componentWillMount() {
-    if (!this.props.getUserID.length) this.props.getUserID();
-    this.props.login();
+    this.props.getUserID();
   }
 
   render() {
     const {
-      modules,
+      oldModules,
       userID,
       loading,
       checkClashLoading,
@@ -34,24 +38,41 @@ export default class DashBoardComponent extends Component {
       newModules,
       newTimetable,
       moduleTimetables,
+      amendment,
     } = this.props;
+
+    const mainStyle = classnames(
+      {
+        [style.dashBoardContainer]: !checkClashLoading,
+      }, {
+        [style.mainLoading]: checkClashLoading,
+      });
+
     return !loading && (
-      <div className={style.mainContainer}>
-        <div>
+      <div className={mainStyle}>
+        <div className={style.name}>
           <span className={style.four}>Welcome {userID}</span>
         </div>
         <ModuleListForm
-          modules={modules}
+          modules={oldModules}
           newModules={newModules}
           newTimetable={newTimetable}
           moduleTimetables={moduleTimetables}
         />
-        {!checkClashLoading && !clash &&
-          <span>Invalid Selection, Please try again </span>
+        { checkClashLoading &&
+          <div className={style.loading}>
+            <Loading type="spinningBubbles" color="#4500c0" />
+          </div>
         }
-        {!checkClashLoading && clash &&
-          <span>Valid Selection</span>
+        { newTimetable && clash &&
+          <div className={style.timeGrid}>
+            <TimetableGrid timetable={newTimetable} amend={amendment} clash={clash}/>
+          </div>
         }
+      </div>
+    ) || (
+      <div className={style.loading}>
+        <Loading type="spinningBubbles" color="#4500c0" />
       </div>
     );
   }

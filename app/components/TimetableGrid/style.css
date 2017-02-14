@@ -1,5 +1,41 @@
 @value desktop, aoi from '../../styles/variables.css';
 
+.headers{
+  text-align: left;
+  width: 5%;
+}
+
+.hide {
+  font-size: 0;
+  width: 5%
+}
+
+.timetable {
+  width: 80%;
+  margin: auto;
+  display: table-row;
+}
+
+.cardContianer{
+  display: table-cell;
+  border: 1px solid #e0e0e0;
+  min-width: 150px;
+}
+
+table {
+  border: none;
+  border-collapse:collapse;
+}
+
+th {
+   border:none;
+}
+
+.timetableGridContainer{
+  display: table;
+  margin: 0 auto;
+}
+
 .button {
   border: 5px solid aoi;
   background-color: aoi;
@@ -24,28 +60,7 @@
   background-color: #eee;
 }
 
-.modulesContainer {
-  overflow:auto;
-}
-
-.right {
-  width: 49%;
-  display: inline-block;
-  padding-left: 1%;
-  text-align: left;
-  float: left;
-}
-
-.left {
-  width: 49%;
-  display: inline-block;
-  padding-right: 1%;
-  text-align: left;
-  float: left;
-}
-
-@media desktop {
-  .button {
-    max-width: 200px;
-  }
+.buttonDiv{
+  width: 190px;
+  float: right;
 }

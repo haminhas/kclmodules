@@ -7,10 +7,12 @@ import {
 } from './actions';
 
 const initialState = {
-  loading: false,
   userID: '',
+  loading: true,
+  firstClash: false,
   checkClash: false,
-  checkClashLoading: true,
+  checkClashLoading: false,
+  modulesInvalid: true,
 };
 
 const userData = {
@@ -21,10 +23,12 @@ const userData = {
 describe('dashBoard reducer', () => {
   it('has correct initialState', () => {
     const expectedState = {
-      loading: true,
       userID: '',
+      loading: true,
+      firstClash: false,
       checkClash: false,
-      checkClashLoading: true,
+      checkClashLoading: false,
+      modulesInvalid: true,
     };
     const actualState = dashBoardReducer(undefined, {});
     expect(actualState).to.deep.equal(expectedState);
@@ -32,10 +36,12 @@ describe('dashBoard reducer', () => {
 
   it('sets loading to true on GET_USERID_REQUEST', () => {
     const expectedState = {
-      loading: true,
       userID: '',
+      loading: true,
+      firstClash: false,
       checkClash: false,
-      checkClashLoading: true,
+      checkClashLoading: false,
+      modulesInvalid: true,
     };
     const action = {
       type: GET_USERID_REQUEST,
@@ -46,10 +52,12 @@ describe('dashBoard reducer', () => {
 
   it('sets loading to false on GET_USERID_FAIL', () => {
     const expectedState = {
-      loading: false,
       userID: '',
+      loading: false,
+      firstClash: false,
       checkClash: false,
-      checkClashLoading: true,
+      checkClashLoading: false,
+      modulesInvalid: true,
     };
     const action = {
       type: GET_USERID_FAIL,

@@ -9,7 +9,7 @@ const ModuleListComponent = props => {
     <ul>
     <Title type="large">{title}</Title>
     { modules.map((item, index) => (
-        <div key={index}>
+        <li key={index}>
           <ExpandablePanel
             key={index}
             moduleCode={item.code}
@@ -19,7 +19,7 @@ const ModuleListComponent = props => {
           >
           <TimetableList name={item.code} modules={moduleTimetables}/>
           </ExpandablePanel>
-        </div>
+        </li>
     ))}
   </ul>
   );

@@ -41,6 +41,3 @@ TimetableCardComponent.propTypes = {
 };
 
 export default TimetableCardComponent;
-
-
-// <h2>{`${item1.day} ${item1.starttime}-${item1.endtime} ${item1.code} ${item1.name}`}</h2>
