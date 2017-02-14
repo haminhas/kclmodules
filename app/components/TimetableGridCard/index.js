@@ -32,12 +32,6 @@ const TimetableGridCardComponent = props => {
         {sessions.length > index + 1 && <hr className={style.line}/>}
       </div>
     ))}
-    {sessions.length === 0 &&
-      <div>
-        <div>Manz Free</div>
-        <div>Woop Woop</div>
-      </div>
-    }
     </tbody>
     </table>
   </li>
