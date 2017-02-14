@@ -29,23 +29,37 @@
 }
 
 .right {
-  width: 49%;
-  display: inline-block;
-  padding-left: 1%;
+  margin: auto;
+  width: 75%;
   text-align: left;
-  float: left;
+  padding-top: 10px;
 }
 
 .left {
-  width: 49%;
-  display: inline-block;
+  margin: auto;
+  width: 75%;
   padding-right: 1%;
   text-align: left;
-  float: left;
+}
+
+.modulesInnerContainer {
+  text-align: center;
 }
 
 @media desktop {
   .button {
     max-width: 200px;
+  }
+
+  .right {
+    padding-left: 1%;
+    float: left;
+    padding-top: 0px;
+    width: 49%;
+  }
+
+  .left {
+    float: left;
+    width: 49%;
   }
 }

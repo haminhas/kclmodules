@@ -32,7 +32,10 @@ export default class ModuleListCardComponent extends Component {
     const { moduleCode, fieldDisabled } = this.props;
 
     return (
-      <div >
+      <div className={style.fieldContainer}>
+      { fieldDisabled &&
+        <p className={style.disabled}>{moduleCode} <span className={style.compulsory}>- Compulsory</span> </p>
+        ||
         <label>
           <input
             className={style.field}
@@ -41,11 +44,8 @@ export default class ModuleListCardComponent extends Component {
             onChange={this.toggleChecked}
             disabled={fieldDisabled}
           />
-        <div className={style.code}>{moduleCode}</div>
-      </label>
-
-      {fieldDisabled &&
-        <div className={style.compulsory}>Compulsory Module</div>
+          <div className={style.code}>{moduleCode}</div>
+        </label>
       }
       </div>
     );

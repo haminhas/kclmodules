@@ -5,6 +5,7 @@
   border-radius: 5px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
   margin: 20px 0 0px;
+  min-width: 315px;
 }
 
 .expanded {
@@ -28,7 +29,7 @@
   max-width: 140px;
   position: absolute;
   right: 24px;
-  top: 15px;
+  top: 14px;
 }
 
 @media desktop {
