@@ -14,6 +14,7 @@ export default class ExpandablePanel extends Component {
     name: string.isRequired,
     fieldDisabled: bool,
     moduleOnChange: func.isRequired,
+    checked: bool.isRequired,
   };
 
   constructor(props) {
@@ -45,7 +46,7 @@ export default class ExpandablePanel extends Component {
   };
 
   render() {
-    const { children, moduleCode, name, fieldDisabled, moduleOnChange } = this.props;
+    const { children, moduleCode, name, fieldDisabled, moduleOnChange, checked } = this.props;
     const { expanded } = this.state;
     const className = classnames(style.expandablePanel, {
       [style.expanded]: expanded,
@@ -57,6 +58,7 @@ export default class ExpandablePanel extends Component {
             moduleCode={moduleCode}
             name={name}
             fieldDisabled={fieldDisabled}
+            checked={checked}
             moduleOnChange={moduleOnChange}
           />
         <div className={style.buttonIcon} onClick={() => this.toggleView()}>View Timetable</div>

@@ -53,9 +53,9 @@ const dashBoardReducer = (state = getInitialState(), action) => {
   case MODULE_ON_CHANGE:
     let modules = '';
     if (action.name === 'newModules') {
-      modules = state.newModules;
+      modules = state.newModules.slice();
     } else {
-      modules = state.oldModules;
+      modules = state.oldModules.slice();
     }
     modules.forEach((item, i) => { if (item.code === action.code) modules[i].checked = action.checked; });
 

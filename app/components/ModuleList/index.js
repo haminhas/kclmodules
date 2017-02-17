@@ -15,6 +15,7 @@ const ModuleListComponent = props => {
             key={index}
             moduleCode={item.code}
             name={name}
+            checked={item.checked}
             fieldDisabled={item.compulsory}
             moduleOnChange={moduleOnChange}
           >

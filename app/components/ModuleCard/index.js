@@ -1,37 +1,16 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import style from './style';
 
 const { func, string, bool} = PropTypes;
+const ModuleListCardComponent = props => {
+  const { moduleCode, fieldDisabled, checked, moduleOnChange, name } = props;
 
-export default class ModuleListCardComponent extends Component {
-  static propTypes = {
-    moduleCode: string.isRequired,
-    name: string.isRequired,
-    fieldDisabled: bool,
-    checked: bool,
-    moduleOnChange: func.isRequired,
+  const toggleChecked = (event) => {
+    const val = event.target.checked;
+    moduleOnChange(name, moduleCode, val);
   };
 
-  state = {
-    checked: false,
-  };
-
-  toggleChecked = () => {
-    this.setState(({ checked }) => ({
-      checked: !checked,
-    }));
-    this.props.moduleOnChange(
-      this.props.name,
-      this.props.moduleCode,
-      !this.state.checked
-    );
-  };
-
-  render() {
-    const { checked } = this.state;
-    const { moduleCode, fieldDisabled } = this.props;
-
-    return (
+  return (
       <div className={style.fieldContainer}>
       { fieldDisabled &&
         <p className={style.disabled}>{moduleCode} <span className={style.compulsory}>- Compulsory</span> </p>
@@ -41,13 +20,22 @@ export default class ModuleListCardComponent extends Component {
             className={style.field}
             type="checkbox"
             checked={checked}
-            onChange={this.toggleChecked}
+            onChange={toggleChecked}
             disabled={fieldDisabled}
           />
           <div className={style.code}>{moduleCode}</div>
         </label>
       }
       </div>
-    );
-  }
-}
+  );
+};
+
+ModuleListCardComponent.propTypes = {
+  moduleCode: string.isRequired,
+  name: string.isRequired,
+  fieldDisabled: bool,
+  checked: bool.isRequired,
+  moduleOnChange: func.isRequired,
+};
+
+export default ModuleListCardComponent;
