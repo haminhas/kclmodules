@@ -46,7 +46,7 @@ export default class ModuleListFormComponent extends Component {
 
     return (
       <div className={style.modulesContainer}>
-        <div>
+        <div className={style.modulesInnerContainer}>
           <div className={style.left}>
             <ModuleList
               title="Current Modules"

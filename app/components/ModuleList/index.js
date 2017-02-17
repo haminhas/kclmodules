@@ -2,6 +2,7 @@ import React from 'react';
 import Title from 'app/components/Title';
 import ExpandablePanel from 'app/components/ExpandablePanel';
 import TimetableList from 'app/components/TimetableList';
+import style from './style';
 
 const ModuleListComponent = props => {
   const { modules, title, moduleTimetables, name, moduleOnChange } = props;
@@ -9,7 +10,7 @@ const ModuleListComponent = props => {
     <ul>
     <Title type="large">{title}</Title>
     { modules.map((item, index) => (
-        <li key={index}>
+        <li key={index} className={style.item}>
           <ExpandablePanel
             key={index}
             moduleCode={item.code}
