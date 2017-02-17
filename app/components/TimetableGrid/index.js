@@ -1,6 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import TimetableGridCard from 'app/components/TimetableGridCard';
 import classnames from 'classnames';
+import Media from 'react-media';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import style from './style.css';
 const { array, func, bool } = PropTypes;
@@ -32,28 +34,71 @@ export default class TimetableGrid extends Component {
       amend(timetable);
     };
 
+    const True = true;
+    const False = false;
+
     return (
       <div className={style.timetableGridContainer}>
-        <div className={style.timetable}>
-          <ul>
-            <div className={style.cardContianer}>
-              <TimetableGridCard day="Monday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'mon')}/>
+      <Media query="(max-width: 750px)">
+          {matches => matches ? (
+            <Tabs>
+              <TabList>
+                <Tab>Mon</Tab>
+                <Tab>Tue</Tab>
+                <Tab>Wed</Tab>
+                <Tab>Thu</Tab>
+                <Tab>Fri</Tab>
+              </TabList>
+
+              <TabPanel>
+                <div className={style.cardContianer}>
+                  <TimetableGridCard hideDay={True} day="Monday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'mon')}/>
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <div className={style.cardContianer}>
+                  <TimetableGridCard hideDay={True} day="Tuesday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'tue')}/>
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <div className={style.cardContianer}>
+                  <TimetableGridCard hideDay={True} day="Wednesday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'wed')}/>
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <div className={style.cardContianer}>
+                  <TimetableGridCard hideDay={True} day="Thursday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'thu')}/>
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <div className={style.cardContianer}>
+                  <TimetableGridCard hideDay={True} day="Friday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'fri')}/>
+                </div>
+              </TabPanel>
+            </Tabs>
+          ) : (
+            <div className={style.timetable}>
+              <ul>
+                <div className={style.cardContianer}>
+                  <TimetableGridCard day="Monday" hideDay={False} sessions={timetable.filter((x) => x.day.toLowerCase() === 'mon')}/>
+                </div>
+                <div className={style.cardContianer}>
+                  <TimetableGridCard day="Tuesday" hideDay={False} sessions={timetable.filter((x) => x.day.toLowerCase() === 'tue')}/>
+                </div>
+                <div className={style.cardContianer}>
+                  <TimetableGridCard day="Wednesday" hideDay={False} sessions={timetable.filter((x) => x.day.toLowerCase() === 'wed')}/>
+                </div>
+                <div className={style.cardContianer}>
+                  <TimetableGridCard day="Thursday" hideDay={False} sessions={timetable.filter((x) => x.day.toLowerCase() === 'thu')}/>
+                </div>
+                <div className={style.cardContianer}>
+                  <TimetableGridCard day="Friday" hideDay={False} sessions={timetable.filter((x) => x.day.toLowerCase() === 'fri')}/>
+                </div>
+              </ul>
             </div>
-            <div className={style.cardContianer}>
-              <TimetableGridCard day="Tuesday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'tue')}/>
-            </div>
-            <div className={style.cardContianer}>
-              <TimetableGridCard day="Wednesday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'wed')}/>
-            </div>
-            <div className={style.cardContianer}>
-              <TimetableGridCard day="Thursday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'thu')}/>
-            </div>
-            <div className={style.cardContianer}>
-              <TimetableGridCard day="Friday" sessions={timetable.filter((x) => x.day.toLowerCase() === 'fri')}/>
-            </div>
-          </ul>
-        </div>
-        <div className={style.buttonDiv}>
+          )}
+        </Media>
+        <div>
         <button
           type="submit"
           disabled={!clash}
