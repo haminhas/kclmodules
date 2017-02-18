@@ -172,3 +172,18 @@ export async function getProgrammeModules(studentid, pool = pools) {
     throw new Error(`[BadGateway] ${err.message}`);
   }
 }
+
+export async function getSpecialisation(studentid, pool = pools) {
+  try {
+    const sql = `SELECT sp.id,
+                         sp.name
+                 FROM    specialisation AS sp
+                 INNER JOIN students AS s
+                 ON      sp.programmeid = s.programmeid
+                 WHERE   s.id = '${studentid}';`;
+    const {rows} =  await pool.query(sql);
+    return rows;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}

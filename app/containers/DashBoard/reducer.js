@@ -12,6 +12,7 @@ import {
   AMEDNMENT_SUCCESS,
   AMEDNMENT_FAIL,
   MODULE_ON_CHANGE,
+  SPEC_SUCCESS,
 } from './actions';
 
 const getInitialState = () => ({
@@ -23,10 +24,11 @@ const getInitialState = () => ({
   modulesInvalid: true,
 });
 
-const invalid = (modules, state) => {
+const invalid = (state) => {
   const newM = state.newModules.filter((x) => x.checked);
   const old = state.oldModules.filter((x) => x.checked);
-  if (newM.length === old.length) {
+  console.log(newM.length === old.length);
+  if (newM.length === old.length && newM.length > 0 && old.length > 0) {
     return false;
   }
   return true;
@@ -38,6 +40,9 @@ const mod = (action) => {
       x.code !== action.modules[0][i].code
     );
   }
+
+  console.log(action);
+
 
   for (const obj of action.modules[0]) {
     obj.checked = false;
@@ -63,13 +68,13 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       return {
         ...state,
         newModules: modules,
-        modulesInvalid: invalid(modules, state),
+        modulesInvalid: invalid(state),
       };
     }
     return {
       ...state,
       oldModules: modules,
-      modulesInvalid: invalid(modules, state),
+      modulesInvalid: invalid(state),
     };
   case CHECK_CLASH_SUCCESS:
     if (action.result[0]) {
@@ -85,6 +90,14 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       ...state,
       checkClash: false,
       checkClashLoading: false,
+    };
+  case SPEC_SUCCESS:
+    for (const obj of action.specialisation) {
+      obj.checked = false;
+    }
+    return {
+      ...state,
+      specialisation: action.specialisation,
     };
   case GET_MODULE_TIMETABLE_SUCCESS:
     return {

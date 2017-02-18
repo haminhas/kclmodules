@@ -16,6 +16,8 @@ import {
   AMEDNMENT_REQUEST,
   amendmentSuccess,
   amendmentFail,
+  specSuccess,
+  specFail,
 } from './actions';
 
 import { loginWorker } from 'app/containers/AccountWidget/saga';
@@ -40,6 +42,15 @@ export function* getModulesWorker(userID) {
   }
 }
 
+export function* specWorker() {
+  try {
+    const specialisation = yield call(fetch, 'POST', '/specialisation');
+    yield put(specSuccess(specialisation));
+  } catch (error) {
+    yield put(specFail(error));
+  }
+}
+
 export function* checkClashWorker({ data }) {
   try {
     const {newModule, oldModule} = data;
@@ -57,6 +68,7 @@ export function* getUserIDWorker() {
     const userID = yield call(fetch, 'GET', '/user');
     yield call(loginWorker);
     yield call(getModulesWorker, userID);
+    yield call(specWorker);
     yield put(getUserIDSuccess(userID));
   } catch (error) {
     yield put(getUserIDFail(error));

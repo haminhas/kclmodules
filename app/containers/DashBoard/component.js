@@ -4,7 +4,8 @@ import ModuleListForm from 'app/containers/ModuleListForm';
 import Loading from 'react-loading';
 import classnames from 'classnames';
 import TimetableGrid from 'app/components/TimetableGrid';
-
+import ExpandablePanel from 'app/components/ExpandablePanel';
+import SpecList from 'app/components/SpecList';
 
 const { func, string, bool, array } = PropTypes;
 
@@ -22,6 +23,7 @@ export default class DashBoardComponent extends Component {
     oldModules: array,
     moduleTimetables: array,
     amendment: func.isRequired,
+    specialisation: array,
   };
 
   componentWillMount() {
@@ -39,6 +41,7 @@ export default class DashBoardComponent extends Component {
       newTimetable,
       moduleTimetables,
       amendment,
+      specialisation,
     } = this.props;
 
     const mainStyle = classnames(
@@ -53,6 +56,13 @@ export default class DashBoardComponent extends Component {
         <div className={style.name}>
           <span className={style.four}>Welcome {userID}</span>
         </div>
+
+        { specialisation && <ExpandablePanel label="View Specialisation">
+            <span>Specialisation</span>
+            <SpecList specialisation={specialisation}/>
+          </ExpandablePanel>
+        }
+
         <ModuleListForm
           modules={oldModules}
           newModules={newModules}

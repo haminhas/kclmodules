@@ -7,6 +7,7 @@ import {
   getModuleTimetable,
   removeOldModules,
   insertStudentTimetable,
+  getSpecialisation,
  } from './db';
 
 
@@ -33,6 +34,11 @@ export default (app) => {
     if (req.isAuthenticated()) { return next(); }
     return res.redirect('/');
   };
+
+  app.post('/specialisation', ensureAuthenticated, async (req, res) => {
+    const response = await getSpecialisation(req.user.alias);
+    return res.json(response);
+  });
 
   app.get('/dashboard', ensureAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, '../../dist/index.html'));

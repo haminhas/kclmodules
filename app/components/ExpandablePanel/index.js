@@ -1,20 +1,14 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames';
-import ModuleCard from 'app/components/ModuleCard';
-
 import style from './style.css';
 
-const { bool, string, node, func } = PropTypes;
+const { bool, node, string } = PropTypes;
 
 export default class ExpandablePanel extends Component {
   static propTypes = {
     children: node.isRequired,
     expanded: bool,
-    moduleCode: string.isRequired,
-    name: string.isRequired,
-    fieldDisabled: bool,
-    moduleOnChange: func.isRequired,
-    checked: bool.isRequired,
+    label: string.isRequired,
   };
 
   constructor(props) {
@@ -46,7 +40,7 @@ export default class ExpandablePanel extends Component {
   };
 
   render() {
-    const { children, moduleCode, name, fieldDisabled, moduleOnChange, checked } = this.props;
+    const { children, label } = this.props;
     const { expanded } = this.state;
     const className = classnames(style.expandablePanel, {
       [style.expanded]: expanded,
@@ -54,16 +48,10 @@ export default class ExpandablePanel extends Component {
     return (
       <div className={className}>
         <div className={style.button}>
-          <ModuleCard
-            moduleCode={moduleCode}
-            name={name}
-            fieldDisabled={fieldDisabled}
-            checked={checked}
-            moduleOnChange={moduleOnChange}
-          />
-        <div className={style.buttonIcon} onClick={() => this.toggleView()}>View Timetable</div>
+          {children[0]}
+        <div className={style.buttonIcon} onClick={() => this.toggleView()}>{label}</div>
         </div>
-        {expanded ? <div className={style.container}>{children}</div> : null}
+        {expanded ? <div className={style.container}>{children[1]}</div> : null}
       </div>
     );
   }

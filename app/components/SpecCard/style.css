@@ -1,0 +1,46 @@
+@value desktop, bermudaGreen from '../../styles/variables.css';
+
+.compulsory {
+  font-size: 14px;
+  height: 18px;
+  color: bermudaGreen;
+}
+
+.fieldContainer {
+  height: 15px;
+}
+
+.fieldDisabled{
+  display : inline;
+  height: 18px;
+  top: 17px;
+  float: left;
+  padding-bottom: 5px;
+  width: auto;
+}
+
+.field{
+  height: 18px;
+  top: 17px;
+  float: left;
+  padding-bottom: 5px;
+}
+
+.disabled {
+  margin-top: -2px;
+  position: absolute;
+  height: 18px;
+}
+
+.code {
+  margin-left: 20px;
+  position: absolute;
+  height: 18px;
+  margin-top: -4px;
+}
+
+@media desktop {
+  .compulsory {
+    width: 87%;
+  }
+}
