@@ -12,6 +12,7 @@ import {
   AMEDNMENT_SUCCESS,
   AMEDNMENT_FAIL,
   MODULE_ON_CHANGE,
+  SPEC_ON_CHANGE,
   SPEC_SUCCESS,
 } from './actions';
 
@@ -34,23 +35,31 @@ const invalid = (state) => {
   return true;
 };
 
+const loop = (arr) => {
+  for (const obj of arr) {
+    obj.checked = false;
+  }
+};
+
 const mod = (action) => {
   for (let i = 0; i < action.modules[0].length; i++) {
     action.modules[1] = action.modules[1].filter((x) =>
       x.code !== action.modules[0][i].code
     );
   }
+  loop(action.modules[0]);
+  loop(action.modules[1]);
+};
 
-  console.log(action);
-
-
-  for (const obj of action.modules[0]) {
-    obj.checked = false;
-  }
-
-  for (const obj of action.modules[1]) {
-    obj.checked = false;
-  }
+const filterSpec = (currentModules, filterModules, negate = false) => {
+  const modules = new Set();
+  currentModules.map((x) => {
+    filterModules.map((item) => {
+      if (!negate && item.modulecode === x.code) modules.add(x);
+      if (negate && item.modulecode !== x.code) modules.add(x);
+    });
+  });
+  return [...modules];
 };
 
 const dashBoardReducer = (state = getInitialState(), action) => {
@@ -76,6 +85,35 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       oldModules: modules,
       modulesInvalid: invalid(state),
     };
+  case SPEC_ON_CHANGE:
+    const newSpec = state.specialisation.slice();
+    state.oldModules = state.oldOriginal.slice();
+    state.newModules = state.newOriginal.slice();
+    newSpec.map((item, i) => (state.specialisation[i].checked = false));
+    newSpec.map((item, i) => {
+      if (item.id === action.id) {
+        state.specialisation[i].checked = action.checked;
+      }
+    });
+    if (action.checked) {
+      const specModules = state.specModules.filter((x) => x.specid === action.id);
+      const newModules = filterSpec(state.newModules, specModules);
+      const oldModules = filterSpec(state.oldModules, specModules, true);
+      return {
+        ...state,
+        specialisation: newSpec,
+        oldModules: oldModules,
+        newModules: newModules,
+        oldOriginal: state.oldModules.slice(),
+        newOriginal: state.newModules.slice(),
+      };
+    }
+    return {
+      ...state,
+      specialisation: newSpec,
+      oldModules: state.oldOriginal.slice(),
+      newModules: state.newOriginal.slice(),
+    };
   case CHECK_CLASH_SUCCESS:
     if (action.result[0]) {
       return {
@@ -92,12 +130,11 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       checkClashLoading: false,
     };
   case SPEC_SUCCESS:
-    for (const obj of action.specialisation) {
-      obj.checked = false;
-    }
+    loop(action.specialisation[0]);
     return {
       ...state,
-      specialisation: action.specialisation,
+      specialisation: action.specialisation[0],
+      specModules: action.specialisation[1],
     };
   case GET_MODULE_TIMETABLE_SUCCESS:
     return {
@@ -125,6 +162,8 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       oldModules: action.modules[0],
       newModules: action.modules[1],
       loading: false,
+      oldOriginal: action.modules[0],
+      newOriginal: action.modules[1],
     };
   case CHECK_CLASH_FAIL:
     return {

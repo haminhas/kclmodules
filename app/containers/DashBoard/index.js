@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import DashBoardComponent from './component';
-import { getUserID, checkClash, amendment } from './actions';
+import { getUserID, checkClash, amendment, specOnChange } from './actions';
 
 const mapStateToProps = state => ({
   userID: state.dashBoard.userID,
@@ -21,6 +21,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getUserID,
   checkClash,
   amendment,
+  specOnChange,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoardComponent);

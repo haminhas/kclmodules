@@ -16,6 +16,14 @@ export const AMEDNMENT_FAIL = 'AMEDNMENT_FAIL';
 export const SPEC_SUCCESS = 'SPEC_SUCCESS';
 export const SPEC_FAIL = 'SPEC_FAIL';
 export const MODULE_ON_CHANGE = 'MODULE_ON_CHANGE';
+export const SPEC_ON_CHANGE = 'SPEC_ON_CHANGE';
+
+export const specOnChange = (id, name, checked) => ({
+  type: SPEC_ON_CHANGE,
+  id,
+  name,
+  checked
+});
 
 export const specSuccess = specialisation => ({
   type: SPEC_SUCCESS,

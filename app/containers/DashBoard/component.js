@@ -24,6 +24,7 @@ export default class DashBoardComponent extends Component {
     moduleTimetables: array,
     amendment: func.isRequired,
     specialisation: array,
+    specOnChange: func.isRequired,
   };
 
   componentWillMount() {
@@ -42,6 +43,7 @@ export default class DashBoardComponent extends Component {
       moduleTimetables,
       amendment,
       specialisation,
+      specOnChange
     } = this.props;
 
     const mainStyle = classnames(
@@ -59,7 +61,7 @@ export default class DashBoardComponent extends Component {
 
         { specialisation && <ExpandablePanel label="View Specialisation">
             <span>Specialisation</span>
-            <SpecList specialisation={specialisation}/>
+            <SpecList specialisation={specialisation} specOnChange={specOnChange}/>
           </ExpandablePanel>
         }
 

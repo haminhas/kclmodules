@@ -176,11 +176,28 @@ export async function getProgrammeModules(studentid, pool = pools) {
 export async function getSpecialisation(studentid, pool = pools) {
   try {
     const sql = `SELECT sp.id,
-                         sp.name
-                 FROM    specialisation AS sp
+                        sp.name
+                 FROM   specialisation AS sp
                  INNER JOIN students AS s
-                 ON      sp.programmeid = s.programmeid
-                 WHERE   s.id = '${studentid}';`;
+                 ON     sp.programmeid = s.programmeid
+                 WHERE  s.id = '${studentid}';`;
+    const {rows} =  await pool.query(sql);
+    return rows;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}
+
+export async function getSpecialisationModules(studentid, pool = pools) {
+  try {
+    const sql = `SELECT sm.specid,
+                        sm.moduleCode
+                 FROM   specialisationModules AS sm
+                 INNER JOIN specialisation AS sp
+                 ON     sp.id = sm.specid
+                 INNER JOIN students AS s
+                 ON     sp.programmeid = s.programmeid
+                 WHERE  s.id = '${studentid}';`;
     const {rows} =  await pool.query(sql);
     return rows;
   } catch (err) {
