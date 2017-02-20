@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
   newModules: state.dashBoard.newModules,
   oldModules: state.dashBoard.oldModules,
   modulesInvalid: state.dashBoard.modulesInvalid,
+  moduleTimetables: state.dashBoard.moduleTimetables,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

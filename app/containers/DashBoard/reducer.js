@@ -14,6 +14,7 @@ import {
   MODULE_ON_CHANGE,
   SPEC_ON_CHANGE,
   SPEC_SUCCESS,
+  EXPANDED_ON_CHANGE,
 } from './actions';
 
 const getInitialState = () => ({
@@ -23,6 +24,7 @@ const getInitialState = () => ({
   checkClash: false,
   checkClashLoading: false,
   modulesInvalid: true,
+  expanded: false,
 });
 
 const invalid = (state) => {
@@ -64,6 +66,11 @@ const filterSpec = (currentModules, filterModules, negate = false) => {
 
 const dashBoardReducer = (state = getInitialState(), action) => {
   switch (action && action.type) {
+  case EXPANDED_ON_CHANGE:
+    return {
+      ...state,
+      expanded: action.expanded,
+    };
   case MODULE_ON_CHANGE:
     let modules = '';
     if (action.name === 'newModules') {

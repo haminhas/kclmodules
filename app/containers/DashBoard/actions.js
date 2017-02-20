@@ -17,6 +17,12 @@ export const SPEC_SUCCESS = 'SPEC_SUCCESS';
 export const SPEC_FAIL = 'SPEC_FAIL';
 export const MODULE_ON_CHANGE = 'MODULE_ON_CHANGE';
 export const SPEC_ON_CHANGE = 'SPEC_ON_CHANGE';
+export const EXPANDED_ON_CHANGE = 'EXPANDED_ON_CHANGE';
+
+export const expandedOnChange = (expanded) => ({
+  type: EXPANDED_ON_CHANGE,
+  expanded,
+});
 
 export const specOnChange = (id, name, checked) => ({
   type: SPEC_ON_CHANGE,

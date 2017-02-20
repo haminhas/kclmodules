@@ -7,12 +7,17 @@ import ModuleCard from 'app/components/ModuleCard';
 
 const ModuleListComponent = props => {
   const { modules, title, moduleTimetables, name, moduleOnChange } = props;
+  const False = false;
   return (
     <ul>
     <Title type="large">{title}</Title>
     { modules.map((item, index) => (
         <li key={index} className={style.item}>
-          <ExpandablePanel key={index} label="View Timetable">
+          <ExpandablePanel
+            key={index}
+            label="View Timetable"
+            executeOnChange={False}
+          >
           <ModuleCard
             moduleCode={item.code}
             name={name}

@@ -2,13 +2,15 @@ import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames';
 import style from './style.css';
 
-const { bool, node, string } = PropTypes;
+const { bool, node, string, func } = PropTypes;
 
 export default class ExpandablePanel extends Component {
   static propTypes = {
     children: node.isRequired,
     expanded: bool,
     label: string.isRequired,
+    onChange: func,
+    executeOnChange: bool.isRequired,
   };
 
   constructor(props) {
@@ -37,6 +39,7 @@ export default class ExpandablePanel extends Component {
     this.setState({
       expanded: !this.state.expanded,
     });
+    this.props.executeOnChange && this.props.onChange(!this.state.expanded);
   };
 
   render() {
