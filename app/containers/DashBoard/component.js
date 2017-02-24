@@ -14,7 +14,6 @@ export default class DashBoardComponent extends Component {
     getUserID: func.isRequired,
     userID: string.isRequired,
     loading: bool.isRequired,
-    checkClash: func.isRequired,
     clash: bool.isRequired,
     checkClashLoading: bool.isRequired,
     firstClash: bool.isRequired,

@@ -4,18 +4,24 @@ import {
   GET_USERID_FAIL,
   GET_MODULES_SUCCESS,
   GET_MODULES_FAIL,
-  CHECK_CLASH_SUCCESS,
-  CHECK_CLASH_FAIL,
-  CHECK_CLASH_REQUEST,
   GET_MODULE_TIMETABLE_SUCCESS,
   GET_MODULE_TIMETABLE_FAIL,
-  AMEDNMENT_SUCCESS,
-  AMEDNMENT_FAIL,
-  MODULE_ON_CHANGE,
   SPEC_ON_CHANGE,
   SPEC_SUCCESS,
   EXPANDED_ON_CHANGE,
 } from './actions';
+
+import {
+  MODULE_ON_CHANGE,
+  CHECK_CLASH_REQUEST,
+  CHECK_CLASH_FAIL,
+  CHECK_CLASH_SUCCESS,
+} from 'app/containers/ModuleListForm/actions';
+
+import {
+  AMEDNMENT_SUCCESS,
+  AMEDNMENT_FAIL,
+} from 'app/containers/TimetableGrid/actions';
 
 const getInitialState = () => ({
   userID: '',

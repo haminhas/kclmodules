@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { amendment } from 'app/containers/DashBoard/actions';
+// import { amendment } from 'app/containers/DashBoard/actions';
+import { amendment } from './actions';
+
 import TimetableGridComponent from './component';
 
 const mapStateToProps = state => ({

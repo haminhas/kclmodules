@@ -6,14 +6,6 @@ import {
 } from './actions';
 
 describe('error reducer', () => {
-  describe('initial state', () => {
-    it('is initially null', () => {
-      const expectedState = null;
-      const actualState = reducer(null, {});
-      expect(actualState).to.deep.equal(expectedState);
-    });
-  });
-
   describe('reducer body', () => {
     it('adds error to state on APPLICATION_ERROR', () => {
       const expectedState = new Error('Some message.');

@@ -131,7 +131,7 @@ export async function decideSwap(studentid, oldModules, newModules) {
     }
     for (const mod of moduleTimetables) {
       const response = await checkModuleGroups(currentTimetable, mod);
-      if (!response) return false;
+      if (!response) return [false];
       currentTimetable = finalTimetable;
     }
     return [true, finalTimetable];

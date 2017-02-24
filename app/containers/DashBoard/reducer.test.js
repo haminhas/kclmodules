@@ -26,6 +26,7 @@ describe('dashBoard reducer', () => {
       userID: '',
       loading: true,
       firstClash: false,
+      expanded: false,
       checkClash: false,
       checkClashLoading: false,
       modulesInvalid: true,

@@ -1,10 +1,16 @@
 import { APPLICATION_ERROR, APPLICATION_NOTIFICATION, DISMISS_NOTIFICATION } from './actions';
 
 import {
-  CHECK_CLASH_SUCCESS,
-  AMEDNMENT_SUCCESS,
   SPEC_FAIL,
 } from 'app/containers/DashBoard/actions';
+
+import {
+  CHECK_CLASH_SUCCESS,
+} from 'app/containers/ModuleListForm/actions';
+
+import {
+  AMEDNMENT_SUCCESS,
+} from 'app/containers/TimetableGrid/actions';
 
 export const errorState = message => ({
   message,
@@ -23,10 +29,10 @@ export const errorReducer = (state = null, action) => {
   case AMEDNMENT_SUCCESS:
     return notificationState('Ammendment Successfull');
   case CHECK_CLASH_SUCCESS:
-    if (action.result[0]) {
-      return notificationState('Valid Selection');
+    if (!action.result[0]) {
+      return errorState('Invalid Selection, Please try again');
     }
-    return errorState('Invalid Selection, Please try again');
+    return notificationState('Valid Selection');
   case APPLICATION_ERROR:
     return errorState(action.error.message);
   case APPLICATION_NOTIFICATION:
