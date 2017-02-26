@@ -4,15 +4,25 @@ import {
   GET_USERID_FAIL,
   GET_MODULES_SUCCESS,
   GET_MODULES_FAIL,
-  CHECK_CLASH_SUCCESS,
-  CHECK_CLASH_FAIL,
-  CHECK_CLASH_REQUEST,
   GET_MODULE_TIMETABLE_SUCCESS,
   GET_MODULE_TIMETABLE_FAIL,
+  SPEC_ON_CHANGE,
+  SPEC_SUCCESS,
+  EXPANDED_ON_CHANGE,
+} from './actions';
+
+import {
+  MODULE_ON_CHANGE,
+  CHECK_CLASH_REQUEST,
+  CHECK_CLASH_FAIL,
+  CLASH_SUCCESS,
+  CLASH_FAIL
+} from 'app/containers/ModuleListForm/actions';
+
+import {
   AMEDNMENT_SUCCESS,
   AMEDNMENT_FAIL,
-  MODULE_ON_CHANGE,
-} from './actions';
+} from 'app/containers/TimetableGrid/actions';
 
 const getInitialState = () => ({
   userID: '',
@@ -21,15 +31,22 @@ const getInitialState = () => ({
   checkClash: false,
   checkClashLoading: false,
   modulesInvalid: true,
+  expanded: false,
 });
 
-const invalid = (modules, state) => {
+const invalid = (state) => {
   const newM = state.newModules.filter((x) => x.checked);
   const old = state.oldModules.filter((x) => x.checked);
-  if (newM.length === old.length) {
+  if (newM.length === old.length && newM.length > 0 && old.length > 0) {
     return false;
   }
   return true;
+};
+
+const loop = (arr) => {
+  for (const obj of arr) {
+    obj.checked = false;
+  }
 };
 
 const mod = (action) => {
@@ -38,18 +55,28 @@ const mod = (action) => {
       x.code !== action.modules[0][i].code
     );
   }
+  loop(action.modules[0]);
+  loop(action.modules[1]);
+};
 
-  for (const obj of action.modules[0]) {
-    obj.checked = false;
-  }
-
-  for (const obj of action.modules[1]) {
-    obj.checked = false;
-  }
+const filterSpec = (currentModules, filterModules, negate = false) => {
+  const modules = new Set();
+  currentModules.map((x) => {
+    filterModules.map((item) => {
+      if (!negate && item.modulecode === x.code) modules.add(x);
+      if (negate && item.modulecode !== x.code) modules.add(x);
+    });
+  });
+  return [...modules];
 };
 
 const dashBoardReducer = (state = getInitialState(), action) => {
   switch (action && action.type) {
+  case EXPANDED_ON_CHANGE:
+    return {
+      ...state,
+      expanded: action.expanded,
+    };
   case MODULE_ON_CHANGE:
     let modules = '';
     if (action.name === 'newModules') {
@@ -63,28 +90,63 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       return {
         ...state,
         newModules: modules,
-        modulesInvalid: invalid(modules, state),
+        modulesInvalid: invalid(state),
       };
     }
     return {
       ...state,
       oldModules: modules,
-      modulesInvalid: invalid(modules, state),
+      modulesInvalid: invalid(state),
     };
-  case CHECK_CLASH_SUCCESS:
-    if (action.result[0]) {
+  case SPEC_ON_CHANGE:
+    const newSpec = state.specialisation.slice();
+    state.oldModules = state.oldOriginal.slice();
+    state.newModules = state.newOriginal.slice();
+    newSpec.map((item, i) => (state.specialisation[i].checked = false));
+    newSpec.map((item, i) => {
+      if (item.id === action.id) {
+        state.specialisation[i].checked = action.checked;
+      }
+    });
+    if (action.checked) {
+      const specModules = state.specModules.filter((x) => x.specid === action.id);
+      const newModules = filterSpec(state.newModules, specModules);
+      const oldModules = filterSpec(state.oldModules, specModules, true);
       return {
         ...state,
-        firstClash: true,
-        checkClash: true,
-        checkClashLoading: false,
-        newTimetable: action.result[1],
+        specialisation: newSpec,
+        oldModules: oldModules,
+        newModules: newModules,
+        oldOriginal: state.oldModules.slice(),
+        newOriginal: state.newModules.slice(),
       };
     }
     return {
       ...state,
+      specialisation: newSpec,
+      oldModules: state.oldOriginal.slice(),
+      newModules: state.newOriginal.slice(),
+    };
+  case CLASH_SUCCESS:
+    return {
+      ...state,
+      firstClash: true,
+      checkClash: true,
+      checkClashLoading: false,
+      newTimetable: action.result[1],
+    };
+  case CLASH_FAIL:
+    return {
+      ...state,
       checkClash: false,
       checkClashLoading: false,
+    };
+  case SPEC_SUCCESS:
+    loop(action.specialisation[0]);
+    return {
+      ...state,
+      specialisation: action.specialisation[0],
+      specModules: action.specialisation[1],
     };
   case GET_MODULE_TIMETABLE_SUCCESS:
     return {
@@ -112,6 +174,8 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       oldModules: action.modules[0],
       newModules: action.modules[1],
       loading: false,
+      oldOriginal: action.modules[0],
+      newOriginal: action.modules[1],
     };
   case CHECK_CLASH_FAIL:
     return {

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ModuleListFormComponent from './component';
-import { checkClash, moduleOnChange } from 'app/containers/DashBoard/actions';
+import { checkClash, moduleOnChange } from './actions';
 
 
 const mapStateToProps = state => ({
@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
   newModules: state.dashBoard.newModules,
   oldModules: state.dashBoard.oldModules,
   modulesInvalid: state.dashBoard.modulesInvalid,
+  moduleTimetables: state.dashBoard.moduleTimetables,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -5,6 +5,11 @@
   color: aoi;
 }
 
+.specContainer {
+  width: 75%;
+  margin: auto;
+}
+
 .name {
   padding-top: 15px;
 }
@@ -42,4 +47,10 @@
   -o-filter: blur(3px);
   -ms-filter: blur(3px);
   filter: blur(3px);
+}
+
+@media desktop {
+  .specContainer {
+    width: 100%;
+  }
 }

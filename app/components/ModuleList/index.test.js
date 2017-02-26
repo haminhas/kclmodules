@@ -19,9 +19,30 @@ describe('app/components/ModuleList', () => {
       },
     ];
 
+    const moduleTimetables = [
+      {
+        code: 'm1',
+        name: 'test',
+      },
+      {
+        code: 'm2',
+        name: 'test',
+      },
+    ];
+
+    const title = 'oldModules';
+
+    const moduleOnChange = () => {
+      return true;
+    };
+
     component = shallow(
       <ModuleList
         modules={modules}
+        title={title}
+        name="testName"
+        moduleOnChange={moduleOnChange}
+        moduleTimetables={moduleTimetables}
       />
     );
   });
@@ -33,10 +54,6 @@ describe('app/components/ModuleList', () => {
   describe('Project elements', () => {
     it('displays an element for each module', () => {
       expect(component.find(ExpandablePanel)).to.have.length(2);
-    });
-
-    it('passes through the code', () => {
-      expect(component.find(ExpandablePanel).first().prop('moduleCode')).to.equal('m1');
     });
 
     it('sets a key to identify this unique element', () => {

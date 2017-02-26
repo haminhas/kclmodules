@@ -4,22 +4,34 @@ export const GET_USERID_FAIL = 'GET_USERID_FAIL';
 export const GET_MODULES_SUCCESS = 'GET_MODULES_SUCCESS';
 export const GET_MODULES_FAIL = 'GET_MODULES_FAIL';
 export const GET_MODULES_REQUEST = 'GET_MODULES_REQUEST';
-export const CHECK_CLASH_REQUEST = 'CHECK_CLASH_REQUEST';
-export const CHECK_CLASH_SUCCESS = 'CHECK_CLASH_SUCCESS';
-export const CHECK_CLASH_FAIL = 'CHECK_CLASH_FAIL';
 export const GET_MODULE_TIMETABLE_REQUEST = 'GET_MODULE_TIMETABLE_REQUEST';
 export const GET_MODULE_TIMETABLE_SUCCESS = 'GET_MODULE_TIMETABLE_SUCCESS';
 export const GET_MODULE_TIMETABLE_FAIL = 'GET_MODULE_TIMETABLE_FAIL';
-export const AMEDNMENT_REQUEST = 'AMEDNMENT_REQUEST';
-export const AMEDNMENT_SUCCESS = 'AMEDNMENT_SUCCESS';
-export const AMEDNMENT_FAIL = 'AMEDNMENT_FAIL';
-export const MODULE_ON_CHANGE = 'MODULE_ON_CHANGE';
+export const SPEC_SUCCESS = 'SPEC_SUCCESS';
+export const SPEC_FAIL = 'SPEC_FAIL';
+export const SPEC_ON_CHANGE = 'SPEC_ON_CHANGE';
+export const EXPANDED_ON_CHANGE = 'EXPANDED_ON_CHANGE';
 
-export const moduleOnChange = (name, code, checked) => ({
-  type: MODULE_ON_CHANGE,
+export const expandedOnChange = (expanded) => ({
+  type: EXPANDED_ON_CHANGE,
+  expanded,
+});
+
+export const specOnChange = (id, name, checked) => ({
+  type: SPEC_ON_CHANGE,
+  id,
   name,
-  code,
   checked
+});
+
+export const specSuccess = specialisation => ({
+  type: SPEC_SUCCESS,
+  specialisation,
+});
+
+export const specFail = error => ({
+  type: SPEC_FAIL,
+  error,
 });
 
 export const getModuleTimetable = (moduleCodes) => ({
@@ -64,34 +76,4 @@ export const getModulesSuccess = modules => ({
 export const getModulesFail = error => ({
   type: GET_MODULES_FAIL,
   error,
-});
-
-export const checkClash = (data) => ({
-  type: CHECK_CLASH_REQUEST,
-  data,
-});
-
-export const checkClashSuccess = result => ({
-  type: CHECK_CLASH_SUCCESS,
-  result,
-});
-
-export const checkClashFail = error => ({
-  type: CHECK_CLASH_FAIL,
-  error,
-});
-
-export const amendment = timetable => ({
-  type: AMEDNMENT_REQUEST,
-  timetable,
-});
-
-export const amendmentSuccess = modules => ({
-  type: AMEDNMENT_SUCCESS,
-  modules,
-});
-
-export const amendmentFail = err => ({
-  type: AMEDNMENT_FAIL,
-  err,
 });

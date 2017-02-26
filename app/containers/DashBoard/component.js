@@ -3,8 +3,9 @@ import style from './style.css';
 import ModuleListForm from 'app/containers/ModuleListForm';
 import Loading from 'react-loading';
 import classnames from 'classnames';
-import TimetableGrid from 'app/components/TimetableGrid';
-
+import TimetableGrid from 'app/containers/TimetableGrid';
+import ExpandablePanel from 'app/components/ExpandablePanel';
+import SpecList from 'app/containers/SpecList';
 
 const { func, string, bool, array } = PropTypes;
 
@@ -13,15 +14,13 @@ export default class DashBoardComponent extends Component {
     getUserID: func.isRequired,
     userID: string.isRequired,
     loading: bool.isRequired,
-    checkClash: func.isRequired,
     clash: bool.isRequired,
     checkClashLoading: bool.isRequired,
     firstClash: bool.isRequired,
     newTimetable: array,
-    newModules: array,
-    oldModules: array,
-    moduleTimetables: array,
-    amendment: func.isRequired,
+    specialisation: array,
+    expanded: bool.isRequired,
+    expandedOnChange: func.isRequired,
   };
 
   componentWillMount() {
@@ -30,15 +29,14 @@ export default class DashBoardComponent extends Component {
 
   render() {
     const {
-      oldModules,
       userID,
       loading,
       checkClashLoading,
       clash,
-      newModules,
       newTimetable,
-      moduleTimetables,
-      amendment,
+      specialisation,
+      expanded,
+      expandedOnChange,
     } = this.props;
 
     const mainStyle = classnames(
@@ -48,17 +46,30 @@ export default class DashBoardComponent extends Component {
         [style.mainLoading]: checkClashLoading,
       });
 
+    const True = true;
+
     return !loading && (
       <div className={mainStyle}>
         <div className={style.name}>
           <span className={style.four}>Welcome {userID}</span>
         </div>
-        <ModuleListForm
-          modules={oldModules}
-          newModules={newModules}
-          newTimetable={newTimetable}
-          moduleTimetables={moduleTimetables}
-        />
+
+        { specialisation &&
+          <div className={style.specContainer}>
+            <ExpandablePanel
+              label="View Specialisation"
+              expanded={expanded}
+              onChange={expandedOnChange}
+              executeOnChange={True}
+            >
+              <span>Specialisation</span>
+              <SpecList />
+            </ExpandablePanel>
+          </div>
+        }
+
+        <ModuleListForm />
+
         { checkClashLoading &&
           <div className={style.loading}>
             <Loading type="spinningBubbles" color="#4500c0" />
@@ -66,7 +77,7 @@ export default class DashBoardComponent extends Component {
         }
         { newTimetable && clash &&
           <div className={style.timeGrid}>
-            <TimetableGrid timetable={newTimetable} amend={amendment} clash={clash}/>
+            <TimetableGrid clash={clash}/>
           </div>
         }
       </div>

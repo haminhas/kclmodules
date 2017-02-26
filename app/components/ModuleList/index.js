@@ -3,9 +3,11 @@ import Title from 'app/components/Title';
 import ExpandablePanel from 'app/components/ExpandablePanel';
 import TimetableList from 'app/components/TimetableList';
 import style from './style';
+import ModuleCard from 'app/components/ModuleCard';
 
 const ModuleListComponent = props => {
   const { modules, title, moduleTimetables, name, moduleOnChange } = props;
+  const False = false;
   return (
     <ul>
     <Title type="large">{title}</Title>
@@ -13,12 +15,16 @@ const ModuleListComponent = props => {
         <li key={index} className={style.item}>
           <ExpandablePanel
             key={index}
+            label="View Timetable"
+            executeOnChange={False}
+          >
+          <ModuleCard
             moduleCode={item.code}
             name={name}
             checked={item.checked}
             fieldDisabled={item.compulsory}
             moduleOnChange={moduleOnChange}
-          >
+          />
           <TimetableList name={item.code} modules={moduleTimetables}/>
           </ExpandablePanel>
         </li>

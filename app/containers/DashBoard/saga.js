@@ -8,27 +8,16 @@ import {
   GET_USERID_REQUEST,
   getModulesSuccess,
   getModulesFail,
-  CHECK_CLASH_REQUEST,
   checkClashSuccess,
   checkClashFail,
   getModuleTimetableSuccess,
   getModuleTimetableFail,
-  AMEDNMENT_REQUEST,
-  amendmentSuccess,
-  amendmentFail,
+  specSuccess,
+  specFail,
 } from './actions';
 
 import { loginWorker } from 'app/containers/AccountWidget/saga';
 
-export function* amendmentWorker({ timetable }) {
-  try {
-    const modules = yield call(fetch, 'POST', '/amend', { timetable });
-    yield put(amendmentSuccess(modules));
-    yield call(getUserIDWorker);
-  } catch (error) {
-    yield put(amendmentFail(error));
-  }
-}
 
 export function* getModulesWorker(userID) {
   try {
@@ -37,6 +26,15 @@ export function* getModulesWorker(userID) {
     yield put(getModulesSuccess(modules));
   } catch (error) {
     yield put(getModulesFail(error));
+  }
+}
+
+export function* specWorker() {
+  try {
+    const specialisation = yield call(fetch, 'POST', '/specialisation');
+    yield put(specSuccess(specialisation));
+  } catch (error) {
+    yield put(specFail(error));
   }
 }
 
@@ -57,6 +55,7 @@ export function* getUserIDWorker() {
     const userID = yield call(fetch, 'GET', '/user');
     yield call(loginWorker);
     yield call(getModulesWorker, userID);
+    yield call(specWorker);
     yield put(getUserIDSuccess(userID));
   } catch (error) {
     yield put(getUserIDFail(error));
@@ -72,14 +71,7 @@ export function* getModuleTimetableWorker(moduleCodes) {
   }
 }
 
-export function* amendmentWatcher() {
-  yield* takeLatest(AMEDNMENT_REQUEST, amendmentWorker);
-}
 
 export function* getUserIDWatcher() {
   yield* takeLatest(GET_USERID_REQUEST, getUserIDWorker);
-}
-
-export function* checkClashWatcher() {
-  yield* takeLatest(CHECK_CLASH_REQUEST, checkClashWorker);
 }

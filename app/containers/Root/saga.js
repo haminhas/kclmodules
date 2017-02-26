@@ -1,7 +1,8 @@
 import { fork } from 'redux-saga/effects';
-import { getUserIDWatcher, checkClashWatcher, amendmentWatcher } from 'app/containers/DashBoard/saga';
+import { getUserIDWatcher } from 'app/containers/DashBoard/saga';
 import { loginWatcher, logoutWatcher } from 'app/containers/AccountWidget/saga';
-
+import { checkClashWatcher } from 'app/containers/ModuleListForm/saga';
+import { amendmentWatcher } from 'app/containers/TimetableGrid/saga';
 
 export default function* () {
   yield fork(getUserIDWatcher);

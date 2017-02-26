@@ -1,6 +1,21 @@
-import { APPLICATION_ERROR, APPLICATION_NOTIFICATION, DISMISS_NOTIFICATION } from './actions';
+import {
+  APPLICATION_ERROR,
+  APPLICATION_NOTIFICATION,
+  DISMISS_NOTIFICATION,
+} from './actions';
 
-import { CHECK_CLASH_SUCCESS, AMEDNMENT_SUCCESS } from 'app/containers/DashBoard/actions';
+import {
+  SPEC_FAIL,
+} from 'app/containers/DashBoard/actions';
+
+import {
+  CLASH_SUCCESS,
+  CLASH_FAIL,
+} from 'app/containers/ModuleListForm/actions';
+
+import {
+  AMEDNMENT_SUCCESS,
+} from 'app/containers/TimetableGrid/actions';
 
 export const errorState = message => ({
   message,
@@ -14,12 +29,13 @@ export const notificationState = message => ({
 
 export const errorReducer = (state = null, action) => {
   switch (action && action.type) {
+  case SPEC_FAIL:
+    return errorState('Cannot get specialisations, Please try again');
   case AMEDNMENT_SUCCESS:
     return notificationState('Ammendment Successfull');
-  case CHECK_CLASH_SUCCESS:
-    if (action.result[0]) {
-      return notificationState('Valid Selection');
-    }
+  case CLASH_SUCCESS:
+    return notificationState('Valid Selection');
+  case CLASH_FAIL:
     return errorState('Invalid Selection, Please try again');
   case APPLICATION_ERROR:
     return errorState(action.error.message);
