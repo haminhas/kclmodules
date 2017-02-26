@@ -4,8 +4,9 @@ import fetch from 'app/fetch';
 
 import {
   CHECK_CLASH_REQUEST,
-  checkClashSuccess,
   checkClashFail,
+  clashSuccess,
+  clashFail,
 } from './actions';
 
 export function* checkClashWorker({ data }) {
@@ -14,7 +15,11 @@ export function* checkClashWorker({ data }) {
     const oldModules = oldModule.map((x) => x.code);
     const newModules = newModule.map((x) => x.code);
     const response = yield call(fetch, 'POST', '/checkClash', { oldModules, newModules });
-    yield put(checkClashSuccess(response));
+    if (response[0]) {
+      yield put(clashSuccess(response));
+    } else {
+      yield put(clashFail(response));
+    }
   } catch (error) {
     yield put(checkClashFail(error));
   }

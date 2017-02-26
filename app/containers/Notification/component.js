@@ -19,7 +19,7 @@ const Notification = props => {
           role="presentation"
           src={(props.notification.type === 'error' ? moodIcon : tickIcon)}
           className={style.moodIcon}
-        />
+         />
         <p>{props.notification.message}</p>
       </div>
     </div>

@@ -1,11 +1,16 @@
-import { APPLICATION_ERROR, APPLICATION_NOTIFICATION, DISMISS_NOTIFICATION } from './actions';
+import {
+  APPLICATION_ERROR,
+  APPLICATION_NOTIFICATION,
+  DISMISS_NOTIFICATION,
+} from './actions';
 
 import {
   SPEC_FAIL,
 } from 'app/containers/DashBoard/actions';
 
 import {
-  CHECK_CLASH_SUCCESS,
+  CLASH_SUCCESS,
+  CLASH_FAIL,
 } from 'app/containers/ModuleListForm/actions';
 
 import {
@@ -28,11 +33,10 @@ export const errorReducer = (state = null, action) => {
     return errorState('Cannot get specialisations, Please try again');
   case AMEDNMENT_SUCCESS:
     return notificationState('Ammendment Successfull');
-  case CHECK_CLASH_SUCCESS:
-    if (!action.result[0]) {
-      return errorState('Invalid Selection, Please try again');
-    }
+  case CLASH_SUCCESS:
     return notificationState('Valid Selection');
+  case CLASH_FAIL:
+    return errorState('Invalid Selection, Please try again');
   case APPLICATION_ERROR:
     return errorState(action.error.message);
   case APPLICATION_NOTIFICATION:

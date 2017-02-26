@@ -15,7 +15,8 @@ import {
   MODULE_ON_CHANGE,
   CHECK_CLASH_REQUEST,
   CHECK_CLASH_FAIL,
-  CHECK_CLASH_SUCCESS,
+  CLASH_SUCCESS,
+  CLASH_FAIL
 } from 'app/containers/ModuleListForm/actions';
 
 import {
@@ -36,7 +37,6 @@ const getInitialState = () => ({
 const invalid = (state) => {
   const newM = state.newModules.filter((x) => x.checked);
   const old = state.oldModules.filter((x) => x.checked);
-  console.log(newM.length === old.length);
   if (newM.length === old.length && newM.length > 0 && old.length > 0) {
     return false;
   }
@@ -127,16 +127,15 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       oldModules: state.oldOriginal.slice(),
       newModules: state.newOriginal.slice(),
     };
-  case CHECK_CLASH_SUCCESS:
-    if (action.result[0]) {
-      return {
-        ...state,
-        firstClash: true,
-        checkClash: true,
-        checkClashLoading: false,
-        newTimetable: action.result[1],
-      };
-    }
+  case CLASH_SUCCESS:
+    return {
+      ...state,
+      firstClash: true,
+      checkClash: true,
+      checkClashLoading: false,
+      newTimetable: action.result[1],
+    };
+  case CLASH_FAIL:
     return {
       ...state,
       checkClash: false,
