@@ -47,6 +47,7 @@ export default class ExpandablePanel extends Component {
     const { expanded } = this.state;
     const className = classnames(style.expandablePanel, {
       [style.expanded]: expanded,
+      [style.checked]: children[0].props.checked,
     });
     return (
       <div className={className}>

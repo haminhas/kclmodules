@@ -18,7 +18,7 @@ const TimetableListComponent = props => {
         ))}
       </div>
     ))}
-  </ul>
+    </ul>
   );
 };
 

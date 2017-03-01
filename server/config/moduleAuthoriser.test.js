@@ -187,23 +187,16 @@ describe('moduleAuthoriser', () => {
         name: 'Lecture'
       } ];
 
-      const modTimetable = [ {
-        code: 'm5',
-        starttime: '12:00:00',
-        endtime: '13:00:00',
-        groupnumber: 1,
-        day: 'Wed',
-        name: 'Lab' },
-      {
-        code: 'm5',
-        starttime: '12:00:00',
-        endtime: '14:00:00',
-        groupnumber: 1,
-        day: 'Thu',
-        name: 'Lecture'
-      } ];
-      const result = changeGroup(ctimetable, newGroup, modTimetable);
-      expect(result).to.be.false();
+      const expected = [
+        { code: 'm3',
+          starttime: '12:00:00',
+          endtime: '15:00:00',
+          groupnumber: 2,
+          day: 'Thu',
+          name: 'Lecture'
+        } ];
+      const result = changeGroup(ctimetable, newGroup);
+      expect(result).to.deep.equal(expected);
     });
 
     it('returns true if group is found', () => {
@@ -226,23 +219,17 @@ describe('moduleAuthoriser', () => {
         name: 'Lecture'
       } ];
 
-      const modTimetable = [ {
-        code: 'm5',
-        starttime: '12:00:00',
-        endtime: '13:00:00',
-        groupnumber: 1,
-        day: 'Wed',
-        name: 'Lab' },
-      {
-        code: 'm5',
-        starttime: '12:00:00',
-        endtime: '14:00:00',
-        groupnumber: 1,
-        day: 'Thu',
-        name: 'Lecture'
-      } ];
-      const result = changeGroup(ctimetable, newGroup, modTimetable);
-      expect(result).to.be.true();
+      const expected = [
+        { code: 'm3',
+          starttime: '12:00:00',
+          endtime: '15:00:00',
+          groupnumber: 2,
+          day: 'Fri',
+          name: 'Lecture'
+        } ];
+
+      const result = changeGroup(ctimetable, newGroup);
+      expect(result).to.deep.equal(expected);
     });
   });
 

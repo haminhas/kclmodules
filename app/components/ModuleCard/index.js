@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import style from './style';
-
 const { func, string, bool} = PropTypes;
 const ModuleListCardComponent = props => {
   const { moduleCode, fieldDisabled, checked, moduleOnChange, name } = props;
@@ -11,22 +10,25 @@ const ModuleListCardComponent = props => {
   };
 
   return (
-      <div className={style.fieldContainer}>
-      { fieldDisabled &&
-        <p className={style.disabled}>{moduleCode} <span className={style.compulsory}>- Compulsory</span> </p>
-        ||
-        <label>
-          <input
-            className={style.field}
-            type="checkbox"
-            checked={checked}
-            onChange={toggleChecked}
-            disabled={fieldDisabled}
-          />
-          <div className={style.code}>{moduleCode}</div>
-        </label>
-      }
-      </div>
+    <div className={style.fieldContainer}>
+    { fieldDisabled &&
+      <p className={style.disabled}>
+        {moduleCode}
+        <span className={style.compulsory}>- Compulsory</span>
+      </p>
+      ||
+      <label>
+        <input
+          className={style.field}
+          type="checkbox"
+          checked={checked}
+          onChange={toggleChecked}
+          disabled={fieldDisabled}
+        />
+        <div className={style.code}>{moduleCode}</div>
+      </label>
+    }
+    </div>
   );
 };
 

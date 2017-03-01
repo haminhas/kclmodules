@@ -53,24 +53,31 @@ export async function checkModuleInProgramme(
   return false;
 }
 
-export const changeGroup = (currentTimetable, newGroup, moduleTimetable) => {
+export const changeGroup = (currentTimetable, newGroup) => {
   let timetable = currentTimetable.filter((x) => (x.code === newGroup.code));
   timetable = timetable.filter((x) => (x.name !== newGroup.name));
   timetable.push(newGroup);
-  if (checkClash(timetable, moduleTimetable)) return true;
-  return false;
+  return [...currentTimetable.filter((x) => (x.code !== newGroup.code)), ...timetable];
 };
 
 // method for looping over groups in currentTimetable
 async function reassign(currentTimetable, moduleTimetable) {
+  let newGroups = [];
   for (const mod of currentTimetable) {
     const otherGroups = await getModuleTypeTimetable(mod.code, mod.groupnumber, mod.name);
-    for (const group of otherGroups) {
-      if (await checkGroupSpace(group.code, group.groupnumber)) {
-        // means we have found another group to assign studnet
-        // check if new group has space
-        return changeGroup(currentTimetable, group, moduleTimetable);
+    if (otherGroups.length > 0) newGroups = [...newGroups, ...otherGroups];
+  }
+  for (const group of newGroups) {
+    if (await checkGroupSpace(group.code, group.groupnumber)) {
+      const newTimetable = changeGroup(currentTimetable, group);
+      if (checkClash(newTimetable, moduleTimetable)) return true;
+      const updates = newGroups.filter((x) => (x.id !== group.id));
+      for (const mod of updates) {
+        const updatedTimetable = changeGroup(newTimetable, mod);
+        if (checkClash(updatedTimetable, moduleTimetable)) return true;
       }
+      // means we have found another group to assign studnet
+      // check if new group has space
     }
   }
   return false;
