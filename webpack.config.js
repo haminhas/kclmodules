@@ -15,7 +15,7 @@ module.exports = {
     path: path.join(__dirname, '/dist/'),
     filename: 'bundle.js',
     publicPath: '/'
-  },
+  }, 
   module: {
     loaders: [{
       test: /\.js$/, // Transform all .js files required somewhere with Babel
@@ -28,8 +28,8 @@ module.exports = {
       test: /\.json$/,
       loader: 'json-loader',
     }, {
-        test: /\.svgi$/,
-        loader: 'svg-inline'
+      test: /\.svgi$/,
+      loader: 'svg-inline'
     }, {
       test: /\.(png|svg)$/,
       loader: "file-loader?name=img-[hash:6].[ext]"

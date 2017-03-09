@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import ModuleList from 'app/components/ModuleList';
 import style from './style.css';
-import classnames from 'classnames';
 
 const { string, array, arrayOf, shape, func, bool } = PropTypes;
 
@@ -24,25 +23,39 @@ export default class ModuleListFormComponent extends Component {
     redux: React.PropTypes.object
   }
 
+  componentDidUpdate(prevProps) {
+    const {
+      modulesInvalid,
+      oldModules,
+      newModules,
+    } = this.props;
+
+    if (!modulesInvalid &&
+       (oldModules !== prevProps.oldModules ||
+        newModules !== prevProps.newModules)
+      ) {
+      this.handleClash();
+    }
+  }
+
+  handleClash() {
+    const {
+      newModules,
+      oldModules,
+      checkClash,
+    } = this.props;
+    const newModule = newModules.filter((x) => x.checked === true);
+    const oldModule = oldModules.filter((x) => x.checked === true);
+    checkClash({newModule, oldModule});
+  }
+
   render() {
     const {
       newModules,
       moduleTimetables,
       moduleOnChange,
       oldModules,
-      checkClash,
-      modulesInvalid,
     } = this.props;
-
-    const buttonStyle = classnames(style.button, {
-      [style.invalid]: modulesInvalid,
-    });
-
-    const handleClash = () => {
-      const newModule = newModules.filter((x) => x.checked === true);
-      const oldModule = oldModules.filter((x) => x.checked === true);
-      checkClash({newModule, oldModule});
-    };
 
     return (
       <div className={style.modulesContainer}>
@@ -66,12 +79,6 @@ export default class ModuleListFormComponent extends Component {
             />
           </div>
         </div>
-        <button
-          type="submit"
-          disabled={modulesInvalid}
-          className={buttonStyle}
-          onClick={handleClash}
-        >Check Validity</button>
       </div>
     );
   }

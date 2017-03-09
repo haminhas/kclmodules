@@ -1,6 +1,3 @@
-// require("babel-core").transform("code", {
-//   plugins: ["transform-async-to-generator"]
-// });
 
 import { getStudentTimetable,
          getModuleTimetable,

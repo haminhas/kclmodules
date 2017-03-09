@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-boolean-value */
+
 import React, { PropTypes, Component } from 'react';
 import style from './style.css';
 import ModuleListForm from 'app/containers/ModuleListForm';
@@ -46,8 +48,6 @@ export default class DashBoardComponent extends Component {
         [style.mainLoading]: checkClashLoading,
       });
 
-    const True = true;
-
     return !loading && (
       <div className={mainStyle}>
         <div className={style.name}>
@@ -60,7 +60,7 @@ export default class DashBoardComponent extends Component {
               label="View Specialisation"
               expanded={expanded}
               onChange={expandedOnChange}
-              executeOnChange={True}
+              executeOnChange={true}
             >
               <span>Specialisation</span>
               <SpecList />
