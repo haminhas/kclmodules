@@ -15,14 +15,19 @@ module.exports = {
     path: path.join(__dirname, '/dist/'),
     filename: 'bundle.js',
     publicPath: '/'
-  }, 
+  },
   module: {
     loaders: [{
       test: /\.js$/, // Transform all .js files required somewhere with Babel
       loaders: ['babel'],
       exclude: /node_modules/,
+    },{
+      test: /\.css$/,
+      include: /node_modules/,
+      loader: 'style!css!postcss',
     }, {
       test: /\.css$/,
+      exclude: /node_modules/,
       loader: 'style!css?modules&importLoaders=1&localIdentName=[local]__[path][name]__[hash:base64:5]!postcss-loader',
     }, {
       test: /\.json$/,

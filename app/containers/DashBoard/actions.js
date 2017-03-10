@@ -17,11 +17,9 @@ export const expandedOnChange = (expanded) => ({
   expanded,
 });
 
-export const specOnChange = (id, name, checked) => ({
+export const specOnChange = (id) => ({
   type: SPEC_ON_CHANGE,
   id,
-  name,
-  checked
 });
 
 export const specSuccess = specialisation => ({

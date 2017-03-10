@@ -3,7 +3,7 @@ import { getStudentTimetable,
          getModuleTimetable,
          getModuleCount,
          getProgrammeModules,
-         getModuleTypeTimetable
+         getModuleTypeTimetable,
 } from './db';
 
 let finalTimetable = '';
@@ -86,6 +86,9 @@ export const groupArrays = (moduleTimetable) => {
   for (let i = 0; i < moduleTimetable.length; i++) {
     if (names.includes(moduleTimetable[i].name)) continue;
     const timetable = moduleTimetable.filter((x) => (x.name === moduleTimetable[i].name));
+    timetable.sort((a, b) => {
+      return a.ratio > b.ratio;
+    });
     newMod.push(timetable);
     names.push(timetable[0].name);
   }
@@ -94,9 +97,9 @@ export const groupArrays = (moduleTimetable) => {
 
 // method for looping over all groups in newModule
 async function checkModuleGroups(currentTimetable, moduleTimetable) {
+  // const newMod = groupReorder(groupArrays(moduleTimetable)[0][0].code);
   const newMod = groupArrays(moduleTimetable);
   const option = [];
-
 // initliase the array with the first group for each type
   for (let i = 0; i < newMod.length; i++) {
     option.push(newMod[i][0]);

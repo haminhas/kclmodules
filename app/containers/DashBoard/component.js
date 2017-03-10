@@ -6,7 +6,6 @@ import ModuleListForm from 'app/containers/ModuleListForm';
 import Loading from 'react-loading';
 import classnames from 'classnames';
 import TimetableGrid from 'app/containers/TimetableGrid';
-import ExpandablePanel from 'app/components/ExpandablePanel';
 import SpecList from 'app/containers/SpecList';
 
 const { func, string, bool, array } = PropTypes;
@@ -21,8 +20,6 @@ export default class DashBoardComponent extends Component {
     firstClash: bool.isRequired,
     newTimetable: array,
     specialisation: array,
-    expanded: bool.isRequired,
-    expandedOnChange: func.isRequired,
   };
 
   componentWillMount() {
@@ -37,8 +34,6 @@ export default class DashBoardComponent extends Component {
       clash,
       newTimetable,
       specialisation,
-      expanded,
-      expandedOnChange,
     } = this.props;
 
     const mainStyle = classnames(
@@ -56,15 +51,7 @@ export default class DashBoardComponent extends Component {
 
         { specialisation &&
           <div className={style.specContainer}>
-            <ExpandablePanel
-              label="View Specialisation"
-              expanded={expanded}
-              onChange={expandedOnChange}
-              executeOnChange={true}
-            >
-              <span>Specialisation</span>
               <SpecList />
-            </ExpandablePanel>
           </div>
         }
 

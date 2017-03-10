@@ -102,31 +102,28 @@ const dashBoardReducer = (state = getInitialState(), action) => {
     const newSpec = state.specialisation.slice();
     state.oldModules = state.oldOriginal.slice();
     state.newModules = state.newOriginal.slice();
-    newSpec.map((item, i) => (state.specialisation[i].checked = false));
-    newSpec.map((item, i) => {
-      if (item.id === action.id) {
-        state.specialisation[i].checked = action.checked;
-      }
-    });
-    if (action.checked) {
-      const specModules = state.specModules.filter((x) => x.specid === action.id);
-      const newModules = filterSpec(state.newModules, specModules);
-      const oldModules = filterSpec(state.oldModules, specModules, true);
+    if (action.id === '') {
       return {
         ...state,
         specialisation: newSpec,
-        oldModules: oldModules,
-        newModules: newModules,
-        oldOriginal: state.oldModules.slice(),
-        newOriginal: state.newModules.slice(),
+        oldModules: state.oldOriginal.slice(),
+        newModules: state.newOriginal.slice(),
       };
     }
+
+    const specModules = state.specModules.filter((x) => x.specid === Number(action.id));
+    console.log(specModules);
+    const newModules = filterSpec(state.newModules, specModules);
+    const oldModules = filterSpec(state.oldModules, specModules, true);
     return {
       ...state,
       specialisation: newSpec,
-      oldModules: state.oldOriginal.slice(),
-      newModules: state.newOriginal.slice(),
+      oldModules: oldModules,
+      newModules: newModules,
+      oldOriginal: state.oldModules.slice(),
+      newOriginal: state.newModules.slice(),
     };
+
   case CLASH_SUCCESS:
     return {
       ...state,

@@ -1,5 +1,10 @@
 @value desktop, aoi from '../../styles/variables.css';
 
+.specLabel {
+  float: left;
+  width: 15%;
+}
+
 .four {
   font-size: 32px;
   color: aoi;
