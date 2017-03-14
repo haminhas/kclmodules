@@ -12,7 +12,6 @@ const initialState = {
   firstClash: false,
   checkClash: false,
   checkClashLoading: false,
-  modulesInvalid: true,
 };
 
 const userData = {
@@ -29,7 +28,6 @@ describe('dashBoard reducer', () => {
       expanded: false,
       checkClash: false,
       checkClashLoading: false,
-      modulesInvalid: true,
     };
     const actualState = dashBoardReducer(undefined, {});
     expect(actualState).to.deep.equal(expectedState);
@@ -42,7 +40,6 @@ describe('dashBoard reducer', () => {
       firstClash: false,
       checkClash: false,
       checkClashLoading: false,
-      modulesInvalid: true,
     };
     const action = {
       type: GET_USERID_REQUEST,
@@ -58,7 +55,6 @@ describe('dashBoard reducer', () => {
       firstClash: false,
       checkClash: false,
       checkClashLoading: false,
-      modulesInvalid: true,
     };
     const action = {
       type: GET_USERID_FAIL,
