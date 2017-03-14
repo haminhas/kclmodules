@@ -4,6 +4,7 @@ export const CHECK_CLASH_SUCCESS = 'CHECK_CLASH_SUCCESS';
 export const CHECK_CLASH_FAIL = 'CHECK_CLASH_FAIL';
 export const CLASH_SUCCESS = 'CLASH_SUCCESS';
 export const CLASH_FAIL = 'CLASH_FAIL';
+export const COMPULSORY_CLASH = 'COMPULSORY_CLASH';
 
 export const moduleOnChange = (name, code, checked) => ({
   type: MODULE_ON_CHANGE,
@@ -35,4 +36,8 @@ export const clashFail = result => ({
 export const checkClashFail = error => ({
   type: CHECK_CLASH_FAIL,
   error,
+});
+
+export const compulosryClash = () => ({
+  type: COMPULSORY_CLASH,
 });

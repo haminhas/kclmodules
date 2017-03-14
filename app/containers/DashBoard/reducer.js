@@ -16,7 +16,8 @@ import {
   CHECK_CLASH_REQUEST,
   CHECK_CLASH_FAIL,
   CLASH_SUCCESS,
-  CLASH_FAIL
+  CLASH_FAIL,
+  COMPULSORY_CLASH,
 } from 'app/containers/ModuleListForm/actions';
 
 import {
@@ -138,8 +139,13 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       checkClash: false,
       checkClashLoading: false,
     };
+  case COMPULSORY_CLASH:
+    return {
+      ...state,
+      checkClash: false,
+      checkClashLoading: false,
+    };
   case SPEC_SUCCESS:
-    loop(action.specialisation[0]);
     return {
       ...state,
       specialisation: action.specialisation[0],

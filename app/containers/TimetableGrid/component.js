@@ -34,7 +34,6 @@ export default class TimetableGridComponent extends Component {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     const smallDays = ['mon', 'tue', 'wed', 'thu', 'fri'];
 
-    console.log(days);
     return (
       <div className={style.timetableGridContainer}>
       <Media query="(max-width: 750px)">

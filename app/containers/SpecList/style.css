@@ -1,3 +1,5 @@
+@value aoi from '../../styles/variables.css';
+
 .item {
   min-width: 315px;
 }

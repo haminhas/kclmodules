@@ -167,7 +167,8 @@ export async function getModuleCount(moduleCode, pool = pools) {
 export async function getProgrammeModules(studentid, pool = pools) {
   try {
     const sql = `SELECT m.programmeid,
-                        m.code
+                        m.code,
+                        m.compulsory
                  FROM   modules AS m
                  INNER JOIN students AS s
                  ON     m.programmeid = s.programmeid
