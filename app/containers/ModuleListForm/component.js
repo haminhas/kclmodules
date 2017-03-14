@@ -16,7 +16,7 @@ export default class ModuleListFormComponent extends Component {
     newTimetable: array,
     checkClash: func.isRequired,
     moduleOnChange: func.isRequired,
-    modulesInvalid: bool.isRequired,
+    compulsoryClash: func.isRequired,
   };
 
   static contextTypes = {
@@ -25,12 +25,11 @@ export default class ModuleListFormComponent extends Component {
 
   componentDidUpdate(prevProps) {
     const {
-      modulesInvalid,
       oldModules,
       newModules,
     } = this.props;
 
-    if (!modulesInvalid &&
+    if (
        (oldModules !== prevProps.oldModules ||
         newModules !== prevProps.newModules)
       ) {
@@ -43,10 +42,24 @@ export default class ModuleListFormComponent extends Component {
       newModules,
       oldModules,
       checkClash,
+      compulsoryClash
     } = this.props;
     const newModule = newModules.filter((x) => x.checked === true);
     const oldModule = oldModules.filter((x) => x.checked === true);
-    checkClash({newModule, oldModule});
+    const compulsoryNew = newModule.filter((x) => x.compulsory === true);
+    const compulsoryOld = oldModule.filter((x) => x.compulsory === true);
+
+    if (compulsoryNew.length !== compulsoryOld.length ) {
+      return compulsoryClash('Please select equal amount of compulsory modules');
+    } else if (newModule.length !== oldModule.length && (newModule.length > 0 && oldModule.length > 0)) {
+      return compulsoryClash('Please select equal amount of modules');
+    }
+
+    if (newModule.length === oldModule.length && newModule.length > 0 && oldModule.length > 0) {
+      return checkClash({newModule, oldModule});
+    }
+
+    return null;
   }
 
   render() {

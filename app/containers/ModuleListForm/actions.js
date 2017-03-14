@@ -38,6 +38,7 @@ export const checkClashFail = error => ({
   error,
 });
 
-export const compulosryClash = () => ({
+export const compulsoryClash = error => ({
   type: COMPULSORY_CLASH,
+  error,
 });

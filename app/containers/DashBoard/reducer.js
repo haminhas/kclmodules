@@ -31,18 +31,8 @@ const getInitialState = () => ({
   firstClash: false,
   checkClash: false,
   checkClashLoading: false,
-  modulesInvalid: true,
   expanded: false,
 });
-
-const invalid = (state) => {
-  const newM = state.newModules.filter((x) => x.checked);
-  const old = state.oldModules.filter((x) => x.checked);
-  if (newM.length === old.length && newM.length > 0 && old.length > 0) {
-    return false;
-  }
-  return true;
-};
 
 const loop = (arr) => {
   for (const obj of arr) {
@@ -91,13 +81,11 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       return {
         ...state,
         newModules: modules,
-        modulesInvalid: invalid(state),
       };
     }
     return {
       ...state,
       oldModules: modules,
-      modulesInvalid: invalid(state),
     };
   case SPEC_ON_CHANGE:
     const newSpec = state.specialisation.slice();

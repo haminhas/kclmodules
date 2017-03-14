@@ -43,7 +43,7 @@ export const errorReducer = (state = null, action) => {
   case APPLICATION_NOTIFICATION:
     return notificationState(action.message);
   case COMPULSORY_CLASH:
-    return errorState('Please select equal amount of compulsory modules');
+    return errorState(action.error);
   case DISMISS_NOTIFICATION:
     return null;
   default:
