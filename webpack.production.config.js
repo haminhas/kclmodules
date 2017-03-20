@@ -19,15 +19,20 @@ module.exports = {
       test: /\.js$/, // Transform all .js files required somewhere with Babel
       loaders: ['babel'],
       exclude: /node_modules/,
+    },{
+      test: /\.css$/,
+      include: /node_modules/,
+      loader: 'style!css!postcss',
     }, {
       test: /\.css$/,
+      exclude: /node_modules/,
       loader: 'style!css?modules&importLoaders=1&localIdentName=[local]__[path][name]__[hash:base64:5]!postcss-loader',
     }, {
       test: /\.json$/,
       loader: 'json-loader',
     }, {
-        test: /\.svgi$/,
-        loader: 'svg-inline'
+      test: /\.svgi$/,
+      loader: 'svg-inline'
     }, {
       test: /\.(png|svg)$/,
       loader: "file-loader?name=img-[hash:6].[ext]"
