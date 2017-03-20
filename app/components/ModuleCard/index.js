@@ -21,7 +21,7 @@ const ModuleListCardComponent = props => {
         />
         <div className={style.code}>{moduleCode}</div>
         <div className={style.compulsory}> - Compulsory</div>
-    </label>
+      </label>
       ||
       <label>
         <input
