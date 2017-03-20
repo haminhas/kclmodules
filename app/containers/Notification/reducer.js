@@ -11,6 +11,7 @@ import {
 import {
   CLASH_SUCCESS,
   CLASH_FAIL,
+  COMPULSORY_CLASH,
 } from 'app/containers/ModuleListForm/actions';
 
 import {
@@ -41,6 +42,8 @@ export const errorReducer = (state = null, action) => {
     return errorState(action.error.message);
   case APPLICATION_NOTIFICATION:
     return notificationState(action.message);
+  case COMPULSORY_CLASH:
+    return errorState(action.error);
   case DISMISS_NOTIFICATION:
     return null;
   default:

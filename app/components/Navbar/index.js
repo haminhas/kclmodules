@@ -8,6 +8,7 @@ import style from './style.css';
 const Navbar = () => (
   <div className={style.navbar}>
     <div className={style.container} >
+      <div className={style.left}/>
       <div className={style.rightSide}>
         <AccountWidget />
       </div>

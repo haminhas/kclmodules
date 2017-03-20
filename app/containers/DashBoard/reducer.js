@@ -16,7 +16,8 @@ import {
   CHECK_CLASH_REQUEST,
   CHECK_CLASH_FAIL,
   CLASH_SUCCESS,
-  CLASH_FAIL
+  CLASH_FAIL,
+  COMPULSORY_CLASH,
 } from 'app/containers/ModuleListForm/actions';
 
 import {
@@ -30,18 +31,8 @@ const getInitialState = () => ({
   firstClash: false,
   checkClash: false,
   checkClashLoading: false,
-  modulesInvalid: true,
   expanded: false,
 });
-
-const invalid = (state) => {
-  const newM = state.newModules.filter((x) => x.checked);
-  const old = state.oldModules.filter((x) => x.checked);
-  if (newM.length === old.length && newM.length > 0 && old.length > 0) {
-    return false;
-  }
-  return true;
-};
 
 const loop = (arr) => {
   for (const obj of arr) {
@@ -90,43 +81,38 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       return {
         ...state,
         newModules: modules,
-        modulesInvalid: invalid(state),
       };
     }
     return {
       ...state,
       oldModules: modules,
-      modulesInvalid: invalid(state),
     };
   case SPEC_ON_CHANGE:
     const newSpec = state.specialisation.slice();
     state.oldModules = state.oldOriginal.slice();
     state.newModules = state.newOriginal.slice();
-    newSpec.map((item, i) => (state.specialisation[i].checked = false));
-    newSpec.map((item, i) => {
-      if (item.id === action.id) {
-        state.specialisation[i].checked = action.checked;
-      }
-    });
-    if (action.checked) {
-      const specModules = state.specModules.filter((x) => x.specid === action.id);
-      const newModules = filterSpec(state.newModules, specModules);
-      const oldModules = filterSpec(state.oldModules, specModules, true);
+    if (action.id === '') {
       return {
         ...state,
         specialisation: newSpec,
-        oldModules: oldModules,
-        newModules: newModules,
-        oldOriginal: state.oldModules.slice(),
-        newOriginal: state.newModules.slice(),
+        oldModules: state.oldOriginal.slice(),
+        newModules: state.newOriginal.slice(),
       };
     }
+
+    const specModules = state.specModules.filter((x) => x.specid === Number(action.id));
+    console.log(specModules);
+    const newModules = filterSpec(state.newModules, specModules);
+    const oldModules = filterSpec(state.oldModules, specModules, true);
     return {
       ...state,
       specialisation: newSpec,
-      oldModules: state.oldOriginal.slice(),
-      newModules: state.newOriginal.slice(),
+      oldModules: oldModules,
+      newModules: newModules,
+      oldOriginal: state.oldModules.slice(),
+      newOriginal: state.newModules.slice(),
     };
+
   case CLASH_SUCCESS:
     return {
       ...state,
@@ -141,8 +127,13 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       checkClash: false,
       checkClashLoading: false,
     };
+  case COMPULSORY_CLASH:
+    return {
+      ...state,
+      checkClash: false,
+      checkClashLoading: false,
+    };
   case SPEC_SUCCESS:
-    loop(action.specialisation[0]);
     return {
       ...state,
       specialisation: action.specialisation[0],

@@ -91,20 +91,26 @@ export async function getStudentTimetable(studentid, pool = pools) {
 
 export async function getModuleTimetable(moduleCode, pool = pools) {
   try {
-    const sql = `SELECT modules.code,
+    const sql = `SELECT t.moduleCode AS code,
                         modules.compulsory,
+                        m.moduleType,
+                        m.groupNumber,
                         m.startTime,
                         m.endtime,
-                        m.groupNumber,
                         m.day,
+                        m.id,
                         t.name,
-                        m.id
+                        count(*)/m.capacity ::float AS ratio
                  FROM   moduleTimetable AS m
                  INNER JOIN moduleTypes AS t
                  ON     m.moduleType = t.id
                  INNER JOIN modules
                  ON     t.moduleCode = modules.code
-                 WHERE  modules.code = '${moduleCode}';`;
+                 FULL OUTER JOIN studentTimetable AS s
+                 ON     s.moduleType = m.id
+                 WHERE  t.moduleCode = '${moduleCode}'
+                 GROUP BY t.name, m.id, m.moduleType, m.groupNumber, t.moduleCode, modules.compulsory, m.startTime, m.endtime, m.day
+                 HAVING count(*) > 0;`;
     const {rows} =  await pool.query(sql);
     return rows;
   } catch (err) {
@@ -161,7 +167,8 @@ export async function getModuleCount(moduleCode, pool = pools) {
 export async function getProgrammeModules(studentid, pool = pools) {
   try {
     const sql = `SELECT m.programmeid,
-                        m.code
+                        m.code,
+                        m.compulsory
                  FROM   modules AS m
                  INNER JOIN students AS s
                  ON     m.programmeid = s.programmeid
@@ -175,8 +182,8 @@ export async function getProgrammeModules(studentid, pool = pools) {
 
 export async function getSpecialisation(studentid, pool = pools) {
   try {
-    const sql = `SELECT sp.id,
-                        sp.name
+    const sql = `SELECT sp.id AS value,
+                        sp.name AS label
                  FROM   specialisation AS sp
                  INNER JOIN students AS s
                  ON     sp.programmeid = s.programmeid

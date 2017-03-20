@@ -21,8 +21,11 @@
   height: 47px;
 }
 
+.left {
+  width: 50%;
+}
+
 .rightSide {
-  width: 99%;
   text-align: right;
   display: inline-block;
 }

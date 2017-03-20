@@ -12,10 +12,16 @@ const ModuleListCardComponent = props => {
   return (
     <div className={style.fieldContainer}>
     { fieldDisabled &&
-      <p className={style.disabled}>
-        {moduleCode}
-        <span className={style.compulsory}>- Compulsory</span>
-      </p>
+      <label>
+        <input
+          className={style.field}
+          type="checkbox"
+          checked={checked}
+          onChange={toggleChecked}
+        />
+        <div className={style.code}>{moduleCode}</div>
+        <div className={style.compulsory}> - Compulsory</div>
+    </label>
       ||
       <label>
         <input
@@ -23,7 +29,6 @@ const ModuleListCardComponent = props => {
           type="checkbox"
           checked={checked}
           onChange={toggleChecked}
-          disabled={fieldDisabled}
         />
         <div className={style.code}>{moduleCode}</div>
       </label>

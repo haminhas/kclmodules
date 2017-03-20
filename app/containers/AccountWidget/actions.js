@@ -5,7 +5,6 @@ export const LOGOUT_FAIL = 'LOGOUT_FAIL';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 
-
 export const loginSuccess = () => ({
   type: LOGIN_SUCCESS,
 });
