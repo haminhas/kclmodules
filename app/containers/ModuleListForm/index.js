@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ModuleListFormComponent from './component';
-import { checkClash, moduleOnChange, compulsoryClash } from './actions';
+import { checkClash, moduleOnChange, compulsoryClash, searchModule } from './actions';
 
 
 const mapStateToProps = state => ({
@@ -15,6 +15,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   moduleOnChange,
   checkClash,
   compulsoryClash,
+  searchModule,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModuleListFormComponent);

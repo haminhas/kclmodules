@@ -46,7 +46,30 @@
   text-align: center;
 }
 
+.inputField {
+  text-align: center;
+  font-family: Roboto, sans-serif;
+  padding: 7px 10px 10px;
+  width: 75%;
+  max-width: 634px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  text-indent: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+  margin: 3px 0px;
+}
+
+.inputField:focus {
+  outline: none;
+  border: solid 1px aoi;
+}
+
 @media desktop {
+  .inputField{
+    width: 50%;
+  }
+
   .button {
     min-width: 20px;
     max-width: 200px;

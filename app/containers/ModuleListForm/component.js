@@ -17,6 +17,7 @@ export default class ModuleListFormComponent extends Component {
     checkClash: func.isRequired,
     moduleOnChange: func.isRequired,
     compulsoryClash: func.isRequired,
+    searchModule: func.isRequired,
   };
 
   static contextTypes = {
@@ -42,8 +43,9 @@ export default class ModuleListFormComponent extends Component {
       newModules,
       oldModules,
       checkClash,
-      compulsoryClash
+      compulsoryClash,
     } = this.props;
+
     const newModule = newModules.filter((x) => x.checked === true);
     const oldModule = oldModules.filter((x) => x.checked === true);
     const compulsoryNew = newModule.filter((x) => x.compulsory === true);
@@ -68,10 +70,24 @@ export default class ModuleListFormComponent extends Component {
       moduleTimetables,
       moduleOnChange,
       oldModules,
+      searchModule
     } = this.props;
+
+    const search = (event) => {
+      searchModule(event.target.value);
+    };
 
     return (
       <div className={style.modulesContainer}>
+        <div>
+          <input
+            className={style.inputField}
+            type="text"
+            name="search"
+            placeholder="Search Modules"
+            onChange={search}
+          />
+        </div>
         <div className={style.modulesInnerContainer}>
           <div className={style.left}>
             <ModuleList
