@@ -52,11 +52,11 @@ export function* checkClashWorker({ data }) {
 
 export function* getUserIDWorker() {
   try {
-    const userID = yield call(fetch, 'GET', '/user');
+    const {userID, name} = yield call(fetch, 'GET', '/user');
     yield call(loginWorker);
     yield call(getModulesWorker, userID);
     yield call(specWorker);
-    yield put(getUserIDSuccess(userID));
+    yield put(getUserIDSuccess(name));
   } catch (error) {
     yield put(getUserIDFail(error));
   }

@@ -72,7 +72,7 @@ export default (app) => {
 
 
   app.get('/user', ensureAuthenticated, (req, res) => {
-    return res.json(req.user.alias);
+    return res.json({ userID: req.user.alias, name: req.user.displayName });
   });
 
   app.post('/moduleTimetables', ensureAuthenticated, async (req, res) => {

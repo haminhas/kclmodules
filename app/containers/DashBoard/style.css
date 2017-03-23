@@ -17,7 +17,6 @@
 
 .name {
   padding-top: 15px;
-  text-align: left;
 }
 
 .dashBoardContainer {
@@ -56,6 +55,10 @@
 }
 
 @media desktop {
+  .name {
+    text-align: left;
+  }
+
   .specContainer {
     width: 100%;
   }

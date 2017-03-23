@@ -18,6 +18,7 @@ import {
   CLASH_SUCCESS,
   CLASH_FAIL,
   COMPULSORY_CLASH,
+  SEARCH_MODULE,
 } from 'app/containers/ModuleListForm/actions';
 
 import {
@@ -63,6 +64,16 @@ const filterSpec = (currentModules, filterModules, negate = false) => {
 
 const dashBoardReducer = (state = getInitialState(), action) => {
   switch (action && action.type) {
+  case SEARCH_MODULE:
+    state.oldModules = state.oldOriginal.slice();
+    state.newModules = state.newOriginal.slice();
+    const newMod = state.newModules.filter((x) => (x.code.toLowerCase()).includes(action.name));
+    const oldMod = state.oldModules.filter((x) => (x.code.toLowerCase()).includes(action.name));
+    return {
+      ...state,
+      newModules: newMod,
+      oldModules: oldMod,
+    };
   case EXPANDED_ON_CHANGE:
     return {
       ...state,
