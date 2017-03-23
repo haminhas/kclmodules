@@ -55,10 +55,6 @@
 }
 
 @media desktop {
-  .name {
-    text-align: left;
-  }
-
   .specContainer {
     width: 100%;
   }

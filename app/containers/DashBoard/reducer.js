@@ -112,7 +112,6 @@ const dashBoardReducer = (state = getInitialState(), action) => {
     }
 
     const specModules = state.specModules.filter((x) => x.specid === Number(action.id));
-    console.log(specModules);
     const newModules = filterSpec(state.newModules, specModules);
     const oldModules = filterSpec(state.oldModules, specModules, true);
     return {
@@ -120,8 +119,6 @@ const dashBoardReducer = (state = getInitialState(), action) => {
       specialisation: newSpec,
       oldModules: oldModules,
       newModules: newModules,
-      oldOriginal: state.oldModules.slice(),
-      newOriginal: state.newModules.slice(),
     };
 
   case CLASH_SUCCESS:
