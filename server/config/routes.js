@@ -9,6 +9,8 @@ import {
   insertStudentTimetable,
   getSpecialisation,
   getSpecialisationModules,
+  getAllAdmins,
+  getAllProgrammes,
  } from './db';
 
 
@@ -35,6 +37,11 @@ export default (app) => {
     if (req.isAuthenticated()) { return next(); }
     return res.redirect('/');
   };
+
+  app.post('/programmes', ensureAuthenticated, async (req, res) => {
+    const programmes = await getAllProgrammes();
+    return res.json(programmes);
+  });
 
   app.post('/specialisation', ensureAuthenticated, async (req, res) => {
     const response1 = await getSpecialisation(req.user.alias);
@@ -71,8 +78,14 @@ export default (app) => {
   });
 
 
-  app.get('/user', ensureAuthenticated, (req, res) => {
-    return res.json({ userID: req.user.alias, name: req.user.displayName });
+  app.get('/user', ensureAuthenticated, async (req, res) => {
+    const admins = await getAllAdmins();
+    for (const obj of admins) {
+      if (obj.email === req.user.emails[0].value) {
+        return res.json({ userID: req.user.alias, name: req.user.displayName, isAdmin: true});
+      }
+    }
+    return res.json({ userID: req.user.alias, name: req.user.displayName, isAdmin: false});
   });
 
   app.post('/moduleTimetables', ensureAuthenticated, async (req, res) => {

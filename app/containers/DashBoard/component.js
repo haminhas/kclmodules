@@ -7,6 +7,7 @@ import Loading from 'react-loading';
 import classnames from 'classnames';
 import TimetableGrid from 'app/containers/TimetableGrid';
 import SpecList from 'app/containers/SpecList';
+import Admin from 'app/containers/Admin';
 
 const { func, string, bool, array } = PropTypes;
 
@@ -20,6 +21,7 @@ export default class DashBoardComponent extends Component {
     firstClash: bool.isRequired,
     newTimetable: array,
     specialisation: array,
+    isAdmin: bool.isRequired,
   };
 
   componentWillMount() {
@@ -34,6 +36,7 @@ export default class DashBoardComponent extends Component {
       clash,
       newTimetable,
       specialisation,
+      isAdmin,
     } = this.props;
 
     const mainStyle = classnames(
@@ -43,7 +46,7 @@ export default class DashBoardComponent extends Component {
         [style.mainLoading]: checkClashLoading,
       });
 
-    return !loading && (
+    return !isAdmin && (!loading && (
       <div className={mainStyle}>
         <div className={style.name}>
           <span className={style.four}>Welcome {userID}</span>
@@ -71,6 +74,11 @@ export default class DashBoardComponent extends Component {
     ) || (
       <div className={style.loading}>
         <Loading type="spinningBubbles" color="#4500c0" />
+      </div>
+    )) || (
+      <div>
+        Admin View
+        <Admin />
       </div>
     );
   }

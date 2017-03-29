@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
   newTimetable: state.dashBoard.newTimetable,
   specialisation: state.dashBoard.specialisation,
   expanded: state.dashBoard.expanded,
+  isAdmin: state.dashBoard.isAdmin,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

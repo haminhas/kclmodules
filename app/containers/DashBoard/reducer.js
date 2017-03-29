@@ -195,7 +195,8 @@ const dashBoardReducer = (state = getInitialState(), action) => {
     return {
       ...state,
       loading: false,
-      userID: action.userID
+      userID: action.userID,
+      isAdmin: action.isAdmin
     };
   default:
     return state;

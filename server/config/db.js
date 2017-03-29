@@ -211,3 +211,27 @@ export async function getSpecialisationModules(studentid, pool = pools) {
     throw new Error(`[BadGateway] ${err.message}`);
   }
 }
+
+export async function getAllAdmins(pool = pools) {
+  try {
+    const sql = `SELECT *
+                 FROM admin;`;
+    const { rows } =  await pool.query(sql);
+    return rows;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}
+
+
+export async function getAllProgrammes(pool = pools) {
+  try {
+    const sql = `SELECT p.id AS value,
+                        p.name AS label
+                 FROM   programmes AS p;`;
+    const { rows } =  await pool.query(sql);
+    return rows;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}
