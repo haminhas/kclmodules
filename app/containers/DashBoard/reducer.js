@@ -161,6 +161,8 @@ const dashBoardReducer = (state = getInitialState(), action) => {
     return {
       ...state,
       checkClashLoading: true,
+      requestNewMod: action.data.newModule,
+      requestOldMod: action.data.oldModule,
     };
   case AMEDNMENT_SUCCESS:
   case GET_MODULES_SUCCESS:

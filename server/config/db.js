@@ -44,6 +44,19 @@ export async function insertStudentTimetable(studentid, id, groupNumber, pool = 
   }
 }
 
+export async function insertAmmendment(newModule, oldModule, pool = pools) {
+  try {
+    console.log(newModule);
+    console.log(oldModule);
+    const sql = `INSERT INTO ammendments (newModule,oldModule)
+                 VALUES ('${newModule}', '${oldModule}');`;
+    const { rowCount } =  await pool.query(sql);
+    return rowCount;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}
+
 export async function getStudentModules(studentid, pool = pools) {
   try {
     const sql = `SELECT DISTINCT ON (m.code)

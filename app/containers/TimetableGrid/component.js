@@ -12,10 +12,12 @@ export default class TimetableGridComponent extends Component {
     timetable: array,
     amendment: func.isRequired,
     clash: bool.isRequired,
+    newMod: array.isRequired,
+    oldMod: array.isRequired,
   };
 
   render() {
-    const { timetable, clash, amendment } = this.props;
+    const { timetable, clash, amendment, newMod, oldMod } = this.props;
     const colors = ['#f44336', '#2196f3', '#4caf50', '#ff9800', '#6d4c41', '#9c27b0'];
     [...new Set(timetable.map((item) => item.code))].map((item, index) => {
       timetable.filter((x) => x.code === item).map((y) => (y.color = colors[index]));
@@ -26,7 +28,7 @@ export default class TimetableGridComponent extends Component {
     });
 
     const handleSubmit = () => {
-      amendment(timetable);
+      amendment(timetable, oldMod, newMod);
     };
 
     const True = true;

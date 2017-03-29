@@ -8,6 +8,8 @@ import TimetableGridComponent from './component';
 
 const mapStateToProps = state => ({
   timetable: state.dashBoard.newTimetable,
+  oldMod: state.dashBoard.requestOldMod,
+  newMod: state.dashBoard.requestNewMod,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

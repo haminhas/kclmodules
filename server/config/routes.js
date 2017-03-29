@@ -11,7 +11,8 @@ import {
   getSpecialisationModules,
   getAllAdmins,
   getAllProgrammes,
- } from './db';
+  insertAmmendment,
+} from './db';
 
 
 export default (app) => {
@@ -26,6 +27,10 @@ export default (app) => {
         }
       } else {
         throw new Error('Failed deleting old modules');
+      }
+      for (let i = 0; i < req.body.newMod.length; i++) {
+        const response = await insertAmmendment(req.body.newMod[i].code, req.body.oldMod[i].code);
+        if (response <= 0) throw new Error('Failed inserting ammendments analytics');
       }
       return true;
     } catch (err) {
@@ -79,7 +84,9 @@ export default (app) => {
 
 
   app.get('/user', ensureAuthenticated, async (req, res) => {
-    const admins = await getAllAdmins();
+    // const admins = await getAllAdmins();
+    const admins = [];
+
     for (const obj of admins) {
       if (obj.email === req.user.emails[0].value) {
         return res.json({ userID: req.user.alias, name: req.user.displayName, isAdmin: true});
