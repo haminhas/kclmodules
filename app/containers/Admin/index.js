@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import AdminComponent from './component';
-import { getProgrammes } from './actions';
+import { getProgrammes, programmesOnChange } from './actions';
 
 const mapStateToProps = state => ({
   programmes: state.admin.programmes,
@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getProgrammes,
+  programmesOnChange
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminComponent);

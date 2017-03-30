@@ -12,6 +12,7 @@ import {
   getAllAdmins,
   getAllProgrammes,
   insertAmmendment,
+  getModuleAnalytics,
 } from './db';
 
 
@@ -112,7 +113,6 @@ export default (app) => {
       }
       return res.json(timetable);
     } catch (err) {
-      console.log(err);
       return err;
     }
   });
@@ -121,6 +121,24 @@ export default (app) => {
     const response1 = await getStudentModules(req.body.userID);
     const response2 = await getProgrammeModules(req.body.userID);
     return res.json([response1, response2]);
+  });
+
+  const getSum = (arr, isNew = true) => {
+    let sum = 0;
+    arr.map((x) => {
+      isNew && (sum = sum + Number(x.newcount));
+      !isNew && (sum = sum + Number(x.oldcount));
+    });
+    return sum;
+  };
+
+  app.post('/analytics', ensureAuthenticated, async (req, res) => {
+    const response = await getModuleAnalytics(req.body.programmeid);
+    return res.json({
+      moduleData: response,
+      sumNew: getSum(response),
+      sumOld: getSum(response, false)
+    });
   });
 
   app.get('/auth/callback',

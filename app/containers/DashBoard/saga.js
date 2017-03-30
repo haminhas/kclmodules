@@ -53,8 +53,8 @@ export function* checkClashWorker({ data }) {
 export function* getUserIDWorker() {
   try {
     const { userID, name, isAdmin } = yield call(fetch, 'GET', '/user');
+    yield call(loginWorker);
     if (!isAdmin) {
-      yield call(loginWorker);
       yield call(getModulesWorker, userID);
       yield call(specWorker);
     }

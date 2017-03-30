@@ -12,6 +12,7 @@ export default class AdminComponent extends Component {
     })).isRequired,
     loading: bool.isRequired,
     getProgrammes: func.isRequired,
+    programmesOnChange: func.isRequired,
   };
 
   constructor(props) {
@@ -27,10 +28,10 @@ export default class AdminComponent extends Component {
   }
 
   render() {
-    const { loading, programmes } = this.props;
+    const { loading, programmes, programmesOnChange } = this.props;
 
     const toggleChecked = (event) => {
-      // specOnChange(event.value);
+      programmesOnChange(event.value);
       this.setState({
         value: event.value,
       });
