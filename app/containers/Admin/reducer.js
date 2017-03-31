@@ -7,25 +7,35 @@ import {
   PROGRAMMES_SUCCESS,
   PROGRAMMES_REQUEST,
   PROGRAMMES_FAIL,
-  PROGRAMMES_ON_CHANGE,
   DATA_SUCCESS,
 } from './actions';
 
 const adminReducer = (state = getInitialState(), action) => {
   switch (action && action.type) {
   case DATA_SUCCESS:
-    console.log(action.data.moduleData);
-    // const newData = action.data.map((x) => {
-    //   return { newModule: x.newmodule, newCount: x.newcount };
-    // });
-    return {
-      ...state,
-      // newData
+    const colors = ['#f44336', '#2196f3', '#4caf50', '#ff9800', '#6d4c41', '#9c27b0'];
+    const newData = {
+      labels: action.data.moduleData.map((x) => x.newmodule),
+      datasets: [{
+        label: 'Which Modules were chosen the most',
+        backgroundColor: colors,
+        data: action.data.moduleData.map((x) => (x.newcount / action.data.sumNew) * 100)
+      }]
     };
-  case PROGRAMMES_ON_CHANGE:
+
+    const oldData = {
+      labels: action.data.moduleData.map((x) => x.oldmodule),
+      datasets: [{
+        label: 'Which Modules were dropped the most',
+        backgroundColor: colors,
+        data: action.data.moduleData.map((x) => (x.oldcount / action.data.sumOld) * 100),
+      }]
+    };
+
     return {
       ...state,
-      programmeid: action.programmeid,
+      newData,
+      oldData,
     };
   case PROGRAMMES_SUCCESS:
     return {

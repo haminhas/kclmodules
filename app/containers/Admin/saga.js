@@ -29,10 +29,10 @@ export function* getAdminDataWorker({ programmeid }) {
   }
 }
 
-export function* getProgrammesWatcher() {
-  yield* takeLatest(PROGRAMMES_REQUEST, getProgrammesWorker);
-}
-
 export function* getAdminDataWatcher() {
   yield* takeLatest(PROGRAMMES_ON_CHANGE, getAdminDataWorker);
+}
+
+export function* getProgrammesWatcher() {
+  yield* takeLatest(PROGRAMMES_REQUEST, getProgrammesWorker);
 }

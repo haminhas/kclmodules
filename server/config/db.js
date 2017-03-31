@@ -258,7 +258,7 @@ export async function getModuleAnalytics(programmeid, pool = pools) {
                  ON     m.code = a.newModule
                  WHERE  m.programmeid = $1::int
                  GROUP BY a.newmodule, a.oldmodule;`;
-    const {rows} =  await pool.query(sql, [programmeid]);
+    const { rows } =  await pool.query(sql, [programmeid]);
     return rows;
   } catch (err) {
     throw new Error(`[BadGateway] ${err.message}`);

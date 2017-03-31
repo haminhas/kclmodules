@@ -2,7 +2,7 @@ export const PROGRAMMES_FAIL = 'PROGRAMMES_FAIL';
 export const PROGRAMMES_SUCCESS = 'PROGRAMMES_SUCCESS';
 export const PROGRAMMES_REQUEST = 'PROGRAMMES_REQUEST';
 export const PROGRAMMES_ON_CHANGE = 'PROGRAMMES_ON_CHANGE';
-export const DATA_SUCCESS = 'PROGRAMMES_ON_CHANGE';
+export const DATA_SUCCESS = 'DATA_SUCCESS';
 export const DATA_FAIL = 'DATA_FAIL';
 
 export const programmesSuccess = programmes => ({
