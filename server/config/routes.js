@@ -85,8 +85,8 @@ export default (app) => {
 
 
   app.get('/user', ensureAuthenticated, async (req, res) => {
-    const admins = await getAllAdmins();
-    // const admins = [];
+    // const admins = await getAllAdmins();
+    const admins = [];
 
     for (const obj of admins) {
       if (obj.email === req.user.emails[0].value) {

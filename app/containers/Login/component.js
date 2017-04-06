@@ -5,7 +5,7 @@ import style from './style.css';
 const url = `${process.env.API_GATEWAY_URL}/auth`;
 const Login = () => (
   <SmallContainer>
-    <a className={style.button} href={url}>Log In</a>
+    <a className={style.button} href={url}>Log In Via KCL</a>
   </SmallContainer>
 );
 
