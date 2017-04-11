@@ -36,6 +36,7 @@ const adminReducer = (state = getInitialState(), action) => {
       ...state,
       newData,
       oldData,
+      loading: false,
     };
   case PROGRAMMES_SUCCESS:
     return {

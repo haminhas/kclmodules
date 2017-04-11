@@ -1,3 +1,6 @@
+// this section was taken from the passport-outlook documentation
+// https://github.com/clocked0ne/passport-outlook
+
 import passport from 'passport';
 const OutlookStrategy = require('passport-outlook').Strategy;
 

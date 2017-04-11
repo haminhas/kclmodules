@@ -71,12 +71,15 @@ describe('dashBoard reducer', () => {
     const expectedState = {
       loading: false,
       userID: userData.userID,
+      isAdmin: false
     };
     const action = {
       type: GET_USERID_SUCCESS,
       userID: userData.userID,
+      isAdmin: false
     };
     const actualState = dashBoardReducer(initialStateTrue, action);
+    console.log(actualState);
     expect(actualState).to.deep.equal(expectedState);
   });
 });

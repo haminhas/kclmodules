@@ -29,8 +29,10 @@ describe('TimetableGrid saga', () => {
     describe('amendmentWorker', () => {
       it('Passes correct parameters to fetch to check amendment', () => {
         const timetable = 'test';
-        const worker = amendmentWorker({ timetable });
-        expect(worker).to.deep.yield(call(fetch, 'POST', '/amend', { timetable }));
+        const oldMod = 'test';
+        const newMod = 'test';
+        const worker = amendmentWorker({ timetable, oldMod, newMod });
+        expect(worker).to.deep.yield(call(fetch, 'POST', '/amend', { timetable, oldMod, newMod }));
       });
     });
   });

@@ -85,8 +85,8 @@ export default (app) => {
 
 
   app.get('/user', ensureAuthenticated, async (req, res) => {
-    // const admins = await getAllAdmins();
-    const admins = [];
+    const admins = await getAllAdmins();
+    // const admins = [];
 
     for (const obj of admins) {
       if (obj.email === req.user.emails[0].value) {
@@ -101,8 +101,8 @@ export default (app) => {
       const modules = req.body.moduleCodes;
       for (let i = 0; i < modules[0].length; i++) {
         modules[1] = modules[1].filter((x) =>
-        x.code !== modules[0][i].code
-      );
+          x.code !== modules[0][i].code
+        );
       }
       const timetable = [];
       for (let i = 0; i < modules.length; i++) {
@@ -141,6 +141,8 @@ export default (app) => {
     });
   });
 
+  // this section was taken from the passport-outlook documentation
+  // https://github.com/clocked0ne/passport-outlook
   app.get('/auth/callback',
     passport.authenticate('windowslive', { failureRedirect: '/login' }),
     (req, res) => {

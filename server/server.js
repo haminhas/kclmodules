@@ -1,3 +1,5 @@
+// some code has been taken from the following boilerplate:
+// https://github.com/christianalfoni/webpack-express-boilerplate/blob/master/server.js
 import register from 'ignore-styles';
 register(['.sass', '.scss']);
 

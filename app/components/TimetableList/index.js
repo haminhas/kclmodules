@@ -5,6 +5,7 @@ const TimetableListComponent = props => {
   const { modules, name } = props;
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const smallDays = ['mon', 'tue', 'wed', 'thu', 'fri'];
+
   return (
     <ul>
     { modules.filter((x) => x[0].code === name).map((item, index) => (

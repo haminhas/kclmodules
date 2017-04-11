@@ -1,5 +1,6 @@
 import { Pool } from 'pg';
-
+// some code has been taken from the node-psql documentation
+// https://github.com/brianc/node-postgres
 process.on('error', (e) => {
   console.log(e.message, e.stack);
 });
