@@ -1,5 +1,6 @@
 import { Pool } from 'pg';
-
+// some code has been taken from the node-psql documentation
+// https://github.com/brianc/node-postgres
 process.on('error', (e) => {
   console.log(e.message, e.stack);
 });
@@ -25,8 +26,8 @@ export async function removeOldModules(studentid, pool = pools) {
   try {
     const sql = `DELETE
                  FROM   studentTimetable
-                 WHERE  studentid = '${studentid}';`;
-    const { rowCount } =  await pool.query(sql);
+                 WHERE  studentid = $1::text;`;
+    const { rowCount } =  await pool.query(sql, [studentid]);
     return rowCount;
   } catch (err) {
     throw new Error(`[BadGateway] ${err.message}`);
@@ -36,8 +37,19 @@ export async function removeOldModules(studentid, pool = pools) {
 export async function insertStudentTimetable(studentid, id, groupNumber, pool = pools) {
   try {
     const sql = `INSERT INTO studentTimetable (studentid,moduleType,groupNumber)
-                 VALUES ('${studentid}', ${id}, ${groupNumber});`;
-    const { rowCount } =  await pool.query(sql);
+                 VALUES ($1::text, $2::int, $3::int);`;
+    const { rowCount } = await pool.query(sql, [studentid, id, groupNumber]);
+    return rowCount;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}
+
+export async function insertAmmendment(newModule, oldModule, pool = pools) {
+  try {
+    const sql = `INSERT INTO ammendments (newModule,oldModule)
+                 VALUES ($1::text, $2::text);`;
+    const { rowCount } =  await pool.query(sql, [newModule, oldModule]);
     return rowCount;
   } catch (err) {
     throw new Error(`[BadGateway] ${err.message}`);
@@ -56,8 +68,8 @@ export async function getStudentModules(studentid, pool = pools) {
                  ON     t.id = mt.moduleType
                  INNER JOIN studentTimetable AS s
                  ON     mt.id = s.moduleType
-                 WHERE  s.studentid = '${studentid}';`;
-    const {rows} =  await pool.query(sql);
+                 WHERE  s.studentid = $1::text;`;
+    const { rows } =  await pool.query(sql, [studentid]);
     return rows;
   } catch (err) {
     throw new Error(`[BadGateway] ${err.message}`);
@@ -81,8 +93,8 @@ export async function getStudentTimetable(studentid, pool = pools) {
                  ON     s.moduleType = m.id
                  INNER JOIN modules
                  ON     t.moduleCode = modules.code
-                 WHERE  m.groupNumber = s.groupNumber AND s.studentid = '${studentid}';`;
-    const {rows} = await pool.query(sql);
+                 WHERE  m.groupNumber = s.groupNumber AND s.studentid = $1::text;`;
+    const { rows } = await pool.query(sql, [studentid]);
     return rows;
   } catch (err) {
     throw new Error(`[BadGateway] ${err.message}`);
@@ -108,10 +120,10 @@ export async function getModuleTimetable(moduleCode, pool = pools) {
                  ON     t.moduleCode = modules.code
                  FULL OUTER JOIN studentTimetable AS s
                  ON     s.moduleType = m.id
-                 WHERE  t.moduleCode = '${moduleCode}'
+                 WHERE  t.moduleCode = $1::text
                  GROUP BY t.name, m.id, m.moduleType, m.groupNumber, t.moduleCode, modules.compulsory, m.startTime, m.endtime, m.day
                  HAVING count(*) > 0;`;
-    const {rows} =  await pool.query(sql);
+    const { rows } =  await pool.query(sql, [moduleCode]);
     return rows;
   } catch (err) {
     throw new Error(`[BadGateway] ${err.message}`);
@@ -133,8 +145,8 @@ export async function getModuleTypeTimetable(moduleCode, groupNumber, name, pool
                  ON     m.moduleType = t.id
                  INNER JOIN modules
                  ON     t.moduleCode = modules.code
-                 WHERE  modules.code = '${moduleCode}' AND m.groupNumber != ${groupNumber} AND t.name = '${name}'`;
-    const {rows} =  await pool.query(sql);
+                 WHERE  modules.code = $1::text AND m.groupNumber != $2::int AND t.name = $3::text`;
+    const {rows} =  await pool.query(sql, [moduleCode, groupNumber, name]);
     return rows;
   } catch (err) {
     throw new Error(`[BadGateway] ${err.message}`);
@@ -154,10 +166,10 @@ export async function getModuleCount(moduleCode, pool = pools) {
                  ON     m.moduleType = t.id
                  FULL OUTER JOIN studentTimetable AS s
                  ON     s.moduleType = m.id
-                 WHERE  t.moduleCode = '${moduleCode}'
+                 WHERE  t.moduleCode = $1::text
                  GROUP BY m.moduleType, m.groupNumber, t.moduleCode, m.capacity
                  HAVING count(*) > 0;`;
-    const {rows} =  await pool.query(sql);
+    const {rows} =  await pool.query(sql, [moduleCode]);
     return rows;
   } catch (err) {
     throw new Error(`[BadGateway] ${err.message}`);
@@ -172,8 +184,8 @@ export async function getProgrammeModules(studentid, pool = pools) {
                  FROM   modules AS m
                  INNER JOIN students AS s
                  ON     m.programmeid = s.programmeid
-                 WHERE  s.id = '${studentid}';`;
-    const {rows} =  await pool.query(sql);
+                 WHERE  s.id = $1::text;`;
+    const { rows } =  await pool.query(sql, [studentid]);
     return rows;
   } catch (err) {
     throw new Error(`[BadGateway] ${err.message}`);
@@ -187,8 +199,8 @@ export async function getSpecialisation(studentid, pool = pools) {
                  FROM   specialisation AS sp
                  INNER JOIN students AS s
                  ON     sp.programmeid = s.programmeid
-                 WHERE  s.id = '${studentid}';`;
-    const {rows} =  await pool.query(sql);
+                 WHERE  s.id = $1::text;`;
+    const { rows } =  await pool.query(sql, [studentid]);
     return rows;
   } catch (err) {
     throw new Error(`[BadGateway] ${err.message}`);
@@ -204,8 +216,50 @@ export async function getSpecialisationModules(studentid, pool = pools) {
                  ON     sp.id = sm.specid
                  INNER JOIN students AS s
                  ON     sp.programmeid = s.programmeid
-                 WHERE  s.id = '${studentid}';`;
-    const {rows} =  await pool.query(sql);
+                 WHERE  s.id = $1::text;`;
+    const { rows } =  await pool.query(sql, [studentid]);
+    return rows;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}
+
+export async function getAllAdmins(pool = pools) {
+  try {
+    const sql = `SELECT *
+                 FROM admin;`;
+    const { rows } =  await pool.query(sql);
+    return rows;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}
+
+
+export async function getAllProgrammes(pool = pools) {
+  try {
+    const sql = `SELECT p.id AS value,
+                        p.name AS label
+                 FROM   programmes AS p;`;
+    const { rows } =  await pool.query(sql);
+    return rows;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}
+
+export async function getModuleAnalytics(programmeid, pool = pools) {
+  try {
+    const sql = `SELECT a.newmodule,
+                        count(a.newmodule) AS newCount,
+                        a.oldmodule,
+                        count(a.oldmodule) AS oldCount
+                 FROM   modules AS m
+                 INNER JOIN ammendments AS a
+                 ON     m.code = a.newModule
+                 WHERE  m.programmeid = $1::int
+                 GROUP BY a.newmodule, a.oldmodule;`;
+    const { rows } =  await pool.query(sql, [programmeid]);
     return rows;
   } catch (err) {
     throw new Error(`[BadGateway] ${err.message}`);

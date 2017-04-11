@@ -3,9 +3,10 @@ import passport from 'passport';
 import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
-// import compress from 'compression';
 import { Strategy } from 'passport-outlook';
 export default (app) => {
+  // some code has been taken from the passport-outlook examples.
+  // https://github.com/clocked0ne/passport-outlook/blob/master/examples/login/app.js
   passport.use(new Strategy({
     clientID: process.env.OUTLOOK_CLIENT_ID,
     clientSecret: process.env.OUTLOOK_CLIENT_SECRET,

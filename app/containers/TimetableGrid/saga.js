@@ -8,9 +8,9 @@ import {
   amendmentFail,
 } from './actions';
 
-export function* amendmentWorker({ timetable }) {
+export function* amendmentWorker({ timetable, oldMod, newMod }) {
   try {
-    const modules = yield call(fetch, 'POST', '/amend', { timetable });
+    const modules = yield call(fetch, 'POST', '/amend', { timetable,  oldMod, newMod });
     yield put(amendmentSuccess(modules));
     yield call(getUserIDWorker);
   } catch (error) {

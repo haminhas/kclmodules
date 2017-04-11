@@ -9,7 +9,11 @@ import {
   insertStudentTimetable,
   getSpecialisation,
   getSpecialisationModules,
- } from './db';
+  getAllAdmins,
+  getAllProgrammes,
+  insertAmmendment,
+  getModuleAnalytics,
+} from './db';
 
 
 export default (app) => {
@@ -25,6 +29,10 @@ export default (app) => {
       } else {
         throw new Error('Failed deleting old modules');
       }
+      for (let i = 0; i < req.body.newMod.length; i++) {
+        const response = await insertAmmendment(req.body.newMod[i].code, req.body.oldMod[i].code);
+        if (response <= 0) throw new Error('Failed inserting ammendments analytics');
+      }
       return true;
     } catch (err) {
       return err;
@@ -35,6 +43,11 @@ export default (app) => {
     if (req.isAuthenticated()) { return next(); }
     return res.redirect('/');
   };
+
+  app.post('/programmes', ensureAuthenticated, async (req, res) => {
+    const programmes = await getAllProgrammes();
+    return res.json(programmes);
+  });
 
   app.post('/specialisation', ensureAuthenticated, async (req, res) => {
     const response1 = await getSpecialisation(req.user.alias);
@@ -71,8 +84,16 @@ export default (app) => {
   });
 
 
-  app.get('/user', ensureAuthenticated, (req, res) => {
-    return res.json({ userID: req.user.alias, name: req.user.displayName });
+  app.get('/user', ensureAuthenticated, async (req, res) => {
+    const admins = await getAllAdmins();
+    // const admins = [];
+
+    for (const obj of admins) {
+      if (obj.email === req.user.emails[0].value) {
+        return res.json({ userID: req.user.alias, name: req.user.displayName, isAdmin: true});
+      }
+    }
+    return res.json({ userID: req.user.alias, name: req.user.displayName, isAdmin: false});
   });
 
   app.post('/moduleTimetables', ensureAuthenticated, async (req, res) => {
@@ -80,8 +101,8 @@ export default (app) => {
       const modules = req.body.moduleCodes;
       for (let i = 0; i < modules[0].length; i++) {
         modules[1] = modules[1].filter((x) =>
-        x.code !== modules[0][i].code
-      );
+          x.code !== modules[0][i].code
+        );
       }
       const timetable = [];
       for (let i = 0; i < modules.length; i++) {
@@ -92,7 +113,6 @@ export default (app) => {
       }
       return res.json(timetable);
     } catch (err) {
-      console.log(err);
       return err;
     }
   });
@@ -103,6 +123,26 @@ export default (app) => {
     return res.json([response1, response2]);
   });
 
+  const getSum = (arr, isNew = true) => {
+    let sum = 0;
+    arr.map((x) => {
+      isNew && (sum = sum + Number(x.newcount));
+      !isNew && (sum = sum + Number(x.oldcount));
+    });
+    return sum;
+  };
+
+  app.post('/analytics', ensureAuthenticated, async (req, res) => {
+    const response = await getModuleAnalytics(req.body.programmeid);
+    return res.json({
+      moduleData: response,
+      sumNew: getSum(response),
+      sumOld: getSum(response, false)
+    });
+  });
+
+  // this section was taken from the passport-outlook documentation
+  // https://github.com/clocked0ne/passport-outlook
   app.get('/auth/callback',
     passport.authenticate('windowslive', { failureRedirect: '/login' }),
     (req, res) => {

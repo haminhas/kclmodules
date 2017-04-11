@@ -1,0 +1,10 @@
+@value aoi from '../../styles/variables.css';
+.button {
+  background-color: aoi;
+  padding: 10px 20px 10px 20px;
+  border-radius: 5px;
+}
+
+.button:link, .button:visited {
+  color: White;
+}

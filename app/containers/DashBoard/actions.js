@@ -51,9 +51,10 @@ export const getUserID = () => ({
   type: GET_USERID_REQUEST,
 });
 
-export const getUserIDSuccess = userID => ({
+export const getUserIDSuccess = (userID, isAdmin) => ({
   type: GET_USERID_SUCCESS,
   userID,
+  isAdmin,
 });
 
 export const getUserIDFail = error => ({

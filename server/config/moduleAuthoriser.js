@@ -23,7 +23,6 @@ export const checkClash = (currentTimetable, moduleTimetable) => {
     }
   }
   console.log('NO CLASH');
-  // console.log(currentTimetable.concat(moduleTimetable));
   finalTimetable = currentTimetable.concat(moduleTimetable);
   return true;
 };
@@ -97,7 +96,6 @@ export const groupArrays = (moduleTimetable) => {
 
 // method for looping over all groups in newModule
 async function checkModuleGroups(currentTimetable, moduleTimetable) {
-  // const newMod = groupReorder(groupArrays(moduleTimetable)[0][0].code);
   const newMod = groupArrays(moduleTimetable);
   const option = [];
 // initliase the array with the first group for each type
