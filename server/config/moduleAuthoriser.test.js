@@ -2,7 +2,6 @@
 import  { checkGroupSpace,
           checkModuleInProgramme,
           checkClash,
-          changeGroup,
           groupArrays
 } from './moduleAuthoriser';
 import sinon from 'sinon';
@@ -163,73 +162,6 @@ describe('moduleAuthoriser', () => {
       const getProgrammeModules = sinon.stub().resolves(modules);
       const result = await checkModuleInProgramme('testid', 1, getProgrammeModules);
       expect(result).to.be.false();
-    });
-  });
-
-  describe('changeGroup', () => {
-    it('returns false if module is not in programme', () => {
-      const newGroup = {
-        code: 'm3',
-        starttime: '12:00:00',
-        endtime: '15:00:00',
-        groupnumber: 2,
-        day: 'Thu',
-        name: 'Lecture'
-      };
-
-      const ctimetable = [{
-        code: 'm3',
-        capacity: 15,
-        starttime: '12:00:00',
-        endtime: '15:00:00',
-        groupnumber: 1,
-        day: 'Wed',
-        name: 'Lecture'
-      } ];
-
-      const expected = [
-        { code: 'm3',
-          starttime: '12:00:00',
-          endtime: '15:00:00',
-          groupnumber: 2,
-          day: 'Thu',
-          name: 'Lecture'
-        } ];
-      const result = changeGroup(ctimetable, newGroup);
-      expect(result).to.deep.equal(expected);
-    });
-
-    it('returns true if group is found', () => {
-      const newGroup = {
-        code: 'm3',
-        starttime: '12:00:00',
-        endtime: '15:00:00',
-        groupnumber: 2,
-        day: 'Fri',
-        name: 'Lecture'
-      };
-
-      const ctimetable = [{
-        code: 'm3',
-        capacity: 15,
-        starttime: '12:00:00',
-        endtime: '15:00:00',
-        groupnumber: 1,
-        day: 'Wed',
-        name: 'Lecture'
-      } ];
-
-      const expected = [
-        { code: 'm3',
-          starttime: '12:00:00',
-          endtime: '15:00:00',
-          groupnumber: 2,
-          day: 'Fri',
-          name: 'Lecture'
-        } ];
-
-      const result = changeGroup(ctimetable, newGroup);
-      expect(result).to.deep.equal(expected);
     });
   });
 

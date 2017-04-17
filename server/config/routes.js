@@ -13,6 +13,7 @@ import {
   getAllProgrammes,
   insertAmmendment,
   getModuleAnalytics,
+  insertAdmin,
 } from './db';
 
 
@@ -64,7 +65,7 @@ export default (app) => {
     res.redirect('/');
   });
 
-  app.post('/checkClash', ensureAuthenticated, async (req, res) => {
+  app.post('/checkClash', async (req, res) => {
     const response = await decideSwap(
       req.user.alias,
       req.body.oldModules,
@@ -73,20 +74,35 @@ export default (app) => {
     res.send(response);
   });
 
-  app.post('/amend', ensureAuthenticated, async (req, res) => {
-    const response = await amend(req);
-    if (response) {
-      const response1 = await getStudentModules(req.user.alias);
-      const response2 = await getProgrammeModules(req.user.alias);
-      return res.json([response1, response2]);
+  app.post('/addAdmin', ensureAuthenticated, async (req, res) => {
+    try {
+      let response = await insertAdmin(req.body.adminEmail);
+      if (response <= 0) throw new Error('Failed inserting admin');
+      response = true;
+      return res.json(response);
+    } catch (err) {
+      return res.sendStatus(500).send({ error: err.message});
     }
-    return res.json(response);
+  });
+
+  app.post('/amend', ensureAuthenticated, async (req, res) => {
+    try {
+      const response = await amend(req);
+      if (response) {
+        const response1 = await getStudentModules(req.user.alias);
+        const response2 = await getProgrammeModules(req.user.alias);
+        return res.json([response1, response2]);
+      }
+      return res.json(response);
+    } catch (err) {
+      return res.sendStatus(500).send({ error: err.message});
+    }
   });
 
 
   app.get('/user', ensureAuthenticated, async (req, res) => {
-    const admins = await getAllAdmins();
-    // const admins = [];
+    // const admins = await getAllAdmins();
+    const admins = [];
 
     for (const obj of admins) {
       if (obj.email === req.user.emails[0].value) {

@@ -1,6 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames';
 import style from './style.css';
+import plusIcon from 'app/assets/ic-plus.svg';
+import minusIcon from 'app/assets/ic-minus.svg';
 
 const { bool, node, string, func } = PropTypes;
 
@@ -43,12 +45,22 @@ export default class ExpandablePanel extends Component {
   };
 
   render() {
-    const { children, label } = this.props;
+    let { children, label } = this.props;
     const { expanded } = this.state;
     const className = classnames(style.expandablePanel, {
       [style.expanded]: expanded,
       [style.checked]: children[0].props.checked,
     });
+
+    const newlabel = (
+      <img
+        src={expanded ? minusIcon : plusIcon}
+        alt={expanded ? '-' : '+'}
+      />
+    );
+    if (!label) {
+      label = newlabel;
+    }
     return (
       <div className={className}>
         <div className={style.button}>

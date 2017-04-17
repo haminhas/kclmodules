@@ -9,6 +9,9 @@ import {
   PROGRAMMES_ON_CHANGE,
   dataSuccess,
   dataFail,
+  ADD_ADMIN_REQUEST,
+  addAdminSuccess,
+  addAdminFail,
 } from './actions';
 
 export function* getProgrammesWorker() {
@@ -27,6 +30,20 @@ export function* getAdminDataWorker({ programmeid }) {
   } catch (error) {
     yield put(dataFail(error));
   }
+}
+
+export function* addAdminWorker({ email }) {
+  try {
+    const { adminEmail } = email;
+    yield call(fetch, 'POST', '/addAdmin', { adminEmail });
+    yield put(addAdminSuccess());
+  } catch (error) {
+    yield put(addAdminFail(error));
+  }
+}
+
+export function* addAdminWatcher() {
+  yield* takeLatest(ADD_ADMIN_REQUEST, addAdminWorker);
 }
 
 export function* getAdminDataWatcher() {

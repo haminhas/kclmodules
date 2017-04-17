@@ -13,20 +13,33 @@ export default class SpecListComponent extends Component {
     specOnChange: func.isRequired,
   };
 
-  render() {
-    const { specialisation, specOnChange } = this.props;
+  constructor(props) {
+    super(props);
 
-    const toggleChecked = (event) => {
-      specOnChange(event.value);
+    this.state = {
+      value: '',
     };
-    const spec = [...specialisation, {value: '', label: 'None'}];
+  }
+
+  toggleChecked = (event) => {
+    this.props.specOnChange(event.value);
+    this.setState({
+      value: event.value,
+    });
+  };
+
+  render() {
+    const { specialisation } = this.props;
+
+    const spec = [...specialisation, {value: '', label: 'Please choose a specialisation'}];
     return (
       <div className={style.container}>
         <Select
+          value={this.state.value}
           placeholder="Please choose a specialisation"
           name="form-field-name"
           options={spec}
-          onChange={toggleChecked}
+          onChange={this.toggleChecked}
         />
       </div>
     );

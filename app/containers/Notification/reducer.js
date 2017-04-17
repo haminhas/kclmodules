@@ -18,6 +18,11 @@ import {
   AMEDNMENT_SUCCESS,
 } from 'app/containers/TimetableGrid/actions';
 
+import {
+  ADD_ADMIN_SUCCESS,
+  ADD_ADMIN_FAIL,
+} from 'app/containers/Admin/actions';
+
 export const errorState = message => ({
   message,
   type: 'error',
@@ -30,6 +35,10 @@ export const notificationState = message => ({
 
 export const errorReducer = (state = null, action) => {
   switch (action && action.type) {
+  case ADD_ADMIN_FAIL:
+    return errorState('Admin cannot be added. Please try again!');
+  case ADD_ADMIN_SUCCESS:
+    return notificationState('Admin added Successfully');
   case SPEC_FAIL:
     return errorState('Cannot get specialisations, Please try again');
   case AMEDNMENT_SUCCESS:

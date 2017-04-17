@@ -45,6 +45,17 @@ export async function insertStudentTimetable(studentid, id, groupNumber, pool = 
   }
 }
 
+export async function insertAdmin(email, pool = pools) {
+  try {
+    const sql = `INSERT INTO admin (email)
+                 VALUES ($1::text);`;
+    const { rowCount } = await pool.query(sql, [email]);
+    return rowCount;
+  } catch (err) {
+    throw new Error(`[BadGateway] ${err.message}`);
+  }
+}
+
 export async function insertAmmendment(newModule, oldModule, pool = pools) {
   try {
     const sql = `INSERT INTO ammendments (newModule,oldModule)
@@ -134,18 +145,23 @@ export async function getModuleTimetable(moduleCode, pool = pools) {
 export async function getModuleTypeTimetable(moduleCode, groupNumber, name, pool = pools) {
   try {
     const sql = `SELECT modules.code,
+                        modules.compulsory,
                         m.startTime,
                         m.endtime,
                         m.groupNumber,
                         m.day,
                         m.id,
-                        t.name
+                        t.name,
+                        m.moduleType,
+                        count(*)/m.capacity ::float AS ratio
                  FROM   moduleTimetable AS m
                  INNER JOIN moduleTypes AS t
                  ON     m.moduleType = t.id
                  INNER JOIN modules
                  ON     t.moduleCode = modules.code
-                 WHERE  modules.code = $1::text AND m.groupNumber != $2::int AND t.name = $3::text`;
+                 WHERE  modules.code = $1::text AND m.groupNumber != $2::int AND t.name = $3::text
+                 GROUP BY modules.code, t.name, m.id, m.moduleType, m.groupNumber, t.moduleCode, modules.compulsory, m.startTime, m.endtime, m.day
+                 HAVING count(*) > 0;`;
     const {rows} =  await pool.query(sql, [moduleCode, groupNumber, name]);
     return rows;
   } catch (err) {

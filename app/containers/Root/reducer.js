@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
 import dashBoardReducer from 'app/containers/DashBoard/reducer';
 import accountReducer from 'app/containers/AccountWidget/reducer';
@@ -10,6 +11,7 @@ const appReducer = combineReducers({
   dashBoard: dashBoardReducer,
   account: accountReducer,
   notification: notificationReducer,
+  form: formReducer
 });
 
 export default function rootReducer(state, action) {

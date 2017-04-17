@@ -3,8 +3,16 @@ import Select from 'react-select';
 import style from './style';
 import 'react-select/dist/react-select.css';
 import { Bar } from 'react-chartjs-2';
+import { reduxForm } from 'redux-form';
+import AddAdminForm from 'app/components/AddAdminForm';
+import ExpandablePanel from 'app/components/ExpandablePanel';
+import validate from './validate';
 
 const { arrayOf, shape, string, number, func, bool, object } = PropTypes;
+
+const AddAdminFormContainer = reduxForm({
+  form: 'addProjectForm',
+})(AddAdminForm);
 
 export default class AdminComponent extends Component {
   static propTypes = {
@@ -16,7 +24,8 @@ export default class AdminComponent extends Component {
     getProgrammes: func.isRequired,
     programmesOnChange: func.isRequired,
     newData: object.isRequired,
-    oldData: object.isRequired
+    oldData: object.isRequired,
+    addAdmin: func.isRequired,
   };
 
   constructor(props) {
@@ -39,7 +48,7 @@ export default class AdminComponent extends Component {
   };
 
   render() {
-    const { loading, programmes, newData, oldData } = this.props;
+    const { loading, programmes, newData, oldData, addAdmin } = this.props;
     const options = {
     	responsive: true,
     	scales: {
@@ -65,6 +74,17 @@ export default class AdminComponent extends Component {
 
     return !loading && (
       <div className={style.container}>
+        <div className={style.add}>
+          <ExpandablePanel
+            executeOnChange={false}
+          >
+          <div>Add Admins</div>
+          <AddAdminFormContainer
+            onSubmit={addAdmin}
+            validate={values => validate(values)}
+          />
+          </ExpandablePanel>
+        </div>
         <Select
           value={this.state.value}
           placeholder="Please choose a programme"

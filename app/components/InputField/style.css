@@ -1,0 +1,46 @@
+@value miloOrange, desktop, haloOrange from '../../styles/variables.css';
+
+.inputField {
+  font-family: Roboto, sans-serif;
+  padding: 14px 10px 10px;
+  width: 100%;
+  max-width: 634px;
+  border-radius: 5px;
+  border: 2px solid #747677;
+  text-indent: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+  margin: 3px 0px;
+}
+
+.inputField:focus {
+  outline: none;
+  border: solid 2px #1853f3;
+}
+
+.inputTitle {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.validationError {
+  color: miloOrange;
+  font-size: 16px;
+  margin: 0 0 0 17px;
+}
+
+.inputFieldInvalid {
+  border: 2px solid miloOrange;
+}
+
+.inputFieldContainer {
+  padding-bottom: 15px;
+  text-align: left;
+}
+
+@media desktop {
+  .inputField {
+    max-width: 435px;
+  }
+}

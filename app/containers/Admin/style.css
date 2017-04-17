@@ -11,6 +11,10 @@
   padding-bottom: 5px;
 }
 
+.add {
+  padding-bottom: 20px;
+}
+
 @media desktop {
   .container {
     width: 50%;

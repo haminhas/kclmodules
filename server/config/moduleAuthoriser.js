@@ -32,8 +32,11 @@ export async function checkGroupSpace(
   groupnumber,
   getModuleCountFn = getModuleCount
 ) {
+  // get the capacity and count for groups in the module
   const data = await getModuleCountFn(moduleCode);
+  // get the current group in the data
   const result = data && data.filter(( obj ) => (obj.groupnumber === groupnumber));
+  // check if there are any spaces
   if (result.length === 0 || (result[0].capacity - result[0].count) < 1) return false;
   return true;
 }
@@ -49,42 +52,16 @@ export async function checkModuleInProgramme(
   return false;
 }
 
-export const changeGroup = (currentTimetable, newGroup) => {
-  let timetable = currentTimetable.filter((x) => (x.code === newGroup.code));
-  timetable = timetable.filter((x) => (x.name !== newGroup.name));
-  timetable.push(newGroup);
-  return [...currentTimetable.filter((x) => (x.code !== newGroup.code)), ...timetable];
-};
-
-// method for looping over groups in currentTimetable
-async function reassign(currentTimetable, moduleTimetable) {
-  let newGroups = [];
-  for (const mod of currentTimetable) {
-    const otherGroups = await getModuleTypeTimetable(mod.code, mod.groupnumber, mod.name);
-    if (otherGroups.length > 0) newGroups = [...newGroups, ...otherGroups];
-  }
-  for (const group of newGroups) {
-    if (await checkGroupSpace(group.code, group.groupnumber)) {
-      const newTimetable = changeGroup(currentTimetable, group);
-      if (checkClash(newTimetable, moduleTimetable)) return true;
-      const updates = newGroups.filter((x) => (x.id !== group.id));
-      for (const mod of updates) {
-        const updatedTimetable = changeGroup(newTimetable, mod);
-        if (checkClash(updatedTimetable, moduleTimetable)) return true;
-      }
-      // means we have found another group to assign studnet
-      // check if new group has space
-    }
-  }
-  return false;
-}
-
 export const groupArrays = (moduleTimetable) => {
   const newMod = [];
   const names = [];
+  // loop throught the timetable
   for (let i = 0; i < moduleTimetable.length; i++) {
+    // if we have already visited this session than move to next iteration
     if (names.includes(moduleTimetable[i].name)) continue;
+    // get all the groups for the current session
     const timetable = moduleTimetable.filter((x) => (x.name === moduleTimetable[i].name));
+    // sort thses groups by proportional ratio size
     timetable.sort((a, b) => {
       return a.ratio > b.ratio;
     });
@@ -94,11 +71,44 @@ export const groupArrays = (moduleTimetable) => {
   return newMod;
 };
 
+// method for looping over groups in currentTimetable
+async function reassign(currentTimetable, moduleTimetable) {
+  let timetable = currentTimetable;
+  // loop over all the groups in the currentTimetable
+  for (let i = 0; i < timetable.length; i++) {
+    // get the other possible group replacement choices
+    const otherGroups = await getModuleTypeTimetable(
+      timetable[i].code,
+      timetable[i].groupnumber,
+      timetable[i].name
+    );
+    // sort replacemnets by proportional size and remove groups
+    // that have been previously been visited
+    otherGroups.sort((a, b) => (a.ratio > b.ratio)).filter((x) => (
+       x.id === timetable[i].id
+    ));
+
+    // loop over replacemnets
+    for (let j = 0; j < otherGroups.length; j++) {
+      if (await checkGroupSpace(otherGroups[j].code, otherGroups[j].groupnumber)) {
+        // swap the replacemnet with the current module group
+        timetable[i] = otherGroups[j];
+        // check for clash
+        if (checkClash(timetable, moduleTimetable)) return true;
+      }
+    }
+    // reset the timetable
+    timetable = currentTimetable;
+  }
+  return false;
+}
+
+
 // method for looping over all groups in newModule
 async function checkModuleGroups(currentTimetable, moduleTimetable) {
   const newMod = groupArrays(moduleTimetable);
   const option = [];
-// initliase the array with the first group for each type
+  // initliase the array with the first group for each type
   for (let i = 0; i < newMod.length; i++) {
     option.push(newMod[i][0]);
   }
