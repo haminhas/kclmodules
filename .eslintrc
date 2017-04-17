@@ -1,3 +1,5 @@
+// from eslint docs
+
 {
   "parser": "babel-eslint", // https://github.com/babel/babel-eslint
   "env": {

@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+// test setup file from project completed at Red-Badger
 import 'babel-polyfill';
 import { jsdom } from 'jsdom';
 import chai from 'chai';
